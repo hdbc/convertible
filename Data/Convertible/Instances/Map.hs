@@ -7,7 +7,7 @@
    Stability  : provisional
    Portability: portable
 
-Numeric instances for Convertible.
+Instances to convert between Map and association list.
 
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 

@@ -37,7 +37,8 @@ library
                    Data.Convertible.Utils,
                    Data.Convertible.Instances,
                    Data.Convertible.Instances.Map,
-                   Data.Convertible.Instances.Num
+                   Data.Convertible.Instances.Num,
+                   Data.Convertible.Instances.Time
 
   --Other-Modules: Database.HDBC.Utils
   --Extensions: ExistentialQuantification, AllowOverlappingInstances,
