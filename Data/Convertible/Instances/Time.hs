@@ -52,8 +52,16 @@ instance Integral a => Convertible a POSIXTime where
     safeConvert = return . fromIntegral
 -}
 
+{- Covered under Real a
 instance Convertible Rational POSIXTime where
     safeConvert = return . fromRational
-
+-}
 instance Real a => Convertible a POSIXTime where
     safeConvert = return . fromRational . toRational
+
+instance Convertible POSIXTime UTCTime where
+    safeConvert = return . posixSecondsToUTCTime
+
+--instance Convertible UTCTime POSIXTime where
+--    safeConvert = return . utcTimeToPOSIXSeconds
+
