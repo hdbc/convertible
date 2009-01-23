@@ -651,3 +651,7 @@ instance Convertible Char Word64 where
     safeConvert = boundedConversion (return . fromIntegral . fromEnum)
 instance Convertible Word64 Char where 
     safeConvert = boundedConversion (return . toEnum . fromIntegral)
+
+
+instance Convertible Integer Integer where
+    safeConvert = return . id

@@ -47,5 +47,13 @@ instance Convertible Integer ST.ClockTime where
 -- Intra-Data.Time stuff
 ----------------------------------------------------------------------
 
-instance Convertible Integer POSIXTime where
+{- covered under Real a below
+instance Integral a => Convertible a POSIXTime where
     safeConvert = return . fromIntegral
+-}
+
+instance Convertible Rational POSIXTime where
+    safeConvert = return . fromRational
+
+instance Real a => Convertible a POSIXTime where
+    safeConvert = return . fromRational . toRational

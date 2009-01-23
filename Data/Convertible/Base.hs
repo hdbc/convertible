@@ -47,9 +47,11 @@ class Convertible a b where
        For a simpler interface, see 'convert'. -}
     safeConvert :: a -> ConvertResult b
 
+{-
 {- | Any type can be converted to itself. -}
 instance Convertible a a where
     safeConvert x = return x
+-}
 
 {-
 {- | Lists of any convertible type can be converted. -}
