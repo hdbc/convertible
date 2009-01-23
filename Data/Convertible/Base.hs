@@ -1,4 +1,4 @@
-{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE MultiParamTypeClasses, UndecidableInstances #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -66,11 +66,6 @@ instance Convertible Integer Double where
 instance Convertible Double Integer where
     safeConvert = return . truncate
 
-convert :: Convertible a b => a -> b
-convert inp = case safeConvert inp of
-                Left e -> error (show e)
-                Right x -> x
-
 ----------------------------------------------------------------------
 -- Error Handling
 ----------------------------------------------------------------------
@@ -93,16 +88,18 @@ This function usually will ignore its paraneter, and should be fine if passed un
 class ConvTypeName a where
     convTypeName :: a -> String
 
+{-
 instance (Typeable a) => ConvTypeName a where
     convTypeName = show . typeOf
+-}
 
 convError :: (Show a, Convertible a b, ConvTypeName a, ConvTypeName b) =>
-             String -> a -> ConvResult b
+             String -> a -> ConvertResult b
 convError msg inpval = if True then Left ret else Right fake
     where ret = ConvertError {
                   convSourceValue = show inpval,
                   convSourceType = convTypeName inpval,
-                  convDestType = convTypeName fake,
+                  convDestType = "foo", -- convTypeName fake,
                   convErrorMessage = msg}
           fake = undefined
     

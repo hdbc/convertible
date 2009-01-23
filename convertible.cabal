@@ -33,9 +33,9 @@ library
 
   GHC-Options: -O2 -Wall -fglasgow-exts
 
-  Exposed-Modules: Database.HDBC, Database.HDBC.Types, Database.HDBC.DriverUtils,
-    Database.HDBC.ColTypes, Database.HDBC.Statement, Database.HDBC.SqlValue
-  Other-Modules: Database.HDBC.Utils
+  Exposed-Modules: Data.Convertible.Base
+
+  --Other-Modules: Database.HDBC.Utils
   --Extensions: ExistentialQuantification, AllowOverlappingInstances,
   --    AllowUndecidableInstances
   Extensions: ExistentialQuantification
