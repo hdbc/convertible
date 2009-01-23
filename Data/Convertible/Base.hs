@@ -1,4 +1,3 @@
-{-# LANGUAGE MultiParamTypeClasses, UndecidableInstances #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -57,6 +56,7 @@ convert x =
       Left e -> error (prettyConvertError e)
       Right r -> r
 
+{-
 instance Convertible Int Double where
     safeConvert = return . fromIntegral
 instance Convertible Double Int where
@@ -65,6 +65,7 @@ instance Convertible Integer Double where
     safeConvert = return . fromIntegral
 instance Convertible Double Integer where
     safeConvert = return . truncate
+-}
 
 ----------------------------------------------------------------------
 -- Error Handling

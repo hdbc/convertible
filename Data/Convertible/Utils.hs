@@ -1,4 +1,3 @@
-{-# LANGUAGE MultiParamTypeClasses #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -29,12 +28,12 @@ import Data.Convertible.Base
 Does this be examining the bounds of the destination type, converting to the type of
 the source via 'safeConvert', comparing to the source value.  Results in an error
 if the conversion is out of bounds. -}
-boundedConversion :: (Ord a, Bounded a, Bounded b, Show a, Show b, Convertible b a,
+boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible b a,
                       ConvTypeName a, ConvTypeName b) => 
-                     a                      -- ^ Input data
-                  -> (a -> ConvertResult b) -- ^ Function to do the conversion
+                     (a -> ConvertResult b) -- ^ Function to do the conversion
+                  -> a                      -- ^ Input data
                   -> ConvertResult b        -- ^ Result
-boundedConversion inp func =
+boundedConversion func inp =
     do result <- func inp
        let smallest = asTypeOf minBound result
        let biggest = asTypeOf maxBound result
