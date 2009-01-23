@@ -62,6 +62,6 @@ instance Real a => Convertible a POSIXTime where
 instance Convertible POSIXTime UTCTime where
     safeConvert = return . posixSecondsToUTCTime
 
---instance Convertible UTCTime POSIXTime where
---    safeConvert = return . utcTimeToPOSIXSeconds
+instance Convertible UTCTime POSIXTime where
+    safeConvert = return . utcTimeToPOSIXSeconds
 
