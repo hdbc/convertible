@@ -88,10 +88,12 @@ This function usually will ignore its paraneter, and should be fine if passed un
 class ConvTypeName a where
     convTypeName :: a -> String
 
+{-
 instance (Typeable a) => ConvTypeName a where
     convTypeName = show . typeOf
+-}
 
-convError :: (Show a, Convertible a b, ConvTypeName a, ConvTypeName b) =>
+convError :: (Show a, ConvTypeName a, ConvTypeName b) =>
              String -> a -> ConvertResult b
 convError msg inpval = if True then Left ret else Right fake
     where ret = ConvertError {
@@ -99,7 +101,7 @@ convError msg inpval = if True then Left ret else Right fake
                   convSourceType = convTypeName inpval,
                   convDestType = t,
                   convErrorMessage = msg}
-          fake = convert inpval                -- never called
+          fake = error "fake"
           t = convTypeName fake
     
 prettyConvertError :: ConvertError -> String

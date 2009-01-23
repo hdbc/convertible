@@ -29,7 +29,8 @@ import Data.Convertible.Base
 Does this be examining the bounds of the destination type, converting to the type of
 the source via 'safeConvert', comparing to the source value.  Results in an error
 if the conversion is out of bounds. -}
-boundedConversion :: (Bounded a, Bounded b, Show a, Show b, Convertible b a) => 
+boundedConversion :: (Ord a, Bounded a, Bounded b, Show a, Show b, Convertible b a,
+                      ConvTypeName a, ConvTypeName b) => 
                      a                      -- ^ Input data
                   -> (a -> ConvertResult b) -- ^ Function to do the conversion
                   -> ConvertResult b        -- ^ Result
