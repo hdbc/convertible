@@ -26,7 +26,6 @@ module Data.Convertible.Base (-- * Handling the results
                               -- * Error handling
                               ConvertError(..),
                               convError,
-                              ConvTypeName(..),
                               prettyConvertError
                              )
 where
@@ -94,26 +93,16 @@ data ConvertError = ConvertError {
 instance Error ConvertError where
     strMsg x = ConvertError "(unknown)" "(unknown)" "(unknown)" x
 
-{- | Because we might not always want to define Typeable instances, we can use this
-to get the name of something.
-
-This function usually will ignore its paraneter, and should be fine if passed undefined. -}
-class ConvTypeName a where
-    convTypeName :: a -> String
-
-instance (Typeable a) => ConvTypeName a where
-    convTypeName = show . typeOf
-
-convError' :: (Show a, ConvTypeName a, ConvTypeName b) =>
+convError' :: (Show a, Typeable a, Typeable b) =>
                String -> a -> b -> ConvertResult b
 convError' msg inpval retval = 
      Left $ ConvertError {
              convSourceValue = show inpval,
-             convSourceType = convTypeName inpval,
-             convDestType = convTypeName retval,
+             convSourceType = show . typeOf $ inpval,
+             convDestType = show . typeOf $ retval,
              convErrorMessage = msg}
     
-convError :: (Show a, ConvTypeName a, ConvTypeName b) =>
+convError :: (Show a, Typeable a, Typeable b) =>
              String -> a -> ConvertResult b
 convError msg inpval = 
     convError' msg inpval undefined

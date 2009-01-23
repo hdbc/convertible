@@ -28,6 +28,7 @@ import Data.Time
 import Data.Time.Clock
 import Data.Time.Clock.POSIX
 import Data.Time.Calendar.OrdinalDate
+import Data.Typeable
 
 ----------------------------------------------------------------------
 -- Intra-System.Time stuff
@@ -54,8 +55,8 @@ instance Integral a => Convertible a POSIXTime where
     safeConvert = return . fromIntegral
 -}
 
-instance ConvTypeName NominalDiffTime where
-    convTypeName _ = "NominalDiffTime"
+instance Typeable NominalDiffTime where
+    typeOf _ = mkTypeName "NominalDiffTime"
 
 {- Covered under Real a
 instance Convertible Rational POSIXTime where

@@ -18,10 +18,12 @@ For license and copyright information, see the file COPYRIGHT
 
 -}
 
-module Data.Convertible.Utils(boundedConversion
+module Data.Convertible.Utils(boundedConversion,
+                             mkTypeName
                              )
 where
 import Data.Convertible.Base
+import Data.Typeable
 
 {- | Utility function to perform bounds checking as part of a conversion.
 
@@ -30,7 +32,7 @@ the source via 'safeConvert', comparing to the source value.  Results in an erro
 if the conversion is out of bounds. -}
 boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible a Integer,
                       Convertible b Integer,
-                      ConvTypeName a, ConvTypeName b) => 
+                      Typeable a, Typeable b) => 
                      (a -> ConvertResult b) -- ^ Function to do the conversion
                   -> a                      -- ^ Input data
                   -> ConvertResult b        -- ^ Result
@@ -45,3 +47,6 @@ boundedConversion func inp =
           then convError ("Input value outside of bounds: " ++ show (smallest, biggest))
                inp
           else return result
+
+mkTypeName :: String -> TypeRep
+mkTypeName name = mkTyConApp (mkTyCon name) []
