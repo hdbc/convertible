@@ -21,6 +21,7 @@ module Data.Convertible.Instances.Time()
 where
 
 import Data.Convertible.Base
+import Data.Convertible.Utils
 import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock
@@ -58,6 +59,14 @@ instance Convertible Rational POSIXTime where
 -}
 instance Real a => Convertible a POSIXTime where
     safeConvert = return . fromRational . toRational
+
+instance Fractional a => Convertible POSIXTime a where
+    safeConvert = return . fromRational . toRational
+
+instance Convertible POSIXTime Integer where
+    safeConvert = return . truncate
+--instance Convertible POSIXTime Int where
+--    safeConvert = boundedConversion (return . truncate)
 
 instance Convertible POSIXTime UTCTime where
     safeConvert = return . posixSecondsToUTCTime
