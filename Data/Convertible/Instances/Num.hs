@@ -197,7 +197,28 @@ instance Convertible Word64 Rational where
 
 ------------------------------------------------------------
 
+instance Convertible Integer Double where
+    safeConvert = return . fromIntegral
+instance Convertible Integer Float where
+    safeConvert = return . fromIntegral
+instance Convertible Integer Rational where
+    safeConvert = return . fromIntegral
+instance Convertible Double Integer where
+    safeConvert = return . truncate
+instance Convertible Float Integer where
+    safeConvert = return . truncate
+instance Convertible Rational Integer where
+    safeConvert = return . truncate
+
 instance Convertible Float Double where
     safeConvert = return . fromRational . toRational
 instance Convertible Double Float where
     safeConvert = return . fromRational . toRational
+instance Convertible Float Rational where
+    safeConvert = return . toRational
+instance Convertible Rational Float where
+    safeConvert = return . fromRational
+instance Convertible Double Rational where
+    safeConvert = return . toRational
+instance Convertible Rational Double where
+    safeConvert = return . fromRational
