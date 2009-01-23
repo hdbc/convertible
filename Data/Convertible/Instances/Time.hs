@@ -37,3 +37,15 @@ instance Convertible ST.ClockTime ST.CalendarTime where
 instance Convertible ST.CalendarTime ST.ClockTime where
     safeConvert = return . ST.toClockTime
 
+instance Convertible ST.ClockTime Integer where
+    safeConvert (ST.TOD x _) = return x
+
+instance Convertible Integer ST.ClockTime where
+    safeConvert x = return $ ST.TOD x 0
+
+----------------------------------------------------------------------
+-- Intra-Data.Time stuff
+----------------------------------------------------------------------
+
+instance Convertible Integer POSIXTime where
+    safeConvert = return . fromIntegral
