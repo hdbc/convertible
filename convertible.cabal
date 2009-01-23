@@ -33,7 +33,8 @@ library
 
   GHC-Options: -O2 -Wall -fglasgow-exts
 
-  Exposed-Modules: Data.Convertible.Base
+  Exposed-Modules: Data.Convertible.Base,
+                   Data.Convertible.Utils
 
   --Other-Modules: Database.HDBC.Utils
   --Extensions: ExistentialQuantification, AllowOverlappingInstances,
