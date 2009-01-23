@@ -22,6 +22,7 @@ where
 
 import Data.Convertible.Base
 import Data.Convertible.Utils
+import Data.Convertible.Instances.Num
 import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock
@@ -53,10 +54,14 @@ instance Integral a => Convertible a POSIXTime where
     safeConvert = return . fromIntegral
 -}
 
+instance ConvTypeName NominalDiffTime where
+    convTypeName _ = "NominalDiffTime"
+
 {- Covered under Real a
 instance Convertible Rational POSIXTime where
     safeConvert = return . fromRational
 -}
+
 instance Real a => Convertible a POSIXTime where
     safeConvert = return . fromRational . toRational
 
@@ -65,8 +70,8 @@ instance Fractional a => Convertible POSIXTime a where
 
 instance Convertible POSIXTime Integer where
     safeConvert = return . truncate
---instance Convertible POSIXTime Int where
---    safeConvert = boundedConversion (return . truncate)
+instance Convertible POSIXTime Int where
+    safeConvert = boundedConversion (return . truncate)
 
 instance Convertible POSIXTime UTCTime where
     safeConvert = return . posixSecondsToUTCTime
