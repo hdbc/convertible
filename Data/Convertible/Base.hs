@@ -51,9 +51,11 @@ class Convertible a b where
 instance Convertible a a where
     safeConvert x = return x
 
+{-
 {- | Lists of any convertible type can be converted. -}
 instance Convertible a b => Convertible [a] [b] where
     safeConvert = mapM safeConvert
+-}
 
 {- | Convert from one type of data to another.  Raises an exception if there is
 an error with the conversion.  For a function that does not raise an exception

@@ -31,15 +31,20 @@ library
     Build-Depends: base<3
   Build-Depends: mtl
 
-  GHC-Options: -O2 -Wall -fglasgow-exts
+  GHC-Options: -O2 -Wall -fno-warn-orphans
 
   Exposed-Modules: Data.Convertible.Base,
                    Data.Convertible.Utils,
+                   Data.Convertible.Instances,
                    Data.Convertible.Instances.Num
 
   --Other-Modules: Database.HDBC.Utils
   --Extensions: ExistentialQuantification, AllowOverlappingInstances,
   --    AllowUndecidableInstances
-  Extensions: ExistentialQuantification, MultiParamTypeClasses, UndecidableInstances
+  Extensions: ExistentialQuantification, MultiParamTypeClasses,
+              UndecidableInstances, FlexibleInstances,
+              FlexibleContexts, TypeSynonymInstances
+  
+  
 
   
