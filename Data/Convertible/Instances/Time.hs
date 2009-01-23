@@ -76,7 +76,8 @@ instance Convertible POSIXTime Int where
 
 instance Convertible POSIXTime UTCTime where
     safeConvert = return . posixSecondsToUTCTime
-
 instance Convertible UTCTime POSIXTime where
     safeConvert = return . utcTimeToPOSIXSeconds
 
+instance Real a => Convertible a UTCTime where
+    safeConvert = return . posixSecondsToUTCTime . fromRational . toRational
