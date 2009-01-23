@@ -1,12 +1,3 @@
-{-
-Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
-
-All rights reserved.
-
-For license and copyright information, see the file COPYRIGHT
-
--}
-
 {- |
    Module     : Data.Convertible.Instances.Num
    Copyright  : Copyright (C) 2009 John Goerzen
@@ -15,6 +6,14 @@ For license and copyright information, see the file COPYRIGHT
    Maintainer : John Goerzen <jgoerzen@complete.org>
    Stability  : provisional
    Portability: portable
+
+Numeric instances for Convertible.
+
+Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
+
+All rights reserved.
+
+For license and copyright information, see the file COPYRIGHT
 
 -}
 
@@ -652,5 +651,3 @@ instance Convertible Char Word64 where
     safeConvert = boundedConversion (return . fromIntegral . fromEnum)
 instance Convertible Word64 Char where 
     safeConvert = boundedConversion (return . toEnum . fromIntegral)
-
-

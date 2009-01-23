@@ -36,6 +36,7 @@ library
   Exposed-Modules: Data.Convertible.Base,
                    Data.Convertible.Utils,
                    Data.Convertible.Instances,
+                   Data.Convertible.Instances.Map,
                    Data.Convertible.Instances.Num
 
   --Other-Modules: Database.HDBC.Utils
