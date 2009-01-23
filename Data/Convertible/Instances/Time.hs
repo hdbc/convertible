@@ -81,3 +81,6 @@ instance Convertible UTCTime POSIXTime where
 
 instance Real a => Convertible a UTCTime where
     safeConvert = return . posixSecondsToUTCTime . fromRational . toRational
+
+testUTC :: UTCTime
+testUTC = convert (51351::Int)
