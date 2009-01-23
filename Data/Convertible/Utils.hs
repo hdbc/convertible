@@ -19,7 +19,7 @@ For license and copyright information, see the file COPYRIGHT
 
 -}
 
-module Data.Convertible.Utils(
+module Data.Convertible.Utils(boundedConversion
                              )
 where
 import Data.Convertible.Base
