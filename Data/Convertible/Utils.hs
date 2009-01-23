@@ -28,7 +28,8 @@ import Data.Convertible.Base
 Does this be examining the bounds of the destination type, converting to the type of
 the source via 'safeConvert', comparing to the source value.  Results in an error
 if the conversion is out of bounds. -}
-boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible b a,
+boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible a Integer,
+                      Convertible b Integer,
                       ConvTypeName a, ConvTypeName b) => 
                      (a -> ConvertResult b) -- ^ Function to do the conversion
                   -> a                      -- ^ Input data
@@ -37,9 +38,10 @@ boundedConversion func inp =
     do result <- func inp
        let smallest = asTypeOf minBound result
        let biggest = asTypeOf maxBound result
-       let smallest' = convert smallest
-       let biggest' = convert biggest
-       if inp < smallest' || inp > biggest'
+       let smallest' = (convert smallest)::Integer
+       let biggest' = (convert biggest)::Integer
+       let inp' = (convert inp)::Integer
+       if inp' < smallest' || inp' > biggest'
           then convError ("Input value outside of bounds: " ++ show (smallest, biggest))
                inp
           else return result
