@@ -29,6 +29,7 @@ import Data.Time.Clock
 import Data.Time.Clock.POSIX
 import Data.Time.Calendar.OrdinalDate
 import Data.Typeable
+import Data.Ratio
 
 ----------------------------------------------------------------------
 -- Intra-System.Time stuff
@@ -114,6 +115,28 @@ instance Convertible LocalTime Day where
     safeConvert = return . localDay
 instance Convertible LocalTime TimeOfDay where
     safeConvert = return . localTimeOfDay
+
+----------------------------------------------------------------------
+-- Conversions between old and new time
+----------------------------------------------------------------------
+instance Convertible ST.CalendarTime ZonedTime where
+    safeConvert ct = return $ ZonedTime {
+     zonedTimeToLocalTime = LocalTime {
+       localDay = fromGregorian (fromIntegral $ ST.ctYear ct) 
+                  (1 + (fromEnum $ ST.ctMonth ct))
+                  (ST.ctDay ct),
+       localTimeOfDay = TimeOfDay {
+         todHour = ST.ctHour ct,
+         todMin = ST.ctMin ct,
+         todSec = (fromIntegral $ ST.ctSec ct) + 
+                  fromRational (ST.ctPicosec ct % 1000000000000)
+                        }
+                            },
+     zonedTimeZone = TimeZone {
+                       timeZoneMinutes = ST.ctTZ ct `div` 60,
+                       timeZoneSummerOnly = ST.ctIsDST ct,
+                       timeZoneName = ST.ctTZName ct}
+}
 
 
 testUTC :: UTCTime
