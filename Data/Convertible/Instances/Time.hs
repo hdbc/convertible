@@ -157,6 +157,27 @@ instance Convertible ST.ClockTime UTCTime where
 instance Convertible POSIXTime ST.ClockTime where
     -- FIXME: 1-second precision
     safeConvert x = safeConvert x >>= (\z -> return $ ST.TOD z 0)
+instance Convertible UTCTime ST.ClockTime where
+    safeConvert = safeConvert . utcTimeToPOSIXSeconds
+
+instance Convertible ZonedTime ST.CalendarTime where
+    safeConvert zt = return $ ST.CalendarTime {
+            ST.ctYear = fromIntegral year,
+            ST.ctMonth = toEnum (month - 1),
+            ST.ctDay = day,
+            ST.ctHour = todHour ltod,
+            ST.ctMin = todMin ltod,
+            ST.ctSec = secs,
+            ST.ctPicosec = truncate $ (((toRational (todSec ltod) - (toRational secs)) * 1000000000000)::Rational),
+            ST.ctWDay = toEnum . snd . sundayStartWeek . localDay . zonedTimeToLocalTime $ zt,
+            ST.ctYDay = snd . toOrdinalDate . localDay . zonedTimeToLocalTime $ zt,
+            ST.ctTZName = timeZoneName . zonedTimeZone $ zt,
+            ST.ctTZ = (timeZoneMinutes . zonedTimeZone $ zt) * 60,
+            ST.ctIsDST = timeZoneSummerOnly . zonedTimeZone $ zt
+          }
+        where (year, month, day) = toGregorian . localDay . zonedTimeToLocalTime $ zt
+              ltod = localTimeOfDay . zonedTimeToLocalTime $ zt
+              secs = (truncate . todSec $ ltod)::Int
 
 testUTC :: UTCTime
 testUTC = convert (51351::Int)
