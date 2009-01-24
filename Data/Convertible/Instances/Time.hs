@@ -109,6 +109,8 @@ instance Convertible UTCTime Int where
 
 instance Convertible UTCTime ZonedTime where
     safeConvert = return . utcToZonedTime utc
+instance Convertible POSIXTime ZonedTime where
+    safeConvert = return . utcToZonedTime utc . posixSecondsToUTCTime
 instance Convertible ZonedTime UTCTime where
     safeConvert = return . zonedTimeToUTC
 instance Convertible ZonedTime POSIXTime where
@@ -153,6 +155,9 @@ instance Convertible ST.ClockTime POSIXTime where
 instance Convertible ST.ClockTime UTCTime where
     safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
                        safeConvert r
+instance Convertible ST.ClockTime ZonedTime where
+    safeConvert a = do r <- (safeConvert a)::ConvertResult UTCTime
+                       safeConvert r
 
 instance Convertible POSIXTime ST.ClockTime where
     -- FIXME: 1-second precision
@@ -178,6 +183,11 @@ instance Convertible ZonedTime ST.CalendarTime where
         where (year, month, day) = toGregorian . localDay . zonedTimeToLocalTime $ zt
               ltod = localTimeOfDay . zonedTimeToLocalTime $ zt
               secs = (truncate . todSec $ ltod)::Int
+instance Convertible POSIXTime ST.CalendarTime where
+    safeConvert pt = do r <- (safeConvert pt)::ConvertResult ZonedTime
+                        safeConvert r
+instance Convertible UTCTime ST.CalendarTime where
+    safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
 testUTC :: UTCTime
 testUTC = convert (51351::Int)
