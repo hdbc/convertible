@@ -50,13 +50,13 @@ instance Convertible Integer ST.ClockTime where
 -- Intra-Data.Time stuff
 ----------------------------------------------------------------------
 
-{- covered under Real a below
-instance Integral a => Convertible a POSIXTime where
-    safeConvert = return . fromIntegral
--}
+------------------------------ POSIX and UTC times
 
 instance Typeable NominalDiffTime where
     typeOf _ = mkTypeName "NominalDiffTime"
+
+instance Typeable UTCTime where
+    typeOf _ = mkTypeName "UTCTime"
 
 {- Covered under Real a
 instance Convertible Rational POSIXTime where
@@ -94,6 +94,17 @@ instance Convertible Int UTCTime where
     safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
 instance Convertible Double UTCTime where
     safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+
+instance Convertible UTCTime Rational where
+    safeConvert = safeConvert . utcTimeToPOSIXSeconds
+instance Convertible UTCTime Integer where
+    safeConvert = safeConvert . utcTimeToPOSIXSeconds
+instance Convertible UTCTime Double where
+    safeConvert = safeConvert . utcTimeToPOSIXSeconds
+instance Convertible UTCTime Int where
+    safeConvert = boundedConversion (safeConvert . utcTimeToPOSIXSeconds)
+
+
 
 testUTC :: UTCTime
 testUTC = convert (51351::Int)
