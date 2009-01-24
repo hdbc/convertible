@@ -104,6 +104,12 @@ instance Convertible UTCTime Double where
 instance Convertible UTCTime Int where
     safeConvert = boundedConversion (safeConvert . utcTimeToPOSIXSeconds)
 
+------------------------------ LocalTime stuff
+
+instance Convertible UTCTime ZonedTime where
+    safeConvert = return . utcToZonedTime utc
+instance Convertible ZonedTime UTCTime where
+    safeConvert = return . zonedTimeToUTC
 
 
 testUTC :: UTCTime
