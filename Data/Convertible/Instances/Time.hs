@@ -110,6 +110,10 @@ instance Convertible UTCTime ZonedTime where
     safeConvert = return . utcToZonedTime utc
 instance Convertible ZonedTime UTCTime where
     safeConvert = return . zonedTimeToUTC
+instance Convertible LocalTime Day where
+    safeConvert = return . localDay
+instance Convertible LocalTime TimeOfDay where
+    safeConvert = return . localTimeOfDay
 
 
 testUTC :: UTCTime
