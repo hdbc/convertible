@@ -63,14 +63,21 @@ instance Convertible Rational POSIXTime where
     safeConvert = return . fromRational
 -}
 
-instance Real a => Convertible a POSIXTime where
-    safeConvert = return . fromRational . toRational
-
-instance Fractional a => Convertible POSIXTime a where
+instance Convertible Rational POSIXTime where
+    safeConvert = return . fromRational
+instance Convertible Integer POSIXTime where
+    safeConvert = return . fromInteger
+instance Convertible Int POSIXTime where
+    safeConvert = return . fromIntegral
+instance Convertible Double POSIXTime where
     safeConvert = return . fromRational . toRational
 
 instance Convertible POSIXTime Integer where
     safeConvert = return . truncate
+instance Convertible POSIXTime Rational where
+    safeConvert = return . toRational
+instance Convertible POSIXTime Double where
+    safeConvert = return . fromRational . toRational
 instance Convertible POSIXTime Int where
     safeConvert = boundedConversion (return . truncate)
 
@@ -79,8 +86,14 @@ instance Convertible POSIXTime UTCTime where
 instance Convertible UTCTime POSIXTime where
     safeConvert = return . utcTimeToPOSIXSeconds
 
-instance Real a => Convertible a UTCTime where
-    safeConvert = return . posixSecondsToUTCTime . fromRational . toRational
+instance Convertible Rational UTCTime where
+    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+instance Convertible Integer UTCTime where
+    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+instance Convertible Int UTCTime where
+    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+instance Convertible Double UTCTime where
+    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
 
 testUTC :: UTCTime
 testUTC = convert (51351::Int)
