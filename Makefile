@@ -9,3 +9,7 @@ install:
 clean:
 	./Setup.lhs clean
 
+test:
+	./Setup.lhs configure -f buildtests
+	./Setup.lhs build
+	./dist/build/runtests/runtests

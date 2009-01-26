@@ -4,9 +4,9 @@ import Test.QuickCheck.Batch
 import qualified Test.HUnit as HU
 import Test.HUnit.Utils
 
-test1 = TestCase ("x" @=? "x")
+test1 = HU.TestCase ((HU.@=?) "x" "x")
 
-alltests = [TestLabel "test1" test1]
+alltests = [HU.TestLabel "test1" test1]
 
-main = do runVerboseTests (tl alltests)
+main = do runVerboseTests (HU.TestList alltests)
           return ()
