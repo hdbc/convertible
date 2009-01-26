@@ -16,7 +16,8 @@ import qualified System.Time as ST
 import Data.Time
 
 instance Arbitrary ST.ClockTime where
-    arbitrary = do (r1, r2) <- arbitrary
+    arbitrary = do r1 <- arbitrary
+                   r2 <- sized $ \n -> choose (0, 1000000000000 - 1)
                    return (ST.TOD r1 r2)
     coarbitrary (ST.TOD a b) = coarbitrary a . coarbitrary b
 
@@ -24,4 +25,10 @@ propCltCalt :: ST.ClockTime -> Result
 propCltCalt x =
     safeConvert x @?= Right (ST.toUTCTime x)
 
-allt = [q "ClockTime -> CalendarTime" propCltCalt]
+propCltCaltClt :: ST.ClockTime -> Result
+propCltCaltClt x =
+    Right x @=? do r1 <- ((safeConvert x)::ConvertResult ST.CalendarTime)
+                   safeConvert r1
+
+allt = [q "ClockTime -> CalendarTime" propCltCalt,
+        q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt]

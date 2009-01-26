@@ -7,7 +7,11 @@
    Stability  : provisional
    Portability: portable
 
-Instances to convert between various time structures.
+Instances to convert between various time structures, both old- and new-style.
+
+At present, this module does not do full input validation.  That is, it is possible
+to get an exception rather than a Left result from these functions if your input is
+invalid, particularly when converting from the old-style System.Time structures.
 
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
