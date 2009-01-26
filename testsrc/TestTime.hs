@@ -39,14 +39,15 @@ propCltCaltClt x =
 propCltPT :: ST.ClockTime -> Result
 propCltPT x@(ST.TOD y z) =
     safeConvert x @?= Right (r::POSIXTime)
-    where r = fromRational $ fromInteger y + fromRational (z % 1000000000000)
+    where r = fromRational $ fromInteger y `plusorminus` fromRational (z % 1000000000000)
+          plusorminus = if y < 0 then (-) else (+)
 
 propPTClt :: POSIXTime -> Result
 propPTClt x =
     safeConvert x @?= Right (r::ST.ClockTime)
     where r = ST.TOD rsecs rpico
           rsecs = (truncate x :: Integer)
-          rpico = truncate $ 1000000000000 * (x - (fromIntegral rsecs))
+          rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
 
 propCltPTClt :: ST.ClockTime -> Result
 propCltPTClt x =
