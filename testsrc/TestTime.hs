@@ -50,8 +50,15 @@ propPTClt x =
 
 propCltPTClt :: ST.ClockTime -> Result
 propCltPTClt x =
+    Right (toTOD x) @=? case do r1 <- (safeConvert x)::ConvertResult POSIXTime
+                                safeConvert r1
+                        of Left x -> Left x
+                           Right y -> Right $ toTOD y
+    where toTOD (ST.TOD x y) = (x, y)
+{-
     Right x @=? do r1 <- (safeConvert x)::ConvertResult POSIXTime
                    safeConvert r1
+-}
 
 propPTCltPT :: POSIXTime -> Result
 propPTCltPT x =

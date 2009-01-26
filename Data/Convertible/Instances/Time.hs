@@ -155,7 +155,8 @@ instance Convertible ST.CalendarTime UTCTime where
 
 instance Convertible ST.ClockTime POSIXTime where
     safeConvert (ST.TOD x y) = return $ fromRational $ 
-                                        fromInteger x + fromRational (y % 1000000000000)
+                                        fromInteger x `plusorminus` fromRational (y % 1000000000000)
+        where plusorminus = if x < 0 then (-) else (+)
 instance Convertible ST.ClockTime UTCTime where
     safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
                        safeConvert r
@@ -164,8 +165,9 @@ instance Convertible ST.ClockTime ZonedTime where
                        safeConvert r
 
 instance Convertible POSIXTime ST.ClockTime where
-    -- FIXME: 1-second precision via Integer
-    safeConvert x = safeConvert x >>= (\z -> return $ ST.TOD z 0)
+    safeConvert x = return $ ST.TOD rsecs rpico
+        where rsecs = (truncate x :: Integer)
+              rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
 instance Convertible UTCTime ST.ClockTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
