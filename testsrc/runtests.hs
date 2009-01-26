@@ -1,6 +1,4 @@
 module Main where
-import Test.QuickCheck
-import Test.QuickCheck.Batch
 import qualified Test.HUnit as HU
 import Test.HUnit.Tools
 

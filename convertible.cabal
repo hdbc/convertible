@@ -55,7 +55,7 @@ Executable runtests
       Buildable: False
    Build-Depends: HUnit, QuickCheck, testpack
    Main-Is: runtests.hs
-   Hs-Source-Dirs: src, testsrc
+   Hs-Source-Dirs: ., testsrc
    GHC-Options: -O2
    Extensions: ExistentialQuantification, MultiParamTypeClasses,
                UndecidableInstances, FlexibleInstances,

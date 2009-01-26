@@ -10,7 +10,7 @@ module TestNum where
 import TestInfrastructure
 import Data.Convertible
 import Test.QuickCheck
-import Test.QuickCheck.Utils
+import Test.QuickCheck.Tools
 
 prop_int_to_integer :: Int -> Result
 prop_int_to_integer x =
