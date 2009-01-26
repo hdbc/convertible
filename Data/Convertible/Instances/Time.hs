@@ -119,10 +119,13 @@ instance Convertible ZonedTime UTCTime where
     safeConvert = return . zonedTimeToUTC
 instance Convertible ZonedTime POSIXTime where
     safeConvert = return . utcTimeToPOSIXSeconds . zonedTimeToUTC
+
+{- Too obvious?
 instance Convertible LocalTime Day where
     safeConvert = return . localDay
 instance Convertible LocalTime TimeOfDay where
     safeConvert = return . localTimeOfDay
+-}
 
 ----------------------------------------------------------------------
 -- Conversions between old and new time

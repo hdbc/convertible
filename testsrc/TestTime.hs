@@ -81,6 +81,22 @@ propCltUTC :: ST.ClockTime -> Result
 propCltUTC x =
     safeConvert x @?= Right (posixSecondsToUTCTime . convert $ x)
 
+propCaltZTCalt :: ST.ClockTime -> Result
+propCaltZTCalt x =
+    Right x @=? do zt <- ((safeConvert calt)::ConvertResult ZonedTime)
+                   calt' <- ((safeConvert zt)::ConvertResult ST.CalendarTime)
+                   return (ST.toClockTime calt')
+    where calt = ST.toUTCTime x
+
+propUTCZT :: UTCTime -> Bool
+propUTCZT x =
+          x == zonedTimeToUTC (convert x)
+
+propUTCZTUTC :: UTCTime -> Result
+propUTCZTUTC x =
+    Right x @=? do r1 <- ((safeConvert x)::ConvertResult ZonedTime)
+                   safeConvert r1
+
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
         q "ClockTime -> POSIXTime" propCltPT,
@@ -89,4 +105,8 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "identity POSIXTime -> ClockTime -> POSIXTime" propPTCltPT,
         q "POSIXTime -> UTCTime" propPTUTC,
         q "UTCTime -> POSIXTime" propUTCPT,
-        q "ClockTime -> UTCTime" propCltUTC]
+        q "ClockTime -> UTCTime" propCltUTC,
+        q "identity CalendarTime -> ZonedTime -> CalendarTime" propCaltZTCalt,
+        q "UTCTime -> ZonedTime" propUTCZT,
+        q "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC
+       ]
