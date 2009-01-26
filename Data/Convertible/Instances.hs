@@ -16,9 +16,20 @@ For license and copyright information, see the file COPYRIGHT
    Stability  : provisional
    Portability: portable
 
+Collection of ready-made 'Data.Convertible.Convertible' instances.  See
+each individual module for more docs:
+
+"Data.Convertible.Instances.Map"
+
+"Data.Convertible.Instances.Num"
+
+"Data.Convertible.Instances.Time"
+
+You can find a list of these instances at 'Data.Convertible.Base.Convertible'.
 -}
 
-module Data.Convertible.Instances() where
+module Data.Convertible.Instances(
+                                 ) where
 
 import Data.Convertible.Instances.Map()
 import Data.Convertible.Instances.Num()

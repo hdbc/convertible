@@ -18,12 +18,11 @@ For license and copyright information, see the file COPYRIGHT
 
 -}
 
-module Data.Convertible.Base (-- * Handling the results
-                              ConvertResult,
-                              -- * The conversion process
+module Data.Convertible.Base( -- * The conversion process
                               convert,
                               Convertible(..),
-                              -- * Error handling
+                              -- * Handling the results
+                              ConvertResult,
                               ConvertError(..),
                               convError,
                               prettyConvertError

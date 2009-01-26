@@ -15,6 +15,20 @@ All rights reserved.
 
 For license and copyright information, see the file COPYRIGHT
 
+These instances perform conversion between numeric types such as Double, Int, Integer,
+Rational, and the like.  Here are some notes about the conversion process:
+
+Conversions from floating-point types such as Double to integral types are dune via the
+'truncate' function.  This is a somewhat arbitrary decision; if you need different
+behavior, you will have to write your own instance or manually perform the conversion.
+
+All conversions perform bounds checking.  If a value is too large for its destination
+type, you will get a 'ConvertError' informing you of this.  Note that this behavior
+differs from functions in the Haskell standard libraries, which will perform the
+conversion without error, but give you garbage in the end.
+
+Conversions do not perform precision checking; loss of precision is implied with certain
+conversions (for instance, Double to Float) and this is not an error.
 -}
 
 module Data.Convertible.Instances.Num()
