@@ -72,6 +72,22 @@ propIntChar x =
                       then Right ((toEnum x)::Char)
                       else Left $ ConvertError (show x) "Int" "Char" "Input value outside of bounds: ('\\NUL','\\1114111')"
 
+propCharInt :: Int -> Property
+propCharInt x =
+    x >= fromEnum (minBound :: Char) && x <= fromEnum (maxBound :: Char) ==>
+    safeConvert c @?= Right ((fromEnum c)::Int)
+    where c = (toEnum x)::Char
+
+propIntIntegerInt :: Int -> Result
+propIntIntegerInt x =
+    Right x @=? do r1 <- ((safeConvert x)::ConvertResult Integer)
+                   ((safeConvert r1)::ConvertResult Int)
+    
+propDoubleRationalDouble :: Double -> Result
+propDoubleRationalDouble x =
+    Right x @=? do r1 <- ((safeConvert x)::ConvertResult Rational)
+                   ((safeConvert r1)::ConvertResult Double)
+
 allt = [q "Int -> Integer" prop_int_to_integer,
         q "Integer -> Int (safe bounds)" prop_integer_to_int_pass,
         q "Integer -> Word8 (general)" prop_integer_to_word8,
@@ -81,7 +97,10 @@ allt = [q "Int -> Integer" prop_int_to_integer,
         q "Double -> Word8 (safe bounds)" prop_double_to_word8_safe,
         q "Double -> Word8 (unsafe bounds)" prop_double_to_word8_unsafe,
         q "Int -> Double" propIntDouble,
-        q "Integer -> Char" propIntChar
+        q "Int -> Char" propIntChar,
+        q "Char -> Int" propCharInt,
+        q "identity Int -> Integer -> Int" propIntIntegerInt,
+        q "identity Double -> Rational -> Double" propDoubleRationalDouble
        ]
 
 
