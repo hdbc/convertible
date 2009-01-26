@@ -10,7 +10,7 @@ clean:
 	runghc Setup.lhs clean
 
 .PHONY: test
-test: test-hugs test-ghc
+test: test-ghc test-hugs
 	@echo ""
 	@echo "All tests pass."
 
