@@ -89,7 +89,7 @@ binary-indep: build install-i
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs -i
-	dh_installdocs -i README.txt
+	dh_installdocs -i
 	dh_installexamples -i
 #	dh_install
 #	dh_installmenu
