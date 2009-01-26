@@ -46,7 +46,7 @@ propPTClt x =
     safeConvert x @?= Right (r::ST.ClockTime)
     where r = ST.TOD rsecs rpico
           rsecs = (truncate x :: Integer)
-          rpico = 1000000000000 * truncate (x - (fromIntegral rsecs))
+          rpico = truncate $ 1000000000000 * (x - (fromIntegral rsecs))
 
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
