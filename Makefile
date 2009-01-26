@@ -1,15 +1,26 @@
 all:
 	@echo "Please use Cabal to build this package; not make."
-	./Setup.lhs configure
-	./Setup.lhs build
+	runghc Setup.lhs configure
+	runghc Setup.lhs build
 
 install:
-	./Setup.lhs install
+	runghc Setup.lhs install
 
 clean:
-	./Setup.lhs clean
+	runghc Setup.lhs clean
 
-test:
-	./Setup.lhs configure -f buildtests
-	./Setup.lhs build
+.PHONY: test
+test: test-hugs test-ghc
+	@echo ""
+	@echo "All tests pass."
+
+test-hugs:
+	@echo " ****** Running hugs tests"
+	runhugs -98 +o -P$(PWD):$(PWD)/testsrc: testsrc/runtests.hs
+
+test-ghc:
+	@echo " ****** Building GHC tests"
+	runghc Setup.lhs configure -f buildtests
+	runghc Setup.lhs build
+	@echo " ****** Running GHC tests"
 	./dist/build/runtests/runtests
