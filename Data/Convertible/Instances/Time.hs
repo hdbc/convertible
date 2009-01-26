@@ -198,5 +198,15 @@ instance Convertible POSIXTime ST.CalendarTime where
 instance Convertible UTCTime ST.CalendarTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
-testUTC :: UTCTime
-testUTC = convert (51351::Int)
+instance Convertible ST.TimeDiff NominalDiffTime where
+    {- This is a clever hack.  We convert the TimeDiff to a ClockTime, applying
+       it as a diff vs. the epoch.  Converting this ClockTime to a POSIXTime yiels
+       the NominalDiffTime we want, since a POSIXTime is a NominalDiffTime vs. the
+       epoch. -}
+    safeConvert td = safeConvert clockTime
+        where clockTime = ST.addToClockTime td (ST.TOD 0 0)
+instance Convertible NominalDiffTime ST.TimeDiff where
+    {- Similar clever hack as above. -}
+    safeConvert ndt =
+        do clockt <- safeConvert ndt
+           return (ST.diffClockTimes clockt (ST.TOD 0 0))
