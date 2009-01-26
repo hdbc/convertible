@@ -164,7 +164,7 @@ instance Convertible ST.ClockTime ZonedTime where
                        safeConvert r
 
 instance Convertible POSIXTime ST.ClockTime where
-    -- FIXME: 1-second precision
+    -- FIXME: 1-second precision via Integer
     safeConvert x = safeConvert x >>= (\z -> return $ ST.TOD z 0)
 instance Convertible UTCTime ST.ClockTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds

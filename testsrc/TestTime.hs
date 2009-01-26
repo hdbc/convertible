@@ -48,7 +48,19 @@ propPTClt x =
           rsecs = (truncate x :: Integer)
           rpico = truncate $ 1000000000000 * (x - (fromIntegral rsecs))
 
+propCltPTClt :: ST.ClockTime -> Result
+propCltPTClt x =
+    Right x @=? do r1 <- (safeConvert x)::ConvertResult POSIXTime
+                   safeConvert r1
+
+propPTCltPT :: POSIXTime -> Result
+propPTCltPT x =
+    Right x @=? do r1 <- (safeConvert x)::ConvertResult ST.ClockTime
+                   safeConvert r1
+
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
         q "ClockTime -> POSIXTime" propCltPT,
-        q "POSIXTime -> ClockTime" propPTClt]
+        q "POSIXTime -> ClockTime" propPTClt,
+        q "identity ClockTime -> POSIXTime -> ClockTime" propCltPTClt,
+        q "identity POSIXTime -> ClockTime -> POSIXTime" propPTCltPT]
