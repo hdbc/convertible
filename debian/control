@@ -1,7 +1,7 @@
 Source: haskell-convertible
 Priority: optional
 Maintainer: John Goerzen <jgoerzen@complete.org>
-Build-Depends: debhelper (>= 4.0.0), ghc6 (>= 6.8.2dfsg1), haskell-devscripts (>= 0.6.15), cpphs, haddock, libghc6-mtl-dev, libghc6-time-dev, libghc6-time-prof, libghc6-testpack-dev
+Build-Depends: debhelper (>= 4.0.0), ghc6 (>= 6.8.2dfsg1), haskell-devscripts (>= 0.6.15), cpphs, haddock, libghc6-mtl-dev, libghc6-time-dev, libghc6-testpack-dev
 Build-Depends-Indep: debhelper (>= 4.0.0), haddock, hugs (>= 98.200503.08), haskell-devscripts (>= 0.6.15), ghc6 (>= 6.8.2dfsg1), cpphs, libghc6-mtl-doc, libghc6-time-doc, ghc6-doc, libhugs-testpack, haskell-testpack-doc
 Standards-Version: 3.8.0
 Section: libs
@@ -35,21 +35,6 @@ Description: Typeclasses and instances for converting between types, GHC package
  Convertible is backed by an extensive test suite and passes tests
  on GHC and Hugs.
 
-Package: libghc6-convertible-prof
-Section: libdevel
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${haskell:Depends}
-Description: Haskell convertible library, GHC6 profiling data
- convertible provides a typeclass with a single function
- that is designed to help convert between different types: numeric
- values, dates and times, and the like.  The conversions perform bounds
- checking and return a pure Either value.  This means that you need
- not remember which specific function performs the conversion you
- desire.
- .
- This package provides profiling data for GHC Haskell convertible library.
-
-Package: libhugs-convertible
 Section: libs
 Architecture: all
 Depends: ${haskell:Depends}, hugs (>= 98.200503.08)
