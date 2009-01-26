@@ -1,62 +1,101 @@
-Source: hdbc
+Source: haskell-convertible
 Priority: optional
 Maintainer: John Goerzen <jgoerzen@complete.org>
-Build-Depends: debhelper (>= 4.0.0), ghc6 (>= 6.8.2dfsg1), haskell-devscripts (>= 0.6.15), cpphs, haddock, libghc6-mtl-dev, libghc6-time-dev, libghc6-time-prof
-Build-Depends-Indep: debhelper (>= 4.0.0), haddock, hugs (>= 98.200503.08), haskell-devscripts (>= 0.6.15), ghc6 (>= 6.8.2dfsg1), cpphs, libghc6-mtl-doc, libghc6-time-doc, ghc6-doc
+Build-Depends: debhelper (>= 4.0.0), ghc6 (>= 6.8.2dfsg1), haskell-devscripts (>= 0.6.15), cpphs, haddock, libghc6-mtl-dev, libghc6-time-dev, libghc6-time-prof, libghc6-testpack-dev
+Build-Depends-Indep: debhelper (>= 4.0.0), haddock, hugs (>= 98.200503.08), haskell-devscripts (>= 0.6.15), ghc6 (>= 6.8.2dfsg1), cpphs, libghc6-mtl-doc, libghc6-time-doc, ghc6-doc, libghc6-testpack-dev
 Standards-Version: 3.6.2
 Section: libs
 
-Package: libghc6-hdbc-dev
+Package: libghc6-convertible-dev
 Section: libdevel
 Architecture: any
-Depends: ${haskell:Depends}, libghc6-mtl-dev
-Suggests: libghc6-hdbc-postgresql-dev | libghc6-hdbc-sqlite3-dev, libghc6-hdbc-missingh-dev
-Description: Haskell Database Connectivity, GHC6 package
- HDBC provides an abstraction layer between Haskell programs and SQL
- relational databases. This lets you write database code once, in
- Haskell, and have it work with any number of backend SQL databases
- (MySQL, Oracle, PostgreSQL, ODBC-compliant databases, etc.)
+Depends: ${haskell:Depends}
+Description: Typeclasses and instances for converting between types, GHC package
+ convertible provides a typeclass with a single function
+ that is designed to help convert between different types: numeric
+ values, dates and times, and the like.  The conversions perform bounds
+ checking and return a pure Either value.  This means that you need
+ not remember which specific function performs the conversion you
+ desire.
  .
- HDBC is modeled loosely on Perl's DBI interface, though it has also been
- influenced by Python's DB-API v2, JDBC in Java, and HSQL in Haskell.
+ Also included in the package are optional instances that provide
+ conversion for various numeric and time types, as well as utilities
+ for writing your own instances.
  .
- To use HDBC, you'll need both this package, and a driver package such
- as libghc6-hdbc-postgresql-dev.
+ Finally, there is a function that will raise an exception on
+ bounds-checking violation, or return a bare value otherwise,
+ implemented in terms of the safer function described above.
+ .
+ Convertible is also used by HDBC 2.0 for handling marshalling of
+ data to/from databases.
+ .
+ Convertible is backed by an extensive test suite and passes tests
+ on GHC and Hugs.
 
-Package: libghc6-hdbc-prof
+Package: libghc6-convertible-prof
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libghc6-hdbc-dev, ghc6-prof (>= 6.8.2), ghc6-prof (<< 6.8.2+)
-Description: Haskell Database Connectivity, GHC6 profiling data
- HDBC provides an abstraction layer between Haskell programs and SQL
- relational databases. This package provides profiling information for using
- HDBC with GHC6.
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${haskell:Depends}
+Description: Haskell convertible library, GHC6 profiling data
+ convertible provides a typeclass with a single function
+ that is designed to help convert between different types: numeric
+ values, dates and times, and the like.  The conversions perform bounds
+ checking and return a pure Either value.  This means that you need
+ not remember which specific function performs the conversion you
+ desire.
+ .
+ This package provides profiling data for GHC Haskell convertible library.
 
-Package: libhugs-hdbc
+Package: libhugs-convertible
 Section: libs
 Architecture: all
-Depends: ${haskell:Depends}
-Description: Haskell Database Connectivity, Hugs package
- HDBC provides an abstraction layer between Haskell programs and SQL
- relational databases. This lets you write database code once, in
- Haskell, and have it work with any number of backend SQL databases
- (MySQL, Oracle, PostgreSQL, ODBC-compliant databases, etc.)
+Depends: ${haskell:Depends}, hugs (>= 98.200503.08)
+Description: Typeclasses and instances for converting between types, Hugs package
+ convertible provides a typeclass with a single function
+ that is designed to help convert between different types: numeric
+ values, dates and times, and the like.  The conversions perform bounds
+ checking and return a pure Either value.  This means that you need
+ not remember which specific function performs the conversion you
+ desire.
  .
- HDBC is modeled loosely on Perl's DBI interface, though it has also been
- influenced by Python's DB-API v2, JDBC in Java, and HSQL in Haskell.
+ Also included in the package are optional instances that provide
+ conversion for various numeric and time types, as well as utilities
+ for writing your own instances.
  .
- To use HDBC, you'll need both this package, and a driver package such
- as libhugs-hdbc-postgresql.
+ Finally, there is a function that will raise an exception on
+ bounds-checking violation, or return a bare value otherwise,
+ implemented in terms of the safer function described above.
+ .
+ Convertible is also used by HDBC 2.0 for handling marshalling of
+ data to/from databases.
+ .
+ Convertible is backed by an extensive test suite and passes tests
+ on GHC and Hugs.
 
-Package: haskell-hdbc-doc
+Package: haskell-convertible-doc
 Section: doc
 Architecture: all
 Depends: ${haskell:Depends}
-Description: Haskell Database Connectivity, Documentation
- HDBC provides an abstraction layer between Haskell programs and SQL
- relational databases. This lets you write database code once, in
- Haskell, and have it work with any number of backend SQL databases
- (MySQL, Oracle, PostgreSQL, ODBC-compliant databases, etc.)
+Description: Typeclasses and instances for converting between types, documentation
+ convertible provides a typeclass with a single function
+ that is designed to help convert between different types: numeric
+ values, dates and times, and the like.  The conversions perform bounds
+ checking and return a pure Either value.  This means that you need
+ not remember which specific function performs the conversion you
+ desire.
  .
- HDBC is modeled loosely on Perl's DBI interface, though it has also been
- influenced by Python's DB-API v2, JDBC in Java, and HSQL in Haskell.
+ Also included in the package are optional instances that provide
+ conversion for various numeric and time types, as well as utilities
+ for writing your own instances.
+ .
+ Finally, there is a function that will raise an exception on
+ bounds-checking violation, or return a bare value otherwise,
+ implemented in terms of the safer function described above.
+ .
+ Convertible is also used by HDBC 2.0 for handling marshalling of
+ data to/from databases.
+ .
+ Convertible is backed by an extensive test suite and passes tests
+ on GHC and Hugs.
+ .
+ This package provides documentation on the Convertible API.
