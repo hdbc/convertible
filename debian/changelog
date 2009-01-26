@@ -1,4 +1,4 @@
-convertible (1.0.0-1) unstable; urgency=low
+haskell-convertible (1.0.0-1) unstable; urgency=low
 
   * Initial release.  Closes: #513145.
 
