@@ -97,6 +97,11 @@ propUTCZTUTC x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult ZonedTime)
                    safeConvert r1
 
+propNdtTdNdt :: NominalDiffTime -> Result
+propNdtTdNdt x =
+    Right x @=? do r1 <- ((safeConvert x)::ConvertResult ST.TimeDiff)
+                   safeConvert r1
+
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
         q "ClockTime -> POSIXTime" propCltPT,
@@ -108,5 +113,6 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> UTCTime" propCltUTC,
         q "identity CalendarTime -> ZonedTime -> CalendarTime" propCaltZTCalt,
         q "UTCTime -> ZonedTime" propUTCZT,
-        q "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC
+        q "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC,
+        q "identity NominalDiffTime -> TimeDiff -> NominalDiffTime" propNdtTdNdt
        ]
