@@ -22,7 +22,7 @@ where
 
 import Data.Convertible.Base
 import Data.Convertible.Utils
-import Data.Convertible.Instances.Num
+import Data.Convertible.Instances.Num()
 import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock
