@@ -35,6 +35,7 @@ Description: Typeclasses and instances for converting between types, GHC package
  Convertible is backed by an extensive test suite and passes tests
  on GHC and Hugs.
 
+Package: libhugs-convertible
 Section: libs
 Architecture: all
 Depends: ${haskell:Depends}, hugs (>= 98.200503.08)
