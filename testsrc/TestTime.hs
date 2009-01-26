@@ -27,6 +27,10 @@ instance Arbitrary NominalDiffTime where
     arbitrary = do r <- arbitrary
                    return $ convert (r::ST.ClockTime)
 
+instance Arbitrary UTCTime where
+    arbitrary = do r <- arbitrary
+                   return $ convert (r::POSIXTime)
+
 propCltCalt :: ST.ClockTime -> Result
 propCltCalt x =
     safeConvert x @?= Right (ST.toUTCTime x)
@@ -66,9 +70,23 @@ propPTCltPT x =
     Right x @=? do r1 <- (safeConvert x)::ConvertResult ST.ClockTime
                    safeConvert r1
 
+propPTUTC :: POSIXTime -> Result
+propPTUTC x =
+    safeConvert x @?= Right (posixSecondsToUTCTime x)
+propUTCPT :: UTCTime -> Result
+propUTCPT x =
+    safeConvert x @?= Right (utcTimeToPOSIXSeconds x)
+
+propCltUTC :: ST.ClockTime -> Result
+propCltUTC x =
+    safeConvert x @?= Right (posixSecondsToUTCTime . convert $ x)
+
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
         q "ClockTime -> POSIXTime" propCltPT,
         q "POSIXTime -> ClockTime" propPTClt,
         q "identity ClockTime -> POSIXTime -> ClockTime" propCltPTClt,
-        q "identity POSIXTime -> ClockTime -> POSIXTime" propPTCltPT]
+        q "identity POSIXTime -> ClockTime -> POSIXTime" propPTCltPT,
+        q "POSIXTime -> UTCTime" propPTUTC,
+        q "UTCTime -> POSIXTime" propUTCPT,
+        q "ClockTime -> UTCTime" propCltUTC]
