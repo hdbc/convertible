@@ -61,6 +61,17 @@ prop_double_to_word8_unsafe x =
     truncate x > toInteger (maxBound :: Word8) ==>
       ((safeConvert x)::ConvertResult Word8) @?= (Left $ ConvertError (show x) "Double" "Word8" "Input value outside of bounds: (0,255)")
 
+propIntDouble :: Int -> Result
+propIntDouble x =
+    safeConvert x @?= Right ((fromIntegral x)::Double)
+
+propIntChar :: Int -> Result
+propIntChar x =
+    safeConvert x @?= if x >= fromEnum (minBound :: Char) &&
+                         x <= fromEnum (maxBound :: Char)
+                      then Right ((toEnum x)::Char)
+                      else Left $ ConvertError (show x) "Int" "Char" "Input value outside of bounds: ('\\NUL','\\1114111')"
+
 allt = [q "Int -> Integer" prop_int_to_integer,
         q "Integer -> Int (safe bounds)" prop_integer_to_int_pass,
         q "Integer -> Word8 (general)" prop_integer_to_word8,
@@ -68,7 +79,9 @@ allt = [q "Int -> Integer" prop_int_to_integer,
         q "Integer -> Word8 (unsafe bounds)" prop_integer_to_word8_unsafe,
         q "Double -> Word8 (general)" prop_double_to_word8,
         q "Double -> Word8 (safe bounds)" prop_double_to_word8_safe,
-        q "Double -> Word8 (unsafe bounds)" prop_double_to_word8_unsafe
+        q "Double -> Word8 (unsafe bounds)" prop_double_to_word8_unsafe,
+        q "Int -> Double" propIntDouble,
+        q "Integer -> Char" propIntChar
        ]
 
 
