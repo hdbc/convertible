@@ -6,19 +6,22 @@ All rights reserved.
 For license and copyright information, see the file COPYRIGHT
 -}
 
-module TestMap where
+module TestTime where
 import TestInfrastructure
 import Data.Convertible
 import Test.QuickCheck
 import Test.QuickCheck.Tools
 import Test.QuickCheck.Instances
-import qualified Data.Map as Map
+import qualified System.Time as ST
+import Data.Time
 
-propListMap :: [(Int, Int)] -> Result
-propListMap x = safeConvert x @?= Right (Map.fromList x)
+instance Arbitrary ST.ClockTime where
+    arbitrary = do (r1, r2) <- arbitrary
+                   return (ST.TOD r1 r2)
+    coarbitrary (ST.TOD a b) = coarbitrary a . coarbitrary b
 
-propMapList :: Map.Map Int Int -> Result
-propMapList x = safeConvert x @?= Right (Map.toList x)
+propCltCalt :: ST.ClockTime -> Result
+propCltCalt x =
+    safeConvert x @?= Right (ST.toUTCTime x)
 
-allt = [q "[(Int, Int)] -> Map" propListMap,
-        q "Map -> [(Int, Int)]" propMapList]
+allt = [q "ClockTime -> CalendarTime" propCltCalt]

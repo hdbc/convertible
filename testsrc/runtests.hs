@@ -4,7 +4,7 @@ import Test.HUnit.Tools
 
 import qualified TestNum
 import qualified TestMap
-import qualified Testtime
+import qualified TestTime
 
 test1 = HU.TestCase ((HU.@=?) "x" "x")
 
