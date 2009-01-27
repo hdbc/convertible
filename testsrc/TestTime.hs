@@ -70,6 +70,11 @@ propPTCltPT x =
     Right x @=? do r1 <- (safeConvert x)::ConvertResult ST.ClockTime
                    safeConvert r1
 
+propPTCalPT :: POSIXTime -> Result
+propPTCalPT x =
+    Right x @=? do r1 <- safeConvert x
+                   safeConvert (r1::ST.CalendarTime)
+
 propPTUTC :: POSIXTime -> Result
 propPTUTC x =
     safeConvert x @?= Right (posixSecondsToUTCTime x)
@@ -108,6 +113,7 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "POSIXTime -> ClockTime" propPTClt,
         q "identity ClockTime -> POSIXTime -> ClockTime" propCltPTClt,
         q "identity POSIXTime -> ClockTime -> POSIXTime" propPTCltPT,
+        q "identity POSIXTime -> CalendarTime -> POSIXTime" propPTCalPT,
         q "POSIXTime -> UTCTime" propPTUTC,
         q "UTCTime -> POSIXTime" propUTCPT,
         q "ClockTime -> UTCTime" propCltUTC,

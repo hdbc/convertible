@@ -58,7 +58,20 @@ mkTypeName :: String -> TypeRep
 mkTypeName name = mkTyConApp (mkTyCon name) []
 
 {- | Useful for defining conversions that are implemented in terms of other
-conversions via an intermediary type. -}
+conversions via an intermediary type. Instead of:
+
+>instance Convertible CalendarTime POSIXTime where
+>    safeConvert a = do r <- safeConvert a
+>                       safeConvert (r :: ClockTime)
+
+we can now write:
+
+>instance Convertible CalendarTime POSIXTime where
+>    safeConvert = convertVia (undefined::ClockTime)
+
+which does the same thing -- converts a CalendarTime to a ClockTime, then a
+ClockTime to a POSIXTime, both using existing 'Convertible' instances.
+ -}
 convertVia :: (Convertible a b, Convertible b c) =>
               b                 -- ^ Dummy data to establish intermediate type - can be undefined
            -> a                 -- ^ Input value

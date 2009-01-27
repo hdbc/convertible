@@ -151,8 +151,7 @@ instance Convertible ST.CalendarTime ZonedTime where
 }
 
 instance Convertible ST.CalendarTime POSIXTime where
-    safeConvert a = do r <- (safeConvert a)::ConvertResult ST.ClockTime
-                       safeConvert r
+    safeConvert = convertVia (undefined::ST.ClockTime)
 instance Convertible ST.CalendarTime UTCTime where
     safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
                        safeConvert r
