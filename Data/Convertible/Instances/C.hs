@@ -21,10 +21,12 @@ where
 
 import Data.Convertible.Base
 import Data.Convertible.Utils
+import Data.Convertible.Instances.Num()
 import Data.Int
 import Data.Word
 import Foreign.C.Types
 
+-- Section 1
 instance Convertible CFloat Int where 
     safeConvert = boundedConversion (return . truncate)
 instance Convertible Int CFloat where 
@@ -175,6 +177,7 @@ instance Convertible CLDouble Word64 where
 instance Convertible Word64 CLDouble where 
     safeConvert = return . fromIntegral
 
+-- Section 2
 instance Convertible CFloat Double where
     safeConvert = return . realToFrac
 instance Convertible Double CFloat where
@@ -220,6 +223,7 @@ instance Convertible CLDouble Rational where
 instance Convertible Rational CLDouble where
     safeConvert = return . realToFrac
 
+-- Section 3
 instance Convertible CChar Int where
     safeConvert = boundedConversion (return . fromIntegral)
 instance Convertible Int CChar where
@@ -870,996 +874,495 @@ instance Convertible CULLong Word64 where
 instance Convertible Word64 CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
-instance Convertible CTime Int where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Int CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Int8 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Int8 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Int16 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Int16 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Int32 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Int32 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Int64 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Int64 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Word where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Word CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Word8 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Word8 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Word16 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Word16 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Word32 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Word32 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime Word64 where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible Word64 CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
+-- Section 4
 instance Convertible CChar CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CULong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CChar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSChar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CSChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CSChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUChar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CUChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CShort CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CShort CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUShort CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CUShort CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CInt CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CInt CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CUInt CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CUInt CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLong CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CSize where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULong CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CULong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CULong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CULong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CSize CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CSize CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CSize where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CULong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CWchar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CWchar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CULong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CLLong CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CLLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CUChar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CUShort where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CUInt where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CULong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CWchar where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
 instance Convertible CULLong CLLong where
     safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
 
-instance Convertible CULLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CTime CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CSChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CUChar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUChar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CShort CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CUShort where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUShort CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CInt CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CUInt where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CUInt CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CULong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CSize where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CSize CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CWchar where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CWchar CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CLLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CLLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
-instance Convertible CTime CULLong where
-    safeConvert = boundedConversion (return . fromIntegral)
-instance Convertible CULLong CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
+-- Section 5
 instance Convertible CFloat CDouble where
-    safeConvert = return . realToFrac
-instance Convertible CDouble CFloat where
     safeConvert = return . realToFrac
 
 instance Convertible CFloat CLDouble where
     safeConvert = return . realToFrac
-instance Convertible CLDouble CFloat where
-    safeConvert = return . realToFrac
 
 instance Convertible CDouble CFloat where
     safeConvert = return . realToFrac
-instance Convertible CFloat CDouble where
-    safeConvert = return . realToFrac
 
 instance Convertible CDouble CLDouble where
-    safeConvert = return . realToFrac
-instance Convertible CLDouble CDouble where
     safeConvert = return . realToFrac
 
 instance Convertible CLDouble CFloat where
     safeConvert = return . realToFrac
-instance Convertible CFloat CLDouble where
-    safeConvert = return . realToFrac
 
 instance Convertible CLDouble CDouble where
     safeConvert = return . realToFrac
-instance Convertible CDouble CLDouble where
-    safeConvert = return . realToFrac
 
+-- Section 6
 instance Convertible CFloat Integer where
     safeConvert = return . truncate
 instance Convertible Integer CFloat where
@@ -1875,6 +1378,7 @@ instance Convertible CLDouble Integer where
 instance Convertible Integer CLDouble where
     safeConvert = return . fromIntegral
 
+-- Section 7
 instance Convertible CChar Integer where
     safeConvert = return . fromIntegral
 instance Convertible Integer CChar where
@@ -1940,11 +1444,7 @@ instance Convertible CULLong Integer where
 instance Convertible Integer CULLong where
     safeConvert = boundedConversion (return . fromIntegral)
 
-instance Convertible CTime Integer where
-    safeConvert = return . fromIntegral
-instance Convertible Integer CTime where
-    safeConvert = boundedConversion (return . fromIntegral)
-
+-- Section 8o
 instance Convertible CChar Char where
     safeConvert = boundedConversion (return . toEnum . fromIntegral)
 instance Convertible Char CChar where
@@ -2008,10 +1508,5 @@ instance Convertible Char CLLong where
 instance Convertible CULLong Char where
     safeConvert = boundedConversion (return . toEnum . fromIntegral)
 instance Convertible Char CULLong where
-    safeConvert = boundedConversion (return . fromIntegral . fromEnum)
-
-instance Convertible CTime Char where
-    safeConvert = boundedConversion (return . toEnum . fromIntegral)
-instance Convertible Char CTime where
     safeConvert = boundedConversion (return . fromIntegral . fromEnum)
 
