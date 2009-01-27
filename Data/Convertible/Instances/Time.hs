@@ -166,6 +166,8 @@ instance Convertible ST.ClockTime UTCTime where
 instance Convertible ST.ClockTime ZonedTime where
     safeConvert a = do r <- (safeConvert a)::ConvertResult UTCTime
                        safeConvert r
+instance Convertible ZonedTime ST.ClockTime where
+    safeConvert = convertVia (undefined::POSIXTime)
 
 instance Convertible POSIXTime ST.ClockTime where
     safeConvert x = return $ ST.TOD rsecs rpico
