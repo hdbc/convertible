@@ -54,14 +54,13 @@ propCltCaltClt x =
 propCltPT :: ST.ClockTime -> Result
 propCltPT x@(ST.TOD y z) =
     safeConvert x @?= Right (r::POSIXTime)
-    where r = fromRational $ fromInteger y `plusorminus` fromRational (z % 1000000000000)
-          plusorminus = if y < 0 then (-) else (+)
+    where r = fromRational $ fromInteger y + fromRational (z % 1000000000000)
 
 propPTClt :: POSIXTime -> Result
 propPTClt x =
     safeConvert x @?= Right (r::ST.ClockTime)
     where r = ST.TOD rsecs rpico
-          rsecs = (truncate x :: Integer)
+          rsecs = floor x
           rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
 
 propCaltPT :: ST.CalendarTime -> Result
@@ -112,6 +111,13 @@ propUTCPT x =
 propCltUTC :: ST.ClockTime -> Result
 propCltUTC x =
     safeConvert x @?= Right (posixSecondsToUTCTime . convert $ x)
+
+propZTCTeqZTCaltCt :: ZonedTime -> Result
+propZTCTeqZTCaltCt x =
+    route1 @=? route2
+    where route1 = (safeConvert x)::ConvertResult ST.ClockTime
+          route2 = do calt <- safeConvert x
+                      safeConvert (calt :: ST.CalendarTime)
 
 propCaltZTCalt :: ST.ClockTime -> Result
 propCaltZTCalt x =
@@ -176,6 +182,7 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "POSIXTime -> UTCTime" propPTUTC,
         q "UTCTime -> POSIXTime" propUTCPT,
         q "ClockTime -> UTCTime" propCltUTC,
+        q "ZonedTime -> ClockTime == ZonedTime -> CalendarTime -> ClockTime" propZTCTeqZTCaltCt,
         q "identity CalendarTime -> ZonedTime -> CalendarTime" propCaltZTCalt,
         q "identity CalendarTime -> ZonedTime -> CalenderTime, test 2" propCaltZTCalt2,
         q "identity ZonedTime -> CalendarTime -> ZonedTime" propZTCaltZT,

@@ -158,8 +158,7 @@ instance Convertible ST.CalendarTime UTCTime where
 
 instance Convertible ST.ClockTime POSIXTime where
     safeConvert (ST.TOD x y) = return $ fromRational $ 
-                                        fromInteger x `plusorminus` fromRational (y % 1000000000000)
-        where plusorminus = if x < 0 then (-) else (+)
+                                        fromInteger x + fromRational (y % 1000000000000)
 instance Convertible ST.ClockTime UTCTime where
     safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
                        safeConvert r
@@ -171,7 +170,7 @@ instance Convertible ZonedTime ST.ClockTime where
 
 instance Convertible POSIXTime ST.ClockTime where
     safeConvert x = return $ ST.TOD rsecs rpico
-        where rsecs = (truncate x :: Integer)
+        where rsecs = floor x
               rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
 instance Convertible UTCTime ST.ClockTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
@@ -184,9 +183,9 @@ instance Convertible ZonedTime ST.CalendarTime where
             ST.ctHour = todHour ltod,
             ST.ctMin = todMin ltod,
             ST.ctSec = secs,
-            ST.ctPicosec = truncate $ (((toRational (todSec ltod) - (toRational secs)) * 1000000000000)::Rational),
+            ST.ctPicosec = pico,
             ST.ctWDay = toEnum . snd . sundayStartWeek . localDay . zonedTimeToLocalTime $ zt,
-            ST.ctYDay = snd . toOrdinalDate . localDay . zonedTimeToLocalTime $ zt,
+            ST.ctYDay = (snd . toOrdinalDate . localDay . zonedTimeToLocalTime $ zt) - 1,
             ST.ctTZName = timeZoneName . zonedTimeZone $ zt,
             ST.ctTZ = (timeZoneMinutes . zonedTimeZone $ zt) * 60,
             ST.ctIsDST = timeZoneSummerOnly . zonedTimeZone $ zt
@@ -194,6 +193,8 @@ instance Convertible ZonedTime ST.CalendarTime where
         where (year, month, day) = toGregorian . localDay . zonedTimeToLocalTime $ zt
               ltod = localTimeOfDay . zonedTimeToLocalTime $ zt
               secs = (truncate . todSec $ ltod)::Int
+              picoRational = toRational (todSec ltod) - toRational secs
+              pico = truncate (picoRational * 1000000000000)
 instance Convertible POSIXTime ST.CalendarTime where
     safeConvert pt = do r <- (safeConvert pt)::ConvertResult ZonedTime
                         safeConvert r
