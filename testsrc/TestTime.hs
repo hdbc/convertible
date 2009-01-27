@@ -16,6 +16,7 @@ import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock.POSIX
 import Data.Ratio
+import Foreign.C.Types
 
 instance Arbitrary ST.ClockTime where
     arbitrary = do r1 <- arbitrary
@@ -169,6 +170,12 @@ propNdtTdNdt x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult ST.TimeDiff)
                    safeConvert r1
 
+propPTCPT :: POSIXTime -> Result
+propPTCPT x =
+    Right testval @=? do r1 <- safeConvert testval
+                         safeConvert (r1 :: CTime)
+        where testval = (convert ((truncate x)::Integer))::POSIXTime      -- CTime doesn't support picosecs
+
 allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt,
         q "ClockTime -> POSIXTime" propCltPT,
@@ -191,5 +198,6 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "ZonedTime -> ColckTime -> CalendarTime -> ClockTime -> ZonedTime" propZTCtCaltCtZT,
         q "UTCTime -> ZonedTime" propUTCZT,
         q "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC,
-        q "identity NominalDiffTime -> TimeDiff -> NominalDiffTime" propNdtTdNdt
+        q "identity NominalDiffTime -> TimeDiff -> NominalDiffTime" propNdtTdNdt,
+        q "identity POSIXTime -> CTime -> POSIXTime" propPTCPT
        ]
