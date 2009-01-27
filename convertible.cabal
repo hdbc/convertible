@@ -5,7 +5,7 @@ Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
 Copyright: Copyright (c) 2009-2009 John Goerzen
 license-file: COPYRIGHT
-extra-source-files: COPYING
+extra-source-files: COPYING, utils/genCinstances.hs
 homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
 Category: Data
 synopsis: Typeclasses and instances for converting between types
