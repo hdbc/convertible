@@ -34,6 +34,7 @@ import Data.Time.Clock.POSIX
 import Data.Time.Calendar.OrdinalDate
 import Data.Typeable
 import Data.Ratio
+import Foreign.C.Types
 
 ----------------------------------------------------------------------
 -- Intra-System.Time stuff
@@ -220,3 +221,20 @@ instance Convertible ST.TimeDiff Integer where
 instance Convertible ST.TimeDiff Rational where
     safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
                        safeConvert r
+
+----------------------------------------------------------------------
+-- Foreign.C Types
+----------------------------------------------------------------------
+
+instance Convertible CTime POSIXTime where
+    safeConvert = return . realToFrac
+instance Convertible POSIXTime CTime where
+    safeConvert = return . fromInteger . truncate
+
+instance Convertible CTime UTCTime where
+    safeConvert x = do r1 <- safeConvert x
+                       safeConvert (r1::POSIXTime)
+instance Convertible UTCTime CTime where
+    safeConvert x = do r1 <- safeConvert x
+                       safeConvert (r1::POSIXTime)
+
