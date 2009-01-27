@@ -231,6 +231,22 @@ instance Convertible CTime POSIXTime where
 instance Convertible POSIXTime CTime where
     safeConvert = return . fromInteger . truncate
 
+instance Convertible CTime Integer where
+    safeConvert = return . truncate . toRational
+instance Convertible Integer CTime where
+    safeConvert = return . fromInteger
+
+instance Convertible CTime Double where
+    safeConvert = return . realToFrac
+instance Convertible Double CTime where
+    safeConvert = return . fromInteger . truncate
+
+instance Convertible CTime Int where
+    safeConvert x = do r1 <- safeConvert x
+                       boundedConversion (return . fromInteger) r1
+instance Convertible Int CTime where
+    safeConvert = safeConvert . toInteger
+
 instance Convertible CTime UTCTime where
     safeConvert x = do r1 <- safeConvert x
                        safeConvert (r1::POSIXTime)
