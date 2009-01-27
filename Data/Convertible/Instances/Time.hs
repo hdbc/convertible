@@ -254,3 +254,12 @@ instance Convertible UTCTime CTime where
     safeConvert x = do r1 <- safeConvert x
                        safeConvert (r1::POSIXTime)
 
+instance Convertible CTime ST.ClockTime where
+    safeConvert x = do r1 <- safeConvert x
+                       safeConvert (r1::POSIXTime)
+instance Convertible ST.ClockTime CTime where
+    safeConvert x = do r1 <- safeConvert x
+                       safeConvert (r1::POSIXTime)
+
+-- CTime CalendarTime
+-- CTime ZonedTime
