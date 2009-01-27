@@ -153,18 +153,15 @@ instance Convertible ST.CalendarTime ZonedTime where
 instance Convertible ST.CalendarTime POSIXTime where
     safeConvert = convertVia (undefined::ST.ClockTime)
 instance Convertible ST.CalendarTime UTCTime where
-    safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
-                       safeConvert r
+    safeConvert = convertVia (undefined::POSIXTime)
 
 instance Convertible ST.ClockTime POSIXTime where
     safeConvert (ST.TOD x y) = return $ fromRational $ 
                                         fromInteger x + fromRational (y % 1000000000000)
 instance Convertible ST.ClockTime UTCTime where
-    safeConvert a = do r <- (safeConvert a)::ConvertResult POSIXTime
-                       safeConvert r
+    safeConvert = convertVia (undefined::POSIXTime)
 instance Convertible ST.ClockTime ZonedTime where
-    safeConvert a = do r <- (safeConvert a)::ConvertResult UTCTime
-                       safeConvert r
+    safeConvert = convertVia (undefined::UTCTime)
 instance Convertible ZonedTime ST.ClockTime where
     safeConvert = convertVia (undefined::POSIXTime)
 
@@ -196,8 +193,7 @@ instance Convertible ZonedTime ST.CalendarTime where
               picoRational = toRational (todSec ltod) - toRational secs
               pico = truncate (picoRational * 1000000000000)
 instance Convertible POSIXTime ST.CalendarTime where
-    safeConvert pt = do r <- (safeConvert pt)::ConvertResult ZonedTime
-                        safeConvert r
+    safeConvert = convertVia (undefined::ZonedTime)
 instance Convertible UTCTime ST.CalendarTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
@@ -215,14 +211,11 @@ instance Convertible NominalDiffTime ST.TimeDiff where
            return (ST.diffClockTimes clockt (ST.TOD 0 0))
 
 instance Convertible Integer ST.TimeDiff where
-    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
-                       safeConvert r
+    safeConvert = convertVia (undefined::NominalDiffTime)
 instance Convertible ST.TimeDiff Integer where
-    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
-                       safeConvert r
+    safeConvert = convertVia (undefined :: NominalDiffTime)
 instance Convertible ST.TimeDiff Rational where
-    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
-                       safeConvert r
+    safeConvert = convertVia (undefined :: NominalDiffTime)
 
 ----------------------------------------------------------------------
 -- Foreign.C Types
@@ -250,18 +243,14 @@ instance Convertible Int CTime where
     safeConvert = safeConvert . toInteger
 
 instance Convertible CTime UTCTime where
-    safeConvert x = do r1 <- safeConvert x
-                       safeConvert (r1::POSIXTime)
+    safeConvert = convertVia (undefined :: POSIXTime)
 instance Convertible UTCTime CTime where
-    safeConvert x = do r1 <- safeConvert x
-                       safeConvert (r1::POSIXTime)
+    safeConvert = convertVia (undefined :: POSIXTime)
 
 instance Convertible CTime ST.ClockTime where
-    safeConvert x = do r1 <- safeConvert x
-                       safeConvert (r1::POSIXTime)
+    safeConvert = convertVia (undefined :: POSIXTime)
 instance Convertible ST.ClockTime CTime where
-    safeConvert x = do r1 <- safeConvert x
-                       safeConvert (r1::POSIXTime)
+    safeConvert = convertVia (undefined :: POSIXTime)
 
 instance Convertible CTime ST.CalendarTime where
     safeConvert = convertVia (undefined::POSIXTime)
