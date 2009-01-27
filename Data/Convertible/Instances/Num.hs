@@ -575,9 +575,9 @@ instance Convertible Rational Integer where
     safeConvert = return . truncate
 
 instance Convertible Float Double where
-    safeConvert = return . fromRational . toRational
+    safeConvert = return . realToFrac
 instance Convertible Double Float where
-    safeConvert = return . fromRational . toRational
+    safeConvert = return . realToFrac
 instance Convertible Float Rational where
     safeConvert = return . toRational
 instance Convertible Rational Float where
