@@ -19,6 +19,8 @@ For license and copyright information, see the file COPYRIGHT
 Collection of ready-made 'Data.Convertible.Convertible' instances.  See
 each individual module for more docs:
 
+"Data.Convertible.Instances.C"
+
 "Data.Convertible.Instances.Map"
 
 "Data.Convertible.Instances.Num"
@@ -31,6 +33,7 @@ You can find a list of these instances at 'Data.Convertible.Base.Convertible'.
 module Data.Convertible.Instances(
                                  ) where
 
+import Data.Convertible.Instances.C()
 import Data.Convertible.Instances.Map()
 import Data.Convertible.Instances.Num()
 import Data.Convertible.Instances.Time()

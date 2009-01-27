@@ -53,6 +53,7 @@ library
                    Data.Convertible.Base,
                    Data.Convertible.Utils,
                    Data.Convertible.Instances,
+                   Data.Convertible.Instances.C,
                    Data.Convertible.Instances.Map,
                    Data.Convertible.Instances.Num,
                    Data.Convertible.Instances.Time
