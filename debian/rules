@@ -41,6 +41,9 @@ build: build-stamp
 build-stamp: configure-stamp 
 	dh_testdir
 
+	$(MAKE) test
+	$(MAKE) clean
+
 	# Add here commands to compile the package.
 	#$(MAKE)
 	#$(MAKE) doc
