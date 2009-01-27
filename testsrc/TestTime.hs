@@ -120,10 +120,34 @@ propCaltZTCalt x =
                    return (ST.toClockTime calt')
     where calt = ST.toUTCTime x
 
+propCaltZTCalt2 :: ST.CalendarTime -> Result
+propCaltZTCalt2 x =
+    Right x @=? do zt <- safeConvert x
+                   safeConvert (zt :: ZonedTime)
+
+propZTCaltCtZT :: ZonedTime -> Result
+propZTCaltCtZT x =
+    Right x @=? do calt <- safeConvert x
+                   ct <- safeConvert (calt :: ST.CalendarTime)
+                   safeConvert (ct :: ST.ClockTime)
+
+propZTCtCaltZT :: ZonedTime -> Result
+propZTCtCaltZT x =
+    Right x @=? do ct <- safeConvert x
+                   calt <- safeConvert (ct :: ST.ClockTime)
+                   safeConvert (calt :: ST.CalendarTime)
+
 propZTCaltZT :: ZonedTime -> Result
 propZTCaltZT x =
     Right x @=? do calt <- safeConvert x
                    safeConvert (calt :: ST.CalendarTime)
+
+propZTCtCaltCtZT :: ZonedTime -> Result
+propZTCtCaltCtZT x =
+    Right x @=? do ct <- safeConvert x
+                   calt <- safeConvert (ct :: ST.ClockTime)
+                   ct' <- safeConvert (calt :: ST.CalendarTime)
+                   safeConvert (ct' :: ST.ClockTime)
 
 propUTCZT :: UTCTime -> Bool
 propUTCZT x =
@@ -153,7 +177,11 @@ allt = [q "ClockTime -> CalendarTime" propCltCalt,
         q "UTCTime -> POSIXTime" propUTCPT,
         q "ClockTime -> UTCTime" propCltUTC,
         q "identity CalendarTime -> ZonedTime -> CalendarTime" propCaltZTCalt,
+        q "identity CalendarTime -> ZonedTime -> CalenderTime, test 2" propCaltZTCalt2,
         q "identity ZonedTime -> CalendarTime -> ZonedTime" propZTCaltZT,
+        q "ZonedTime -> CalendarTime -> ClockTime -> ZonedTime" propZTCaltCtZT,
+        q "ZonedTime -> ClockTime -> CalendarTime -> ZonedTime" propZTCtCaltZT,
+        q "ZonedTime -> ColckTime -> CalendarTime -> ClockTime -> ZonedTime" propZTCtCaltCtZT,
         q "UTCTime -> ZonedTime" propUTCZT,
         q "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC,
         q "identity NominalDiffTime -> TimeDiff -> NominalDiffTime" propNdtTdNdt
