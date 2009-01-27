@@ -266,5 +266,7 @@ instance Convertible CTime ST.CalendarTime where
 instance Convertible ST.CalendarTime CTime where
     safeConvert = convertVia (undefined::POSIXTime)
 
--- CTime CalendarTime
--- CTime ZonedTime
+instance Convertible CTime ZonedTime where
+    safeConvert = convertVia (undefined::POSIXTime)
+instance Convertible ZonedTime CTime where
+    safeConvert = convertVia (undefined::POSIXTime)
