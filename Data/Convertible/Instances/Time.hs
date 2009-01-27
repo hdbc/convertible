@@ -76,14 +76,14 @@ instance Convertible Integer POSIXTime where
 instance Convertible Int POSIXTime where
     safeConvert = return . fromIntegral
 instance Convertible Double POSIXTime where
-    safeConvert = return . fromRational . toRational
+    safeConvert = return . realToFrac
 
 instance Convertible POSIXTime Integer where
     safeConvert = return . truncate
 instance Convertible POSIXTime Rational where
     safeConvert = return . toRational
 instance Convertible POSIXTime Double where
-    safeConvert = return . fromRational . toRational
+    safeConvert = return . realToFrac
 instance Convertible POSIXTime Int where
     safeConvert = boundedConversion (return . truncate)
 
