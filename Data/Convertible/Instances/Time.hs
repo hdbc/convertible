@@ -261,5 +261,10 @@ instance Convertible ST.ClockTime CTime where
     safeConvert x = do r1 <- safeConvert x
                        safeConvert (r1::POSIXTime)
 
+instance Convertible CTime ST.CalendarTime where
+    safeConvert = convertVia (undefined::POSIXTime)
+instance Convertible ST.CalendarTime CTime where
+    safeConvert = convertVia (undefined::POSIXTime)
+
 -- CTime CalendarTime
 -- CTime ZonedTime

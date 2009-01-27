@@ -19,7 +19,8 @@ For license and copyright information, see the file COPYRIGHT
 -}
 
 module Data.Convertible.Utils(boundedConversion,
-                             mkTypeName
+                             mkTypeName,
+                             convertVia
                              )
 where
 import Data.Convertible.Base
@@ -48,5 +49,20 @@ boundedConversion func inp =
                inp
           else return result
 
+{- | Useful for defining 'Typeable' instances.  Example:
+
+>instance Typeable TimeOfDay where
+>    typeOf _ = mkTypeName "TimeOfDay"
+-}
 mkTypeName :: String -> TypeRep
 mkTypeName name = mkTyConApp (mkTyCon name) []
+
+{- | Useful for defining conversions that are implemented in terms of other
+conversions via an intermediary type. -}
+convertVia :: (Convertible a b, Convertible b c) =>
+              b                 -- ^ Dummy data to establish intermediate type - can be undefined
+           -> a                 -- ^ Input value
+           -> ConvertResult c   -- ^ Result
+convertVia dummy inp =
+    do r1 <- safeConvert inp
+       safeConvert (asTypeOf r1 dummy)
