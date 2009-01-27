@@ -210,3 +210,13 @@ instance Convertible NominalDiffTime ST.TimeDiff where
     safeConvert ndt =
         do clockt <- safeConvert ndt
            return (ST.diffClockTimes clockt (ST.TOD 0 0))
+
+instance Convertible Integer ST.TimeDiff where
+    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
+                       safeConvert r
+instance Convertible ST.TimeDiff Integer where
+    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
+                       safeConvert r
+instance Convertible ST.TimeDiff Rational where
+    safeConvert x = do r <- ((safeConvert x)::ConvertResult NominalDiffTime)
+                       safeConvert r
