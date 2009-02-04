@@ -212,9 +212,13 @@ instance Convertible NominalDiffTime ST.TimeDiff where
 
 instance Convertible Integer ST.TimeDiff where
     safeConvert = convertVia (undefined::NominalDiffTime)
+instance Convertible Double ST.TimeDiff where
+    safeConvert = convertVia (undefined::NominalDiffTime)
 instance Convertible ST.TimeDiff Integer where
     safeConvert = convertVia (undefined :: NominalDiffTime)
 instance Convertible ST.TimeDiff Rational where
+    safeConvert = convertVia (undefined :: NominalDiffTime)
+instance Convertible ST.TimeDiff Double where
     safeConvert = convertVia (undefined :: NominalDiffTime)
 
 ----------------------------------------------------------------------
