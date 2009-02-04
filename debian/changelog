@@ -1,3 +1,9 @@
+haskell-convertible (1.0.2-1) unstable; urgency=low
+
+  * Added Double conversion to/from System.Time.TimeDiff.
+
+ -- John Goerzen <jgoerzen@complete.org>  Wed, 04 Feb 2009 11:29:36 -0600
+
 haskell-convertible (1.0.1-2) unstable; urgency=low
 
   * Now build a porfiling version.
