@@ -68,9 +68,9 @@ library
 Executable runtests
    if flag(buildtests)
       Buildable: True
+      Build-Depends: HUnit, QuickCheck, testpack
    else
       Buildable: False
-   Build-Depends: HUnit, QuickCheck, testpack
    Main-Is: runtests.hs
    Hs-Source-Dirs: ., testsrc
    GHC-Options: -O2
