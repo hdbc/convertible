@@ -63,7 +63,7 @@ library
   --    AllowUndecidableInstances
   Extensions: ExistentialQuantification, MultiParamTypeClasses,
               UndecidableInstances, FlexibleInstances,
-              FlexibleContexts, TypeSynonymInstances
+              FlexibleContexts, TypeSynonymInstances, CPP
   
 Executable runtests
    if flag(buildtests)
@@ -76,4 +76,4 @@ Executable runtests
    GHC-Options: -O2
    Extensions: ExistentialQuantification, MultiParamTypeClasses,
                UndecidableInstances, FlexibleInstances,
-               FlexibleContexts, TypeSynonymInstances
+               FlexibleContexts, TypeSynonymInstances, CPP
