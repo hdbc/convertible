@@ -58,8 +58,8 @@ instance Convertible Integer ST.ClockTime where
 
 ------------------------------ POSIX and UTC times
 
-#if __GLASGOW_HASKELL__ >= 610 && MIN_VERSION_time(1,1,2)
--- instances added in this version
+#if __GLASGOW_HASKELL__ >= 610
+-- instances added in GHC 6.10.3
 #else
 instance Typeable NominalDiffTime where
     typeOf _ = mkTypeName "NominalDiffTime"
