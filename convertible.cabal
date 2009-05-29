@@ -1,5 +1,5 @@
 Name: convertible
-Version: 1.0.3
+Version: 1.0.5
 License: LGPL
 Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
@@ -42,7 +42,7 @@ flag buildtests
 
 library
   if flag(splitBase)
-    Build-Depends: base>=3, old-time, time, bytestring, containers, old-locale
+    Build-Depends: base>=3, old-time, time>=1.1.2.4, bytestring, containers, old-locale
   else
     Build-Depends: base<3
   Build-Depends: mtl
