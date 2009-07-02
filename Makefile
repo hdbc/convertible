@@ -1,13 +1,17 @@
-all:
+all: setup
 	@echo "Please use Cabal to build this package; not make."
-	runghc Setup.lhs configure
-	runghc Setup.lhs build
+	./setup configure
+	./setup build
 
-install:
-	runghc Setup.lhs install
+setup: Setup.lhs
+	ghc --make -o setup Setup.lhs
+
+install: setup
+	./setup install
 
 clean:
-	runghc Setup.lhs clean
+	-./setup clean
+	-runghc Setup.lhs clean
 
 .PHONY: test
 test: test-ghc test-hugs
