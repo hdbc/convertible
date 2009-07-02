@@ -1,3 +1,9 @@
+haskell-convertible (1.0.2-2) unstable; urgency=low
+
+  * Remove requirement for ghci at build time.  Closes: #520860.
+
+ -- John Goerzen <jgoerzen@complete.org>  Thu, 02 Jul 2009 01:21:40 -0500
+
 haskell-convertible (1.0.2-1) unstable; urgency=low
 
   * Added Double conversion to/from System.Time.TimeDiff.
