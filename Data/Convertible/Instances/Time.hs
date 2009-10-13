@@ -58,15 +58,11 @@ instance Convertible Integer ST.ClockTime where
 
 ------------------------------ POSIX and UTC times
 
-#if __GLASGOW_HASKELL__ >= 610
--- instances added in GHC 6.10.3
-#else
 instance Typeable NominalDiffTime where
     typeOf _ = mkTypeName "NominalDiffTime"
 
 instance Typeable UTCTime where
     typeOf _ = mkTypeName "UTCTime"
-#endif
 
 {- Covered under Real a
 instance Convertible Rational POSIXTime where

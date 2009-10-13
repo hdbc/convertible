@@ -42,7 +42,7 @@ flag buildtests
 
 library
   if flag(splitBase)
-    Build-Depends: base>=3, old-time, time>=1.1.2.4 && <1.1.3,
+    Build-Depends: base>=3 && <4, old-time, time>=1.1.2.4 && <1.1.3,
      bytestring, containers, old-locale
   else
     Build-Depends: base<3
@@ -77,4 +77,4 @@ Executable runtests
    GHC-Options: -O2
    Extensions: ExistentialQuantification, MultiParamTypeClasses,
                UndecidableInstances, FlexibleInstances,
-               FlexibleContexts, TypeSynonymInstances, CPP
+               FlexibleContexts, TypeSynonymInstances
