@@ -1,3 +1,10 @@
+haskell-convertible (1.0.6-1) unstable; urgency=low
+
+  * New upstream release fixes issues with time library.
+  * Move this to Haskell team maintenance.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 02 Nov 2009 16:19:21 -0600
+
 haskell-convertible (1.0.2-2) unstable; urgency=low
 
   * Remove requirement for ghci at build time.  Closes: #520860.
