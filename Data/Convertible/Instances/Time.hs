@@ -1,5 +1,5 @@
 {- |
-   Module     : Data.Convertible.Instances.Time
+   Module     : Data.ConvertAttempt.Instances.Time
    Copyright  : Copyright (C) 2009 John Goerzen
    License    : LGPL
 
@@ -66,74 +66,123 @@ instance ConvertSuccess Integer ST.ClockTime where
 ------------------------------ POSIX and UTC times
 
 {- Covered under Real a
-instance Convertible Rational POSIXTime where
-    safeConvert = return . fromRational
+instance ConvertAttempt Rational POSIXTime where
+    convertAttempt = return . fromRational
 -}
 
-instance Convertible Rational POSIXTime where
-    safeConvert = return . fromRational
-instance Convertible Integer POSIXTime where
-    safeConvert = return . fromInteger
-instance Convertible Int POSIXTime where
-    safeConvert = return . fromIntegral
-instance Convertible Double POSIXTime where
-    safeConvert = return . realToFrac
+instance ConvertSuccess Rational POSIXTime where
+    convertSuccess = fromRational
+instance ConvertSuccess Integer POSIXTime where
+    convertSuccess = fromInteger
+instance ConvertSuccess Int POSIXTime where
+    convertSuccess = fromIntegral
+instance ConvertSuccess Double POSIXTime where
+    convertSuccess = realToFrac
 
-instance Convertible POSIXTime Integer where
-    safeConvert = return . truncate
-instance Convertible POSIXTime Rational where
-    safeConvert = return . toRational
-instance Convertible POSIXTime Double where
-    safeConvert = return . realToFrac
-instance Convertible POSIXTime Int where
-    safeConvert = boundedConversion (return . truncate)
+instance ConvertAttempt Rational POSIXTime where
+    convertAttempt = return . fromRational
+instance ConvertAttempt Integer POSIXTime where
+    convertAttempt = return . fromInteger
+instance ConvertAttempt Int POSIXTime where
+    convertAttempt = return . fromIntegral
+instance ConvertAttempt Double POSIXTime where
+    convertAttempt = return . realToFrac
 
-instance Convertible POSIXTime UTCTime where
-    safeConvert = return . posixSecondsToUTCTime
-instance Convertible UTCTime POSIXTime where
-    safeConvert = return . utcTimeToPOSIXSeconds
+instance ConvertSuccess POSIXTime Integer where
+    convertSuccess = truncate
+instance ConvertSuccess POSIXTime Rational where
+    convertSuccess = toRational
+instance ConvertSuccess POSIXTime Double where
+    convertSuccess = realToFrac
 
-instance Convertible Rational UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
-instance Convertible Integer UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
-instance Convertible Int UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
-instance Convertible Double UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+instance ConvertAttempt POSIXTime Integer where
+    convertAttempt = return . truncate
+instance ConvertAttempt POSIXTime Rational where
+    convertAttempt = return . toRational
+instance ConvertAttempt POSIXTime Double where
+    convertAttempt = return . realToFrac
+instance ConvertAttempt POSIXTime Int where
+    convertAttempt = boundedConversion (return . truncate)
 
-instance Convertible UTCTime Rational where
-    safeConvert = safeConvert . utcTimeToPOSIXSeconds
-instance Convertible UTCTime Integer where
-    safeConvert = safeConvert . utcTimeToPOSIXSeconds
-instance Convertible UTCTime Double where
-    safeConvert = safeConvert . utcTimeToPOSIXSeconds
-instance Convertible UTCTime Int where
-    safeConvert = boundedConversion (safeConvert . utcTimeToPOSIXSeconds)
+instance ConvertSuccess POSIXTime UTCTime where
+    convertSuccess = posixSecondsToUTCTime
+instance ConvertSuccess UTCTime POSIXTime where
+    convertSuccess = utcTimeToPOSIXSeconds
+
+instance ConvertAttempt POSIXTime UTCTime where
+    convertAttempt = return . posixSecondsToUTCTime
+instance ConvertAttempt UTCTime POSIXTime where
+    convertAttempt = return . utcTimeToPOSIXSeconds
+
+instance ConvertSuccess Rational UTCTime where
+    convertSuccess = posixSecondsToUTCTime . convertSuccess
+instance ConvertSuccess Integer UTCTime where
+    convertSuccess = posixSecondsToUTCTime . convertSuccess
+instance ConvertSuccess Int UTCTime where
+    convertSuccess = posixSecondsToUTCTime . convertSuccess
+instance ConvertSuccess Double UTCTime where
+    convertSuccess = posixSecondsToUTCTime . convertSuccess
+
+instance ConvertAttempt Rational UTCTime where
+    convertAttempt a = convertAttempt a >>= return . posixSecondsToUTCTime
+instance ConvertAttempt Integer UTCTime where
+    convertAttempt a = convertAttempt a >>= return . posixSecondsToUTCTime
+instance ConvertAttempt Int UTCTime where
+    convertAttempt a = convertAttempt a >>= return . posixSecondsToUTCTime
+instance ConvertAttempt Double UTCTime where
+    convertAttempt a = convertAttempt a >>= return . posixSecondsToUTCTime
+
+instance ConvertSuccess UTCTime Rational where
+    convertSuccess = convertSuccess . utcTimeToPOSIXSeconds
+instance ConvertSuccess UTCTime Integer where
+    convertSuccess = convertSuccess . utcTimeToPOSIXSeconds
+instance ConvertSuccess UTCTime Double where
+    convertSuccess = convertSuccess . utcTimeToPOSIXSeconds
+
+instance ConvertAttempt UTCTime Rational where
+    convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
+instance ConvertAttempt UTCTime Integer where
+    convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
+instance ConvertAttempt UTCTime Double where
+    convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
+instance ConvertAttempt UTCTime Int where
+    convertAttempt = boundedConversion (convertAttempt . utcTimeToPOSIXSeconds)
 
 ------------------------------ LocalTime stuff
 
-instance Convertible UTCTime ZonedTime where
-    safeConvert = return . utcToZonedTime utc
-instance Convertible POSIXTime ZonedTime where
-    safeConvert = return . utcToZonedTime utc . posixSecondsToUTCTime
-instance Convertible ZonedTime UTCTime where
-    safeConvert = return . zonedTimeToUTC
-instance Convertible ZonedTime POSIXTime where
-    safeConvert = return . utcTimeToPOSIXSeconds . zonedTimeToUTC
+instance ConvertSuccess UTCTime ZonedTime where
+    convertSuccess = utcToZonedTime utc
+instance ConvertSuccess POSIXTime ZonedTime where
+    convertSuccess = utcToZonedTime utc . posixSecondsToUTCTime
+instance ConvertSuccess ZonedTime UTCTime where
+    convertSuccess = zonedTimeToUTC
+instance ConvertSuccess ZonedTime POSIXTime where
+    convertSuccess = utcTimeToPOSIXSeconds . zonedTimeToUTC
+
+instance ConvertAttempt UTCTime ZonedTime where
+    convertAttempt = return . utcToZonedTime utc
+instance ConvertAttempt POSIXTime ZonedTime where
+    convertAttempt = return . utcToZonedTime utc . posixSecondsToUTCTime
+instance ConvertAttempt ZonedTime UTCTime where
+    convertAttempt = return . zonedTimeToUTC
+instance ConvertAttempt ZonedTime POSIXTime where
+    convertAttempt = return . utcTimeToPOSIXSeconds . zonedTimeToUTC
 
 {- Too obvious?
-instance Convertible LocalTime Day where
-    safeConvert = return . localDay
-instance Convertible LocalTime TimeOfDay where
-    safeConvert = return . localTimeOfDay
+instance ConvertAttempt LocalTime Day where
+    convertAttempt = return . localDay
+instance ConvertAttempt LocalTime TimeOfDay where
+    convertAttempt = return . localTimeOfDay
 -}
 
 ----------------------------------------------------------------------
 -- Conversions between old and new time
 ----------------------------------------------------------------------
-instance Convertible ST.CalendarTime ZonedTime where
-    safeConvert ct = return $ ZonedTime {
+instance ConvertAttempt ST.CalendarTime ZonedTime where
+    convertAttempt = return . convertSuccess
+
+instance ConvertSuccess ST.CalendarTime ZonedTime where
+    convertSuccess ct = ZonedTime {
      zonedTimeToLocalTime = LocalTime {
        localDay = fromGregorian (fromIntegral $ ST.ctYear ct) 
                   (1 + (fromEnum $ ST.ctMonth ct))
@@ -151,30 +200,52 @@ instance Convertible ST.CalendarTime ZonedTime where
                        timeZoneName = ST.ctTZName ct}
 }
 
-instance Convertible ST.CalendarTime POSIXTime where
-    safeConvert = convertVia (undefined::ST.ClockTime)
-instance Convertible ST.CalendarTime UTCTime where
-    safeConvert = convertVia (undefined::POSIXTime)
+instance ConvertSuccess ST.CalendarTime POSIXTime where
+    convertSuccess = convertSuccessVia (undefined::ST.ClockTime)
+instance ConvertSuccess ST.CalendarTime UTCTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
 
-instance Convertible ST.ClockTime POSIXTime where
-    safeConvert (ST.TOD x y) = return $ fromRational $ 
+instance ConvertAttempt ST.CalendarTime POSIXTime where
+    convertAttempt = convertAttemptVia (undefined::ST.ClockTime)
+instance ConvertAttempt ST.CalendarTime UTCTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+
+instance ConvertAttempt ST.ClockTime POSIXTime where
+    convertAttempt = return . convertSuccess
+instance ConvertSuccess ST.ClockTime POSIXTime where
+    convertSuccess (ST.TOD x y) = fromRational $ 
                                         fromInteger x + fromRational (y % 1000000000000)
-instance Convertible ST.ClockTime UTCTime where
-    safeConvert = convertVia (undefined::POSIXTime)
-instance Convertible ST.ClockTime ZonedTime where
-    safeConvert = convertVia (undefined::UTCTime)
-instance Convertible ZonedTime ST.ClockTime where
-    safeConvert = convertVia (undefined::POSIXTime)
 
-instance Convertible POSIXTime ST.ClockTime where
-    safeConvert x = return $ ST.TOD rsecs rpico
+instance ConvertSuccess ST.ClockTime UTCTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+instance ConvertSuccess ST.ClockTime ZonedTime where
+    convertSuccess = convertSuccessVia (undefined::UTCTime)
+instance ConvertSuccess ZonedTime ST.ClockTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+
+instance ConvertAttempt ST.ClockTime UTCTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+instance ConvertAttempt ST.ClockTime ZonedTime where
+    convertAttempt = convertAttemptVia (undefined::UTCTime)
+instance ConvertAttempt ZonedTime ST.ClockTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+
+instance ConvertAttempt POSIXTime ST.ClockTime where
+    convertAttempt = return . convertSuccess
+instance ConvertSuccess POSIXTime ST.ClockTime where
+    convertSuccess x = ST.TOD rsecs rpico
         where rsecs = floor x
               rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
-instance Convertible UTCTime ST.ClockTime where
-    safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
-instance Convertible ZonedTime ST.CalendarTime where
-    safeConvert zt = return $ ST.CalendarTime {
+instance ConvertSuccess UTCTime ST.ClockTime where
+    convertSuccess = convertSuccess . utcTimeToPOSIXSeconds
+instance ConvertAttempt UTCTime ST.ClockTime where
+    convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
+
+instance ConvertAttempt ZonedTime ST.CalendarTime where
+    convertAttempt = return . convertSuccess
+instance ConvertSuccess ZonedTime ST.CalendarTime where
+    convertSuccess zt = ST.CalendarTime {
             ST.ctYear = fromIntegral year,
             ST.ctMonth = toEnum (month - 1),
             ST.ctDay = day,
@@ -193,76 +264,130 @@ instance Convertible ZonedTime ST.CalendarTime where
               secs = (truncate . todSec $ ltod)::Int
               picoRational = toRational (todSec ltod) - toRational secs
               pico = truncate (picoRational * 1000000000000)
-instance Convertible POSIXTime ST.CalendarTime where
-    safeConvert = convertVia (undefined::ZonedTime)
-instance Convertible UTCTime ST.CalendarTime where
-    safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
-instance Convertible ST.TimeDiff NominalDiffTime where
+instance ConvertSuccess POSIXTime ST.CalendarTime where
+    convertSuccess = convertSuccessVia (undefined::ZonedTime)
+instance ConvertSuccess UTCTime ST.CalendarTime where
+    convertSuccess = convertSuccess . utcTimeToPOSIXSeconds
+
+instance ConvertAttempt POSIXTime ST.CalendarTime where
+    convertAttempt = convertAttemptVia (undefined::ZonedTime)
+instance ConvertAttempt UTCTime ST.CalendarTime where
+    convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
+
+instance ConvertAttempt ST.TimeDiff NominalDiffTime where
+    convertAttempt = return . convertSuccess
+instance ConvertSuccess ST.TimeDiff NominalDiffTime where
     {- This is a clever hack.  We convert the TimeDiff to a ClockTime, applying
        it as a diff vs. the epoch.  Converting this ClockTime to a POSIXTime yiels
        the NominalDiffTime we want, since a POSIXTime is a NominalDiffTime vs. the
        epoch. -}
-    safeConvert td = safeConvert clockTime
+    convertSuccess td = convertSuccess clockTime
         where clockTime = ST.addToClockTime td (ST.TOD 0 0)
-instance Convertible NominalDiffTime ST.TimeDiff where
+instance ConvertAttempt NominalDiffTime ST.TimeDiff where
+    convertAttempt = return . convertSuccess
+instance ConvertSuccess NominalDiffTime ST.TimeDiff where
     {- Similar clever hack as above. -}
-    safeConvert ndt =
-        do clockt <- safeConvert ndt
-           return (ST.diffClockTimes clockt (ST.TOD 0 0))
+    convertSuccess ndt =
+       let clockt = convertSuccess ndt
+        in ST.diffClockTimes clockt (ST.TOD 0 0)
 
-instance Convertible Integer ST.TimeDiff where
-    safeConvert = convertVia (undefined::NominalDiffTime)
-instance Convertible Double ST.TimeDiff where
-    safeConvert = convertVia (undefined::NominalDiffTime)
-instance Convertible ST.TimeDiff Integer where
-    safeConvert = convertVia (undefined :: NominalDiffTime)
-instance Convertible ST.TimeDiff Rational where
-    safeConvert = convertVia (undefined :: NominalDiffTime)
-instance Convertible ST.TimeDiff Double where
-    safeConvert = convertVia (undefined :: NominalDiffTime)
+instance ConvertSuccess Integer ST.TimeDiff where
+    convertSuccess = convertSuccessVia (undefined::NominalDiffTime)
+instance ConvertSuccess Double ST.TimeDiff where
+    convertSuccess = convertSuccessVia (undefined::NominalDiffTime)
+instance ConvertSuccess ST.TimeDiff Integer where
+    convertSuccess = convertSuccessVia (undefined :: NominalDiffTime)
+instance ConvertSuccess ST.TimeDiff Rational where
+    convertSuccess = convertSuccessVia (undefined :: NominalDiffTime)
+instance ConvertSuccess ST.TimeDiff Double where
+    convertSuccess = convertSuccessVia (undefined :: NominalDiffTime)
+
+instance ConvertAttempt Integer ST.TimeDiff where
+    convertAttempt = convertAttemptVia (undefined::NominalDiffTime)
+instance ConvertAttempt Double ST.TimeDiff where
+    convertAttempt = convertAttemptVia (undefined::NominalDiffTime)
+instance ConvertAttempt ST.TimeDiff Integer where
+    convertAttempt = convertAttemptVia (undefined :: NominalDiffTime)
+instance ConvertAttempt ST.TimeDiff Rational where
+    convertAttempt = convertAttemptVia (undefined :: NominalDiffTime)
+instance ConvertAttempt ST.TimeDiff Double where
+    convertAttempt = convertAttemptVia (undefined :: NominalDiffTime)
 
 ----------------------------------------------------------------------
 -- Foreign.C Types
 ----------------------------------------------------------------------
 
-instance Convertible CTime POSIXTime where
-    safeConvert = return . realToFrac
-instance Convertible POSIXTime CTime where
-    safeConvert = return . fromInteger . truncate
+instance ConvertSuccess CTime POSIXTime where
+    convertSuccess = realToFrac
+instance ConvertSuccess POSIXTime CTime where
+    convertSuccess = fromInteger . truncate
 
-instance Convertible CTime Integer where
-    safeConvert = return . truncate . toRational
-instance Convertible Integer CTime where
-    safeConvert = return . fromInteger
+instance ConvertSuccess CTime Integer where
+    convertSuccess = truncate . toRational
+instance ConvertSuccess Integer CTime where
+    convertSuccess = fromInteger
 
-instance Convertible CTime Double where
-    safeConvert = return . realToFrac
-instance Convertible Double CTime where
-    safeConvert = return . fromInteger . truncate
+instance ConvertSuccess CTime Double where
+    convertSuccess = realToFrac
+instance ConvertSuccess Double CTime where
+    convertSuccess = fromInteger . truncate
 
-instance Convertible CTime Int where
-    safeConvert x = do r1 <- safeConvert x
-                       boundedConversion (return . fromInteger) r1
-instance Convertible Int CTime where
-    safeConvert = safeConvert . toInteger
+instance ConvertAttempt CTime POSIXTime where
+    convertAttempt = return . realToFrac
+instance ConvertAttempt POSIXTime CTime where
+    convertAttempt = return . fromInteger . truncate
 
-instance Convertible CTime UTCTime where
-    safeConvert = convertVia (undefined :: POSIXTime)
-instance Convertible UTCTime CTime where
-    safeConvert = convertVia (undefined :: POSIXTime)
+instance ConvertAttempt CTime Integer where
+    convertAttempt = return . truncate . toRational
+instance ConvertAttempt Integer CTime where
+    convertAttempt = return . fromInteger
 
-instance Convertible CTime ST.ClockTime where
-    safeConvert = convertVia (undefined :: POSIXTime)
-instance Convertible ST.ClockTime CTime where
-    safeConvert = convertVia (undefined :: POSIXTime)
+instance ConvertAttempt CTime Double where
+    convertAttempt = return . realToFrac
+instance ConvertAttempt Double CTime where
+    convertAttempt = return . fromInteger . truncate
 
-instance Convertible CTime ST.CalendarTime where
-    safeConvert = convertVia (undefined::POSIXTime)
-instance Convertible ST.CalendarTime CTime where
-    safeConvert = convertVia (undefined::POSIXTime)
+instance ConvertAttempt CTime Int where
+    convertAttempt x = do r1 <- convertAttempt x
+                          boundedConversion (return . fromInteger) r1
+instance ConvertAttempt Int CTime where
+    convertAttempt = convertAttempt . toInteger
+instance ConvertSuccess Int CTime where
+    convertSuccess = convertSuccess . toInteger
 
-instance Convertible CTime ZonedTime where
-    safeConvert = convertVia (undefined::POSIXTime)
-instance Convertible ZonedTime CTime where
-    safeConvert = convertVia (undefined::POSIXTime)
+instance ConvertSuccess CTime UTCTime where
+    convertSuccess = convertSuccessVia (undefined :: POSIXTime)
+instance ConvertSuccess UTCTime CTime where
+    convertSuccess = convertSuccessVia (undefined :: POSIXTime)
+instance ConvertAttempt CTime UTCTime where
+    convertAttempt = convertAttemptVia (undefined :: POSIXTime)
+instance ConvertAttempt UTCTime CTime where
+    convertAttempt = convertAttemptVia (undefined :: POSIXTime)
+
+instance ConvertSuccess CTime ST.ClockTime where
+    convertSuccess = convertSuccessVia (undefined :: POSIXTime)
+instance ConvertSuccess ST.ClockTime CTime where
+    convertSuccess = convertSuccessVia (undefined :: POSIXTime)
+instance ConvertAttempt CTime ST.ClockTime where
+    convertAttempt = convertAttemptVia (undefined :: POSIXTime)
+instance ConvertAttempt ST.ClockTime CTime where
+    convertAttempt = convertAttemptVia (undefined :: POSIXTime)
+
+instance ConvertSuccess CTime ST.CalendarTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+instance ConvertSuccess ST.CalendarTime CTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+instance ConvertAttempt CTime ST.CalendarTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+instance ConvertAttempt ST.CalendarTime CTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+
+instance ConvertSuccess CTime ZonedTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+instance ConvertSuccess ZonedTime CTime where
+    convertSuccess = convertSuccessVia (undefined::POSIXTime)
+instance ConvertAttempt CTime ZonedTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
+instance ConvertAttempt ZonedTime CTime where
+    convertAttempt = convertAttemptVia (undefined::POSIXTime)
