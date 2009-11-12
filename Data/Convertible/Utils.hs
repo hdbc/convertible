@@ -45,8 +45,8 @@ boundedConversion :: (Ord a, Bounded b, Show a, Show b,
                   -> Attempt b        -- ^ Result
 boundedConversion func inp =
     do result <- func inp
-       let smallest = asTypeOf minBound result
-       let biggest = asTypeOf maxBound result
+       let smallest = minBound `asTypeOf` result
+           biggest  = maxBound `asTypeOf` result
        smallest' <- convertAttempt smallest :: Attempt Integer
        biggest'  <- convertAttempt biggest  :: Attempt Integer
        inp'      <- convertAttempt inp      :: Attempt Integer
@@ -91,7 +91,7 @@ convertAttemptVia :: (ConvertAttempt a b, ConvertAttempt b c) =>
            -> Attempt c         -- ^ Result
 convertAttemptVia dummy inp =
     do r1 <- convertAttempt inp
-       convertAttempt (asTypeOf r1 dummy)
+       convertAttempt (r1 `asTypeOf` dummy)
 
 {- | Same as 'convertAttemptVia' for 'ConvertSuccess' -}
 convertSuccessVia :: (ConvertSuccess a b, ConvertSuccess b c) =>
@@ -99,4 +99,4 @@ convertSuccessVia :: (ConvertSuccess a b, ConvertSuccess b c) =>
            -> a                 -- ^ Input value
            -> c                 -- ^ Result
 convertSuccessVia dummy inp =
-    convertSuccess $ asTypeOf (convertSuccess inp) dummy
+    convertSuccess $ convertSuccess inp `asTypeOf` dummy
