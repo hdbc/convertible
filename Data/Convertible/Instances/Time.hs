@@ -32,7 +32,9 @@ import Data.Time
 import Data.Time.Clock
 import Data.Time.Clock.POSIX
 import Data.Time.Calendar.OrdinalDate
+#ifndef TIME_GT_113
 import Data.Typeable
+#endif
 import Data.Ratio
 import Foreign.C.Types
 
@@ -58,11 +60,13 @@ instance Convertible Integer ST.ClockTime where
 
 ------------------------------ POSIX and UTC times
 
+#ifndef TIME_GT_113
 instance Typeable NominalDiffTime where
     typeOf _ = mkTypeName "NominalDiffTime"
 
 instance Typeable UTCTime where
     typeOf _ = mkTypeName "UTCTime"
+#endif
 
 {- Covered under Real a
 instance Convertible Rational POSIXTime where
