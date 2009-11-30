@@ -24,7 +24,12 @@ import Data.Convertible.Base
 
 import qualified Data.Map as Map
 
-instance Ord k => Convertible [(k, a)] (Map.Map k a) where
-    safeConvert = return . Map.fromList
-instance Convertible (Map.Map k a) [(k, a)] where
-    safeConvert = return . Map.toList
+instance Ord k => ConvertSuccess [(k, a)] (Map.Map k a) where
+    convertSuccess = Map.fromList
+instance Ord k => ConvertAttempt [(k, a)] (Map.Map k a) where
+    convertAttempt = return . convertSuccess
+
+instance ConvertSuccess (Map.Map k a) [(k, a)] where
+    convertSuccess = Map.toList
+instance ConvertAttempt (Map.Map k a) [(k, a)] where
+    convertAttempt = return . convertSuccess
