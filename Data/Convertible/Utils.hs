@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -19,35 +20,47 @@ For license and copyright information, see the file COPYRIGHT
 -}
 
 module Data.Convertible.Utils(boundedConversion,
+                             ConvertBoundsException (..),
                              mkTypeName,
-                             convertVia
+                             convertAttemptVia,
+                             convertSuccessVia
                              )
 where
 import Data.Convertible.Base
 import Data.Typeable
+import Data.Attempt
+import Control.Exception (Exception)
 
 {- | Utility function to perform bounds checking as part of a conversion.
 
 Does this be examining the bounds of the destination type, converting to the type of
 the source via 'safeConvert', comparing to the source value.  Results in an error
 if the conversion is out of bounds. -}
-boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible a Integer,
-                      Convertible b Integer,
-                      Typeable a, Typeable b) => 
-                     (a -> ConvertResult b) -- ^ Function to do the conversion
-                  -> a                      -- ^ Input data
-                  -> ConvertResult b        -- ^ Result
+boundedConversion :: (Ord a, Bounded b, Show a, Show b,
+                      ConvertAttempt a Integer,
+                      ConvertAttempt b Integer,
+                      Typeable a, Typeable b) =>
+                     (a -> Attempt b) -- ^ Function to do the conversion
+                  -> a                -- ^ Input data
+                  -> Attempt b        -- ^ Result
 boundedConversion func inp =
     do result <- func inp
        let smallest = asTypeOf minBound result
        let biggest = asTypeOf maxBound result
-       let smallest' = (convert smallest)::Integer
-       let biggest' = (convert biggest)::Integer
-       let inp' = (convert inp)::Integer
+       smallest' <- convertAttempt smallest :: Attempt Integer
+       biggest'  <- convertAttempt biggest  :: Attempt Integer
+       inp'      <- convertAttempt inp      :: Attempt Integer
        if inp' < smallest' || inp' > biggest'
-          then convError ("Input value outside of bounds: " ++ show (smallest, biggest))
-               inp
+          then failure $ ConvertBoundsException smallest biggest inp
           else return result
+
+data ConvertBoundsException v a = ConvertBoundsException v v a
+    deriving Typeable
+instance (Show v, Show a) => Show (ConvertBoundsException v a) where
+    show (ConvertBoundsException x y a) =
+        "Input value outside of bounds: " ++ show (x, y) ++ ": " ++ show a
+instance (Show v, Show a, Typeable v, Typeable a)
+    => Exception (ConvertBoundsException v a)
 
 {- | Useful for defining 'Typeable' instances.  Example:
 
@@ -72,10 +85,18 @@ we can now write:
 which does the same thing -- converts a CalendarTime to a ClockTime, then a
 ClockTime to a POSIXTime, both using existing 'Convertible' instances.
  -}
-convertVia :: (Convertible a b, Convertible b c) =>
+convertAttemptVia :: (ConvertAttempt a b, ConvertAttempt b c) =>
               b                 -- ^ Dummy data to establish intermediate type - can be undefined
            -> a                 -- ^ Input value
-           -> ConvertResult c   -- ^ Result
-convertVia dummy inp =
-    do r1 <- safeConvert inp
-       safeConvert (asTypeOf r1 dummy)
+           -> Attempt c         -- ^ Result
+convertAttemptVia dummy inp =
+    do r1 <- convertAttempt inp
+       convertAttempt (asTypeOf r1 dummy)
+
+{- | Same as 'convertAttemptVia' for 'ConvertSuccess' -}
+convertSuccessVia :: (ConvertSuccess a b, ConvertSuccess b c) =>
+              b                 -- ^ Dummy data to establish intermediate type - can be undefined
+           -> a                 -- ^ Input value
+           -> c                 -- ^ Result
+convertSuccessVia dummy inp =
+    convertSuccess $ asTypeOf (convertSuccess inp) dummy
