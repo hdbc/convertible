@@ -5,39 +5,49 @@ hsint = ["Int", "Int8", "Int16", "Int32", "Int64", "Word", "Word8", "Word16", "W
          "Word64"]
 hsfloat = ["Double", "Float", "Rational"]
 
-printFP (f, i) = 
-    "instance Convertible " ++ f ++ " " ++ i ++ " where \n\
-    \    safeConvert = boundedConversion (return . truncate)\n\
-    \instance Convertible " ++ i ++ " " ++ f ++ " where \n\
-    \    safeConvert = return . fromIntegral\n"
+printFP (f, i) =
+    "instance ConvertAttempt " ++ f ++ " " ++ i ++ " where \n\
+    \    convertAttempt = boundedConversion (return . truncate)\n\
+    \instance ConvertAttempt " ++ i ++ " " ++ f ++ " where \n\
+    \    convertAttempt= return . fromIntegral\n\
+    \instance ConvertSuccess " ++ i ++ " " ++ f ++ " where \n\
+    \    convertSuccess= fromIntegral\n"
 
 printIntegerF f =
-    "instance Convertible " ++ f ++ " Integer where\n\
-     \    safeConvert = return . truncate\n\
-     \instance Convertible Integer " ++ f ++ " where\n\
-     \    safeConvert = return . fromIntegral\n"
+    "instance ConvertAttempt " ++ f ++ " Integer where\n\
+    \    convertAttempt = return . truncate\n\
+    \instance ConvertSuccess " ++ f ++ " Integer where\n\
+    \    convertSuccess = truncate\n\
+    \instance ConvertAttempt Integer " ++ f ++ " where\n\
+    \    convertAttempt = return . fromIntegral\n\
+    \instance ConvertSuccess Integer " ++ f ++ " where\n\
+    \    convertSuccess = fromIntegral\n"
 
 printIntegerI i =
-    "instance Convertible " ++ i ++ " Integer where\n\
-    \    safeConvert = return . fromIntegral\n\
-    \instance Convertible Integer " ++ i ++ " where\n\
-    \    safeConvert = boundedConversion (return . fromIntegral)\n"
+    "instance ConvertAttempt " ++ i ++ " Integer where\n\
+    \    convertAttempt = return . fromIntegral\n\
+    \instance ConvertSuccess " ++ i ++ " Integer where\n\
+    \    convertSuccess = fromIntegral\n\
+    \instance ConvertAttempt Integer " ++ i ++ " where\n\
+    \    convertAttempt = boundedConversion (return . fromIntegral)\n"
 
 printCharI i =
-    "instance Convertible " ++ i ++ " Char where\n\
-    \    safeConvert = boundedConversion (return . toEnum . fromIntegral)\n\
-    \instance Convertible Char " ++ i ++ " where\n\
-    \    safeConvert = boundedConversion (return . fromIntegral . fromEnum)\n"
+    "instance ConvertAttempt " ++ i ++ " Char where\n\
+    \    convertAttempt = boundedConversion (return . toEnum . fromIntegral)\n\
+    \instance ConvertAttempt Char " ++ i ++ " where\n\
+    \    convertAttempt = boundedConversion (return . fromIntegral . fromEnum)\n"
 
 printFP1 (f1, f2) = 
-    "instance Convertible " ++ f1 ++ " " ++ f2 ++ " where\n\
-    \    safeConvert = return . realToFrac\n"
+    "instance ConvertAttempt " ++ f1 ++ " " ++ f2 ++ " where\n\
+    \    convertAttempt = return . realToFrac\n\
+    \instance ConvertSuccess " ++ f1 ++ " " ++ f2 ++ " where\n\
+    \    convertSuccess = realToFrac\n"
 
 printFPFP (f1, f2) = printFP1 (f1, f2) ++ printFP1 (f2, f1)
 
 printInt (i1, i2) =
-    "instance Convertible " ++ i1 ++ " " ++ i2 ++ " where\n\
-    \    safeConvert = boundedConversion (return . fromIntegral)\n"
+    "instance ConvertAttempt " ++ i1 ++ " " ++ i2 ++ " where\n\
+    \    convertAttempt = boundedConversion (return . fromIntegral)\n"
 
 printIntInt (i1, i2) = printInt (i1, i2) ++ printInt (i2, i1)
 
@@ -59,8 +69,3 @@ main = do putStrLn "-- Section 1"
           mapM_ (putStrLn . printIntegerI) cint
           putStrLn "-- Section 8o"
           mapM_ (putStrLn . printCharI) cint
-
-
-
-
-          
