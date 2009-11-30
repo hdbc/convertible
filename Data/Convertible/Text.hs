@@ -8,7 +8,7 @@ For license and copyright information, see the file COPYRIGHT
 -}
 
 {- |
-   Module     : Data.Convertible.Base
+   Module     : Data.Convertible.Text
    Copyright  : Copyright (C) 2009 John Goerzen
    License    : LGPL
 
@@ -29,7 +29,7 @@ You can import these modules individually, or this module will export the entire
 for you.
 -}
 
-module Data.Convertible (
+module Data.Convertible.Text (
                          module Data.Convertible.Base,
                          module Data.Convertible.Utils,
                          module Data.Convertible.Instances

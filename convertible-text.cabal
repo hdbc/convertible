@@ -1,8 +1,8 @@
-Name: convertible
-Version: 1.2.0
+Name: convertible-text
+Version: 0.0.0
 License: LGPL
-Maintainer: John Goerzen <jgoerzen@complete.org>
-Author: John Goerzen
+Maintainer: Michael Snoyman <michael@snoyman.com>
+Author: John Goerzen, Michael Snoyman
 Copyright: Copyright (c) 2009-2009 John Goerzen
 license-file: COPYRIGHT
 extra-source-files: COPYING, utils/genCinstances.hs
@@ -45,6 +45,9 @@ library
   Build-Depends: base >= 4 && < 5,
                  old-time >= 1.0.0.2 && < 1.1,
                  containers >= 0.2.0.1 && < 0.3,
+                 text >= 0.5 && < 0.6,
+                 bytestring >= 0.9.1.4 && < 0.10,
+                 safe-failure >= 0.4 && < 0.5,
                  attempt >= 0.2.0 && < 0.3
   if flag(time_gte_113)
     Build-Depends: time>=1.1.3 && <= 1.1.4
@@ -54,14 +57,16 @@ library
 
   GHC-Options: -O2 -Wall -fno-warn-orphans
 
-  Exposed-Modules: Data.Convertible,
+  Exposed-Modules: Data.Convertible.Text,
                    Data.Convertible.Base,
                    Data.Convertible.Utils,
                    Data.Convertible.Instances,
                    Data.Convertible.Instances.C,
                    Data.Convertible.Instances.Map,
                    Data.Convertible.Instances.Num,
-                   Data.Convertible.Instances.Time
+                   Data.Convertible.Instances.Time,
+                   Data.Convertible.Instances.Text,
+                   Data.Convertible.Instances.String
 
   --Other-Modules: Database.HDBC.Utils
   --Extensions: ExistentialQuantification, AllowOverlappingInstances,
