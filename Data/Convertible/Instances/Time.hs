@@ -58,12 +58,6 @@ instance Convertible Integer ST.ClockTime where
 
 ------------------------------ POSIX and UTC times
 
-instance Typeable NominalDiffTime where
-    typeOf _ = mkTypeName "NominalDiffTime"
-
-instance Typeable UTCTime where
-    typeOf _ = mkTypeName "UTCTime"
-
 {- Covered under Real a
 instance Convertible Rational POSIXTime where
     safeConvert = return . fromRational
