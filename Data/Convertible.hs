@@ -37,4 +37,4 @@ module Data.Convertible (
 where
 import Data.Convertible.Base
 import Data.Convertible.Utils
-import Data.Convertible.Instances
+import Data.Convertible.Instances()

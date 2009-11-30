@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -20,30 +21,32 @@ For license and copyright information, see the file COPYRIGHT
 
 module Data.Convertible.Base( -- * The conversion process
                               convert,
-                              Convertible(..),
-                              -- * Handling the results
-                              ConvertResult,
-                              ConvertError(..),
-                              convError,
-                              prettyConvertError
+                              ConvertAttempt (..),
+                              ConvertSuccess (..),
+                              ConversionException (..),
+                              convertAttemptWrap
                              )
 where
-import Control.Monad.Error
-import Data.Typeable
-
-{- | The result of a safe conversion via 'safeConvert'. -}
-type ConvertResult a = Either ConvertError a
+import Data.Attempt
+import Control.Exception (Exception)
+import Data.Typeable (Typeable)
 
 ----------------------------------------------------------------------
 -- Conversions
 ----------------------------------------------------------------------
 
-{- | A typeclass that represents something that can be converted.
-A @Convertible a b@ instance represents an @a@ that can be converted to a @b@. -}
-class Convertible a b where
-    {- | Convert @a@ to @b@, returning Right on success and Left on error.
-       For a simpler interface, see 'convert'. -}
-    safeConvert :: a -> ConvertResult b
+{- | A typeclass that represents something that can attempt a conversion.
+An @ConvertAttempt a b@ instance represents an @a@ that might be convertible to a @b@. -}
+class ConvertAttempt a b where
+    {- | Convert @a@ to @b@, returning 'Success' on success and 'Failure' on error.
+     -}
+    convertAttempt :: a -> Attempt b
+
+{- | A typeclass that represents something that guarantees a successful conversion.
+A @ConvertSuccess a b@ instance represents an @a@ that can be converted to a @b@. -}
+class ConvertAttempt a b => ConvertSuccess a b where
+    {- | Convert @a@ to @b@. -}
+    convertSuccess :: a -> b
 
 {-
 {- | Any type can be converted to itself. -}
@@ -59,12 +62,9 @@ instance Convertible a b => Convertible [a] [b] where
 
 {- | Convert from one type of data to another.  Raises an exception if there is
 an error with the conversion.  For a function that does not raise an exception
-in that case, see 'safeConvert'. -}
-convert :: Convertible a b => a -> b
-convert x = 
-    case safeConvert x of
-      Left e -> error (prettyConvertError e)
-      Right r -> r
+in that case, see 'convertAttempt'. -}
+convert :: ConvertAttempt a b => a -> b
+convert = fromSuccess . convertAttempt
 
 {-
 instance Convertible Int Double where
@@ -77,37 +77,21 @@ instance Convertible Double Integer where
     safeConvert = return . truncate
 -}
 
-----------------------------------------------------------------------
--- Error Handling
-----------------------------------------------------------------------
+{- | Wraps 'Exception' which could occur during a 'convertAttempt'.
+-}
+data ConversionException = forall e. Exception e => ConversionException e
+    deriving Typeable
+instance Show ConversionException where
+    show (ConversionException e) = "ConversionException " ++ show e
+instance Exception ConversionException
 
-{- | How we indicate that there was an error. -}
-data ConvertError = ConvertError {
-      convSourceValue :: String,
-      convSourceType :: String,
-      convDestType :: String,
-      convErrorMessage :: String}
-                    deriving (Eq, Read, Show)
-
-instance Error ConvertError where
-    strMsg x = ConvertError "(unknown)" "(unknown)" "(unknown)" x
-
-convError' :: (Show a, Typeable a, Typeable b) =>
-               String -> a -> b -> ConvertResult b
-convError' msg inpval retval = 
-     Left $ ConvertError {
-             convSourceValue = show inpval,
-             convSourceType = show . typeOf $ inpval,
-             convDestType = show . typeOf $ retval,
-             convErrorMessage = msg}
-    
-convError :: (Show a, Typeable a, Typeable b) =>
-             String -> a -> ConvertResult b
-convError msg inpval = 
-    convError' msg inpval undefined
-    
-prettyConvertError :: ConvertError -> String
-prettyConvertError (ConvertError sv st dt em) =
-    "Convertible: error converting source data " ++ sv ++ " of type " ++ st
-    ++ " to type " ++ dt ++ ": " ++ em
-    
+{- | Calls 'convertAttempt', wrapping any 'Exception's in a
+ 'ConversionException'
+-}
+convertAttemptWrap :: (ConvertAttempt a b,
+                       MonadFailure ConversionException m
+                      )
+                   => a
+                   -> m b
+convertAttemptWrap = attempt (failure . ConversionException) return .
+                     convertAttempt
