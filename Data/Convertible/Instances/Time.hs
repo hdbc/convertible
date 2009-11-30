@@ -32,7 +32,6 @@ import Data.Time
 import Data.Time.Clock
 import Data.Time.Clock.POSIX
 import Data.Time.Calendar.OrdinalDate
-import Data.Typeable
 import Data.Ratio
 import Foreign.C.Types
 
@@ -40,17 +39,25 @@ import Foreign.C.Types
 -- Intra-System.Time stuff
 ----------------------------------------------------------------------
 
-instance Convertible ST.ClockTime ST.CalendarTime where
-    safeConvert = return . ST.toUTCTime
+instance ConvertAttempt ST.ClockTime ST.CalendarTime where
+    convertAttempt = return . ST.toUTCTime
+instance ConvertSuccess ST.ClockTime ST.CalendarTime where
+    convertSuccess = ST.toUTCTime
 
-instance Convertible ST.CalendarTime ST.ClockTime where
-    safeConvert = return . ST.toClockTime
+instance ConvertAttempt ST.CalendarTime ST.ClockTime where
+    convertAttempt = return . ST.toClockTime
+instance ConvertSuccess ST.CalendarTime ST.ClockTime where
+    convertSuccess = ST.toClockTime
 
-instance Convertible ST.ClockTime Integer where
-    safeConvert (ST.TOD x _) = return x
+instance ConvertAttempt ST.ClockTime Integer where
+    convertAttempt (ST.TOD x _) = return x
+instance ConvertSuccess ST.ClockTime Integer where
+    convertSuccess (ST.TOD x _) = x
 
-instance Convertible Integer ST.ClockTime where
-    safeConvert x = return $ ST.TOD x 0
+instance ConvertAttempt Integer ST.ClockTime where
+    convertAttempt x = return $ ST.TOD x 0
+instance ConvertSuccess Integer ST.ClockTime where
+    convertSuccess x = ST.TOD x 0
 
 ----------------------------------------------------------------------
 -- Intra-Data.Time stuff
