@@ -23,7 +23,6 @@ Vcs-Git: git://git.debian.org/git/pkg-haskell/haskell-convertible.git
 Vcs-Browser: http://git.debian.org/?p=pkg-haskell/haskell-convertible.git;a=summary
 
 Package: libghc6-convertible-dev
-Section: haskell
 Architecture: any
 Depends: ${msic:Depends},  ${haskell:Depends}
 Description: Typeclasses and instances for converting between types, GHC package
@@ -49,7 +48,6 @@ Description: Typeclasses and instances for converting between types, GHC package
  on GHC and Hugs.
 
 Package: libghc6-convertible-prof
-Section: libdevel
 Architecture: any
 Depends:  ${misc:Depends}, ${haskell:Depends}
 Description: Typeclasses and instances for converting between types, GHC profiling package
@@ -75,7 +73,6 @@ Description: Typeclasses and instances for converting between types, GHC profili
  on GHC and Hugs.
 
 Package: libhugs-convertible
-Section: libs
 Architecture: all
 Depends: ${haskell:Depends}
 Description: Typeclasses and instances for converting between types, Hugs package
