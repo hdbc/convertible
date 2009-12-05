@@ -1,3 +1,9 @@
+haskell-convertible (1.0.6-3) unstable; urgency=low
+
+  * Build depend on cpphs to prevent FTBFS. (Closes: #556819)
+
+ -- Joachim Breitner <nomeata@debian.org>  Sat, 05 Dec 2009 19:11:33 +0100
+
 haskell-convertible (1.0.6-2) unstable; urgency=low
 
   [ Erik de Castro Lopo ]
