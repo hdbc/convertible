@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {- |
    Module     : Data.Convertible.Instances.Map
    Copyright  : Copyright (C) 2009 John Goerzen

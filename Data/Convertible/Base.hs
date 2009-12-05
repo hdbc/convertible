@@ -1,4 +1,10 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE OverlappingInstances #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
@@ -47,6 +53,9 @@ A @ConvertSuccess a b@ instance represents an @a@ that can be converted to a @b@
 class ConvertAttempt a b => ConvertSuccess a b where
     {- | Convert @a@ to @b@. -}
     convertSuccess :: a -> b
+
+instance ConvertSuccess a b => ConvertAttempt a b where
+    convertAttempt = return . convertSuccess
 
 {-
 {- | Any type can be converted to itself. -}

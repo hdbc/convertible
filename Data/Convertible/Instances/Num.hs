@@ -1,3 +1,6 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 {- |
    Module     : Data.Convertible.Instances.Num
    Copyright  : Copyright (C) 2009 John Goerzen

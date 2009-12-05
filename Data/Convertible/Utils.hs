@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-
 Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
