@@ -24,7 +24,8 @@ Vcs-Browser: http://git.debian.org/?p=pkg-haskell/haskell-convertible.git;a=summ
 
 Package: libghc6-convertible-dev
 Architecture: any
-Depends: ${msic:Depends},  ${haskell:Depends}
+Depends: ${misc:Depends},  ${haskell:Depends}, ${shlibs:Depends}
+Suggests: ${haskell:Suggests}
 Description: Typeclasses and instances for converting between types, GHC package
  convertible provides a typeclass with a single function
  that is designed to help convert between different types: numeric
@@ -74,7 +75,7 @@ Description: Typeclasses and instances for converting between types, GHC profili
 
 Package: libhugs-convertible
 Architecture: all
-Depends: ${haskell:Depends}
+Depends: ${haskell:Depends}, ${misc:Depends}
 Description: Typeclasses and instances for converting between types, Hugs package
  convertible provides a typeclass with a single function
  that is designed to help convert between different types: numeric
@@ -100,7 +101,9 @@ Description: Typeclasses and instances for converting between types, Hugs packag
 Package: haskell-convertible-doc
 Section: doc
 Architecture: all
-Depends: ${haskell:Depends}
+Depends: ${haskell:Depends}, ${misc:Depends}
+Recommends: ${haskell:Recommends}
+Suggests: ${haskell:Suggests}
 Description: Typeclasses and instances for converting between types, documentation
  convertible provides a typeclass with a single function
  that is designed to help convert between different types: numeric
