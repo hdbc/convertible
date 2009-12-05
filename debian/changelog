@@ -1,4 +1,4 @@
-haskell-convertible (1.0.6-2) UNRELEASED; urgency=low
+haskell-convertible (1.0.6-2) unstable; urgency=low
 
   [ Erik de Castro Lopo ]
   * debian/rules
@@ -17,7 +17,7 @@ haskell-convertible (1.0.6-2) UNRELEASED; urgency=low
   * Put packages in section haskell properly
   * Add ${misc:Depends} and other subst vars
 
- -- Erik de Castro Lopo <erikd@mega-nerd.com>  Mon, 23 Nov 2009 20:30:55 +1100
+ -- Joachim Breitner <nomeata@debian.org>  Sat, 05 Dec 2009 17:42:10 +0100
 
 haskell-convertible (1.0.6-1) unstable; urgency=low
 
