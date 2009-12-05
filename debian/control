@@ -1,5 +1,5 @@
 Source: haskell-convertible
-Priority: optional
+Priority: extra
 Uploaders: John Goerzen <jgoerzen@complete.org>
 Maintainer: Debian Haskell Group <pkg-haskell-maintainers@lists.alioth.debian.org>
 Build-Depends: debhelper (>= 5.0.0),

@@ -1,5 +1,6 @@
 haskell-convertible (1.0.6-2) UNRELEASED; urgency=low
 
+  [ Erik de Castro Lopo ]
   * debian/rules
     - Convert to hlibrary.mk (dh_haskell was removed to haskell-devscripts).
   * debian/control
@@ -10,6 +11,9 @@ haskell-convertible (1.0.6-2) UNRELEASED; urgency=low
     - Section haskell.
    * debian/compat
     - Version 5
+
+  [ Joachim Breitner ]
+  * Change priority to extra
 
  -- Erik de Castro Lopo <erikd@mega-nerd.com>  Mon, 23 Nov 2009 20:30:55 +1100
 
