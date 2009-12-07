@@ -34,293 +34,197 @@ import Foreign.C.Types
 -- Section 1
 instance ConvertAttempt CFloat Int where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Int8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int8 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int8 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Int16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int16 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int16 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Int32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int32 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int32 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Int64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int64 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int64 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Word where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Word8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word8 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word8 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Word16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word16 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word16 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Word32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word32 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word32 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CFloat Word64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word64 CFloat where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word64 CFloat where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Int where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Int8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int8 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int8 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Int16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int16 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int16 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Int32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int32 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int32 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Int64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int64 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int64 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Word where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Word8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word8 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word8 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Word16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word16 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word16 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Word32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word32 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word32 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CDouble Word64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word64 CDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word64 CDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Int where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Int8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int8 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int8 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Int16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int16 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int16 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Int32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int32 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int32 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Int64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Int64 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Int64 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Word where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Word8 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word8 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word8 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Word16 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word16 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word16 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Word32 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word32 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word32 CLDouble where 
     convertSuccess= fromIntegral
 
 instance ConvertAttempt CLDouble Word64 where 
     convertAttempt = boundedConversion (return . truncate)
-instance ConvertAttempt Word64 CLDouble where 
-    convertAttempt= return . fromIntegral
 instance ConvertSuccess Word64 CLDouble where 
     convertSuccess= fromIntegral
 
 -- Section 2
-instance ConvertAttempt CFloat Double where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CFloat Double where
     convertSuccess = realToFrac
-instance ConvertAttempt Double CFloat where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Double CFloat where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CFloat Float where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CFloat Float where
     convertSuccess = realToFrac
-instance ConvertAttempt Float CFloat where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Float CFloat where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CFloat Rational where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CFloat Rational where
     convertSuccess = realToFrac
-instance ConvertAttempt Rational CFloat where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Rational CFloat where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CDouble Double where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CDouble Double where
     convertSuccess = realToFrac
-instance ConvertAttempt Double CDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Double CDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CDouble Float where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CDouble Float where
     convertSuccess = realToFrac
-instance ConvertAttempt Float CDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Float CDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CDouble Rational where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CDouble Rational where
     convertSuccess = realToFrac
-instance ConvertAttempt Rational CDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Rational CDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CLDouble Double where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CLDouble Double where
     convertSuccess = realToFrac
-instance ConvertAttempt Double CLDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Double CLDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CLDouble Float where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CLDouble Float where
     convertSuccess = realToFrac
-instance ConvertAttempt Float CLDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Float CLDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CLDouble Rational where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CLDouble Rational where
     convertSuccess = realToFrac
-instance ConvertAttempt Rational CLDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess Rational CLDouble where
     convertSuccess = realToFrac
 
@@ -1445,151 +1349,101 @@ instance ConvertAttempt CULLong CLLong where
     convertAttempt = boundedConversion (return . fromIntegral)
 
 -- Section 5
-instance ConvertAttempt CFloat CDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CFloat CDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CFloat CLDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CFloat CLDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CDouble CFloat where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CDouble CFloat where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CDouble CLDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CDouble CLDouble where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CLDouble CFloat where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CLDouble CFloat where
     convertSuccess = realToFrac
 
-instance ConvertAttempt CLDouble CDouble where
-    convertAttempt = return . realToFrac
 instance ConvertSuccess CLDouble CDouble where
     convertSuccess = realToFrac
 
 -- Section 6
-instance ConvertAttempt CFloat Integer where
-    convertAttempt = return . truncate
 instance ConvertSuccess CFloat Integer where
     convertSuccess = truncate
-instance ConvertAttempt Integer CFloat where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess Integer CFloat where
     convertSuccess = fromIntegral
 
-instance ConvertAttempt CDouble Integer where
-    convertAttempt = return . truncate
 instance ConvertSuccess CDouble Integer where
     convertSuccess = truncate
-instance ConvertAttempt Integer CDouble where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess Integer CDouble where
     convertSuccess = fromIntegral
 
-instance ConvertAttempt CLDouble Integer where
-    convertAttempt = return . truncate
 instance ConvertSuccess CLDouble Integer where
     convertSuccess = truncate
-instance ConvertAttempt Integer CLDouble where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess Integer CLDouble where
     convertSuccess = fromIntegral
 
 -- Section 7
-instance ConvertAttempt CChar Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CChar Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CChar where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CSChar Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CSChar Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CSChar where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CUChar Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CUChar Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CUChar where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CShort Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CShort Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CShort where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CUShort Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CUShort Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CUShort where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CInt Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CInt Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CInt where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CUInt Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CUInt Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CUInt where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CLong Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CLong Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CLong where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CULong Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CULong Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CULong where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CSize Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CSize Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CSize where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CWchar Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CWchar Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CWchar where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CLLong Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CLLong Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CLLong where
     convertAttempt = boundedConversion (return . fromIntegral)
 
-instance ConvertAttempt CULLong Integer where
-    convertAttempt = return . fromIntegral
 instance ConvertSuccess CULLong Integer where
     convertSuccess = fromIntegral
 instance ConvertAttempt Integer CULLong where
