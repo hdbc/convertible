@@ -26,10 +26,10 @@ For license and copyright information, see the file COPYRIGHT
 -}
 
 module Data.Convertible.Base( -- * The conversion process
-                              convert,
                               ConvertAttempt (..),
                               ConvertSuccess (..),
                               ConversionException (..),
+                              convertUnsafe,
                               convertAttemptWrap
                              )
 where
@@ -57,11 +57,9 @@ class ConvertAttempt a b => ConvertSuccess a b where
 instance ConvertSuccess a b => ConvertAttempt a b where
     convertAttempt = return . convertSuccess
 
-{-
 {- | Any type can be converted to itself. -}
-instance Convertible a a where
-    safeConvert x = return x
--}
+instance ConvertSuccess a a where
+    convertSuccess = id
 
 {-
 {- | Lists of any convertible type can be converted. -}
@@ -72,21 +70,10 @@ instance Convertible a b => Convertible [a] [b] where
 {- | Convert from one type of data to another.  Raises an exception if there is
 an error with the conversion.  For a function that does not raise an exception
 in that case, see 'convertAttempt'. -}
-convert :: ConvertAttempt a b => a -> b
-convert = fromSuccess . convertAttempt
+convertUnsafe :: ConvertAttempt a b => a -> b
+convertUnsafe = fromSuccess . convertAttempt
 
-{-
-instance Convertible Int Double where
-    safeConvert = return . fromIntegral
-instance Convertible Double Int where
-    safeConvert = return . truncate         -- could do bounds checking here
-instance Convertible Integer Double where
-    safeConvert = return . fromIntegral
-instance Convertible Double Integer where
-    safeConvert = return . truncate
--}
-
-{- | Wraps 'Exception' which could occur during a 'convertAttempt'.
+{- | Wraps any 'Exception' which could occur during a 'convertAttempt'.
 -}
 data ConversionException = forall e. Exception e => ConversionException e
     deriving Typeable
