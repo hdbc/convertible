@@ -67,13 +67,6 @@ library
                    Data.Convertible.Instances.Time,
                    Data.Convertible.Instances.Text,
                    Data.Convertible.Instances.String
-
-  --Other-Modules: Database.HDBC.Utils
-  --Extensions: ExistentialQuantification, AllowOverlappingInstances,
-  --    AllowUndecidableInstances
-  Extensions: ExistentialQuantification, MultiParamTypeClasses,
-              UndecidableInstances, FlexibleInstances,
-              FlexibleContexts, TypeSynonymInstances, CPP
   
 Executable runtests
    if flag(buildtests)

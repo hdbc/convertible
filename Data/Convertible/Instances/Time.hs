@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 {- |
    Module     : Data.ConvertAttempt.Instances.Time
    Copyright  : Copyright (C) 2009 John Goerzen
@@ -189,9 +192,6 @@ instance ConvertAttempt LocalTime TimeOfDay where
 ----------------------------------------------------------------------
 -- Conversions between old and new time
 ----------------------------------------------------------------------
-instance ConvertAttempt ST.CalendarTime ZonedTime where
-    convertAttempt = return . convertSuccess
-
 instance ConvertSuccess ST.CalendarTime ZonedTime where
     convertSuccess ct = ZonedTime {
      zonedTimeToLocalTime = LocalTime {
@@ -221,8 +221,6 @@ instance ConvertAttempt ST.CalendarTime POSIXTime where
 instance ConvertAttempt ST.CalendarTime UTCTime where
     convertAttempt = convertAttemptVia (undefined::POSIXTime)
 
-instance ConvertAttempt ST.ClockTime POSIXTime where
-    convertAttempt = return . convertSuccess
 instance ConvertSuccess ST.ClockTime POSIXTime where
     convertSuccess (ST.TOD x y) = fromRational $ 
                                         fromInteger x + fromRational (y % 1000000000000)
@@ -241,8 +239,6 @@ instance ConvertAttempt ST.ClockTime ZonedTime where
 instance ConvertAttempt ZonedTime ST.ClockTime where
     convertAttempt = convertAttemptVia (undefined::POSIXTime)
 
-instance ConvertAttempt POSIXTime ST.ClockTime where
-    convertAttempt = return . convertSuccess
 instance ConvertSuccess POSIXTime ST.ClockTime where
     convertSuccess x = ST.TOD rsecs rpico
         where rsecs = floor x
@@ -253,8 +249,6 @@ instance ConvertSuccess UTCTime ST.ClockTime where
 instance ConvertAttempt UTCTime ST.ClockTime where
     convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
 
-instance ConvertAttempt ZonedTime ST.CalendarTime where
-    convertAttempt = return . convertSuccess
 instance ConvertSuccess ZonedTime ST.CalendarTime where
     convertSuccess zt = ST.CalendarTime {
             ST.ctYear = fromIntegral year,
@@ -286,8 +280,6 @@ instance ConvertAttempt POSIXTime ST.CalendarTime where
 instance ConvertAttempt UTCTime ST.CalendarTime where
     convertAttempt = convertAttempt . utcTimeToPOSIXSeconds
 
-instance ConvertAttempt ST.TimeDiff NominalDiffTime where
-    convertAttempt = return . convertSuccess
 instance ConvertSuccess ST.TimeDiff NominalDiffTime where
     {- This is a clever hack.  We convert the TimeDiff to a ClockTime, applying
        it as a diff vs. the epoch.  Converting this ClockTime to a POSIXTime yiels
@@ -295,8 +287,6 @@ instance ConvertSuccess ST.TimeDiff NominalDiffTime where
        epoch. -}
     convertSuccess td = convertSuccess clockTime
         where clockTime = ST.addToClockTime td (ST.TOD 0 0)
-instance ConvertAttempt NominalDiffTime ST.TimeDiff where
-    convertAttempt = return . convertSuccess
 instance ConvertSuccess NominalDiffTime ST.TimeDiff where
     {- Similar clever hack as above. -}
     convertSuccess ndt =

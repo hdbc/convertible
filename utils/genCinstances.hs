@@ -8,25 +8,17 @@ hsfloat = ["Double", "Float", "Rational"]
 printFP (f, i) =
     "instance ConvertAttempt " ++ f ++ " " ++ i ++ " where \n\
     \    convertAttempt = boundedConversion (return . truncate)\n\
-    \instance ConvertAttempt " ++ i ++ " " ++ f ++ " where \n\
-    \    convertAttempt= return . fromIntegral\n\
     \instance ConvertSuccess " ++ i ++ " " ++ f ++ " where \n\
     \    convertSuccess= fromIntegral\n"
 
 printIntegerF f =
-    "instance ConvertAttempt " ++ f ++ " Integer where\n\
-    \    convertAttempt = return . truncate\n\
-    \instance ConvertSuccess " ++ f ++ " Integer where\n\
+    "instance ConvertSuccess " ++ f ++ " Integer where\n\
     \    convertSuccess = truncate\n\
-    \instance ConvertAttempt Integer " ++ f ++ " where\n\
-    \    convertAttempt = return . fromIntegral\n\
     \instance ConvertSuccess Integer " ++ f ++ " where\n\
     \    convertSuccess = fromIntegral\n"
 
 printIntegerI i =
-    "instance ConvertAttempt " ++ i ++ " Integer where\n\
-    \    convertAttempt = return . fromIntegral\n\
-    \instance ConvertSuccess " ++ i ++ " Integer where\n\
+    "instance ConvertSuccess " ++ i ++ " Integer where\n\
     \    convertSuccess = fromIntegral\n\
     \instance ConvertAttempt Integer " ++ i ++ " where\n\
     \    convertAttempt = boundedConversion (return . fromIntegral)\n"
@@ -38,9 +30,7 @@ printCharI i =
     \    convertAttempt = boundedConversion (return . fromIntegral . fromEnum)\n"
 
 printFP1 (f1, f2) = 
-    "instance ConvertAttempt " ++ f1 ++ " " ++ f2 ++ " where\n\
-    \    convertAttempt = return . realToFrac\n\
-    \instance ConvertSuccess " ++ f1 ++ " " ++ f2 ++ " where\n\
+    "instance ConvertSuccess " ++ f1 ++ " " ++ f2 ++ " where\n\
     \    convertSuccess = realToFrac\n"
 
 printFPFP (f1, f2) = printFP1 (f1, f2) ++ printFP1 (f2, f1)
