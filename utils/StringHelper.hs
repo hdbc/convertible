@@ -1,3 +1,5 @@
+import Control.Monad
+
 types = ["BS.ByteString", "BL.ByteString", "ST.Text", "LT.Text"]
 fromStringAttempts = ["Day", "Bool", "Int", "(Ratio Integer)"]
 fromStringSuccesses = []
@@ -5,9 +7,9 @@ toStringAttempts = []
 toStringSuccesses = ["Day", "Bool", "Int", "(Ratio Integer)"]
 
 main = do
-    mapM_ fsa $ fromStringAttempts ++ fromStringSuccesses
+    mapM_ fsa fromStringAttempts
     mapM_ fss fromStringSuccesses
-    mapM_ tsa $ toStringAttempts ++ toStringSuccesses
+    mapM_ tsa toStringAttempts
     mapM_ tss toStringSuccesses
 
 fsa t = forM_ types (\f -> putStrLn $
