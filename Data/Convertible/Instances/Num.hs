@@ -6,7 +6,7 @@
    Copyright  : Copyright (C) 2009 John Goerzen
    License    : LGPL
 
-   Maintainer : John Goerzen <jgoerzen@complete.org>
+   Maintainer : Michael Snoyman <michael@snoyman.com>
    Stability  : provisional
    Portability: portable
 

@@ -19,14 +19,13 @@ For license and copyright information, see the file COPYRIGHT
    Copyright  : Copyright (C) 2009 John Goerzen
    License    : LGPL
 
-   Maintainer : John Goerzen <jgoerzen@complete.org>
+   Maintainer : Michael Snoyman <michael@snoyman.com>
    Stability  : provisional
    Portability: portable
 
 -}
 
-module Data.Convertible.Base( -- * The conversion process
-                              ConvertAttempt (..),
+module Data.Convertible.Base( ConvertAttempt (..),
                               ConvertSuccess (..),
                               ConversionException (..),
                               convertUnsafe,
