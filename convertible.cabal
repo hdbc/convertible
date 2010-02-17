@@ -1,9 +1,9 @@
 Name: convertible
-Version: 1.0.8
+Version: 1.0.9
 License: LGPL
 Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
-Copyright: Copyright (c) 2009-2009 John Goerzen
+Copyright: Copyright (c) 2009-2010 John Goerzen
 license-file: COPYRIGHT
 extra-source-files: COPYING, utils/genCinstances.hs,
                     Makefile,
