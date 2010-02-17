@@ -1,3 +1,10 @@
+haskell-convertible (1.0.9-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuild for GHC 6.12.
+
+ -- John Goerzen <jgoerzen@complete.org>  Wed, 17 Feb 2010 11:08:10 -0600
+
 haskell-convertible (1.0.6-3) unstable; urgency=low
 
   * Build depend on cpphs to prevent FTBFS. (Closes: #556819)
