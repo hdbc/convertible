@@ -1,3 +1,30 @@
+haskell-convertible (1.0.6-3) unstable; urgency=low
+
+  * Build depend on cpphs to prevent FTBFS. (Closes: #556819)
+
+ -- Joachim Breitner <nomeata@debian.org>  Sat, 05 Dec 2009 19:11:33 +0100
+
+haskell-convertible (1.0.6-2) unstable; urgency=low
+
+  [ Erik de Castro Lopo ]
+  * debian/rules
+    - Convert to hlibrary.mk (dh_haskell was removed to haskell-devscripts).
+  * debian/control
+    - Depend on haskell-devscripts >= 0.6.18.
+    - Move Build-Depends-Indeps to Build-Depends.
+    - Add hscolour to build deps.
+    - Standards-Version 3.8.3
+    - Section haskell.
+   * debian/compat
+    - Version 5
+
+  [ Joachim Breitner ]
+  * Change priority to extra
+  * Put packages in section haskell properly
+  * Add ${misc:Depends} and other subst vars
+
+ -- Joachim Breitner <nomeata@debian.org>  Sat, 05 Dec 2009 17:42:10 +0100
+
 haskell-convertible (1.0.6-1) unstable; urgency=low
 
   * New upstream release fixes issues with time library.
