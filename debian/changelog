@@ -2,6 +2,7 @@ haskell-convertible (1.0.9-1) unstable; urgency=low
 
   * New upstream release.
   * Rebuild for GHC 6.12.
+  * Drop Hugs build for now due to Cabal issue.
 
  -- John Goerzen <jgoerzen@complete.org>  Wed, 17 Feb 2010 11:08:10 -0600
 
