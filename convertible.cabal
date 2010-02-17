@@ -1,11 +1,16 @@
 Name: convertible
-Version: 1.0.7
+Version: 1.0.8
 License: LGPL
 Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
 Copyright: Copyright (c) 2009-2009 John Goerzen
 license-file: COPYRIGHT
-extra-source-files: COPYING, utils/genCinstances.hs
+extra-source-files: COPYING, utils/genCinstances.hs,
+                    Makefile,
+                    testsrc/TestInfrastructure.hs,
+                    testsrc/TestMap.hs,
+                    testsrc/TestNum.hs,
+                    testsrc/TestTime.hs
 homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
 Category: Data
 synopsis: Typeclasses and instances for converting between types

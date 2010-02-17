@@ -129,56 +129,6 @@ instance Convertible CDouble Word64 where
 instance Convertible Word64 CDouble where 
     safeConvert = return . fromIntegral
 
-instance Convertible CLDouble Int where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Int CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Int8 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Int8 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Int16 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Int16 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Int32 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Int32 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Int64 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Int64 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Word where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Word CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Word8 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Word8 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Word16 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Word16 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Word32 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Word32 CLDouble where 
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Word64 where 
-    safeConvert = boundedConversion (return . truncate)
-instance Convertible Word64 CLDouble where 
-    safeConvert = return . fromIntegral
-
 -- Section 2
 instance Convertible CFloat Double where
     safeConvert = return . realToFrac
@@ -208,21 +158,6 @@ instance Convertible Float CDouble where
 instance Convertible CDouble Rational where
     safeConvert = return . realToFrac
 instance Convertible Rational CDouble where
-    safeConvert = return . realToFrac
-
-instance Convertible CLDouble Double where
-    safeConvert = return . realToFrac
-instance Convertible Double CLDouble where
-    safeConvert = return . realToFrac
-
-instance Convertible CLDouble Float where
-    safeConvert = return . realToFrac
-instance Convertible Float CLDouble where
-    safeConvert = return . realToFrac
-
-instance Convertible CLDouble Rational where
-    safeConvert = return . realToFrac
-instance Convertible Rational CLDouble where
     safeConvert = return . realToFrac
 
 -- Section 3
@@ -1349,19 +1284,7 @@ instance Convertible CULLong CLLong where
 instance Convertible CFloat CDouble where
     safeConvert = return . realToFrac
 
-instance Convertible CFloat CLDouble where
-    safeConvert = return . realToFrac
-
 instance Convertible CDouble CFloat where
-    safeConvert = return . realToFrac
-
-instance Convertible CDouble CLDouble where
-    safeConvert = return . realToFrac
-
-instance Convertible CLDouble CFloat where
-    safeConvert = return . realToFrac
-
-instance Convertible CLDouble CDouble where
     safeConvert = return . realToFrac
 
 -- Section 6
@@ -1373,11 +1296,6 @@ instance Convertible Integer CFloat where
 instance Convertible CDouble Integer where
     safeConvert = return . truncate
 instance Convertible Integer CDouble where
-    safeConvert = return . fromIntegral
-
-instance Convertible CLDouble Integer where
-    safeConvert = return . truncate
-instance Convertible Integer CLDouble where
     safeConvert = return . fromIntegral
 
 -- Section 7
