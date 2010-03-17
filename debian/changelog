@@ -1,3 +1,9 @@
+haskell-convertible (1.0.9-2) UNRELEASED; urgency=low
+
+  * debian/control: Rename -doc package.
+
+ -- Marco Túlio Gontijo e Silva <marcot@debian.org>  Wed, 17 Mar 2010 19:39:17 -0300
+
 haskell-convertible (1.0.9-1) unstable; urgency=low
 
   * New upstream release.
