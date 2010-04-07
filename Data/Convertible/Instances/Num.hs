@@ -18,7 +18,7 @@ For license and copyright information, see the file COPYRIGHT
 These instances perform conversion between numeric types such as Double, Int, Integer,
 Rational, and the like.  Here are some notes about the conversion process:
 
-Conversions from floating-point types such as Double to integral types are dune via the
+Conversions from floating-point types such as Double to integral types are done via the
 'truncate' function.  This is a somewhat arbitrary decision; if you need different
 behavior, you will have to write your own instance or manually perform the conversion.
 
