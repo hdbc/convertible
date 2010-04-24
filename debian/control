@@ -73,7 +73,10 @@ Description: Typeclasses and instances for converting between types, GHC profili
  Convertible is backed by an extensive test suite and passes tests
  on GHC and Hugs.
 
-Package: haskell-convertible-doc
+Package: libghc6-convertible-doc
+Replaces: haskell-convertible-doc
+Conflicts: haskell-convertible-doc
+Provides: haskell-convertible-doc
 Section: doc
 Architecture: all
 Depends: ${haskell:Depends}, ${misc:Depends}
