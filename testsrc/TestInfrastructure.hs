@@ -13,5 +13,3 @@ import Test.HUnit.Tools
 q :: QC.Testable a => String -> a -> HU.Test
 q = qc2hu 250
 
-qverbose :: QC.Testable a => String -> a -> HU.Test
-qverbose = qc2huVerbose 250
