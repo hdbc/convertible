@@ -82,7 +82,7 @@ library
 Executable runtests
    if flag(buildtests)
       Buildable: True
-      Build-Depends: HUnit, QuickCheck, testpack
+      Build-Depends: HUnit, QuickCheck >= 2.0, testpack >= 2.0
       if flag(time_gte_113)
         Build-Depends: time>=1.1.3
         CPP-OPTIONS: -DTIME_GT_113
