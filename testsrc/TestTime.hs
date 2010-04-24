@@ -12,6 +12,7 @@ import Data.Convertible
 import Test.QuickCheck
 import Test.QuickCheck.Tools
 import Test.QuickCheck.Instances
+import qualified Test.QuickCheck.Property as P
 import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock.POSIX
@@ -22,7 +23,7 @@ instance Arbitrary ST.ClockTime where
     arbitrary = do r1 <- arbitrary
                    r2 <- sized $ \n -> choose (0, 1000000000000 - 1)
                    return (ST.TOD r1 r2)
-    coarbitrary (ST.TOD a b) = coarbitrary a . coarbitrary b
+    -- coarbitrary (ST.TOD a b) = coarbitrary a . coarbitrary b
 
 instance Arbitrary ST.CalendarTime where
     arbitrary = do r <- arbitrary
@@ -43,34 +44,34 @@ instance Arbitrary ZonedTime where
 instance Eq ZonedTime where
     a == b = zonedTimeToUTC a == zonedTimeToUTC b
 
-propCltCalt :: ST.ClockTime -> Result
+propCltCalt :: ST.ClockTime -> P.Result
 propCltCalt x =
     safeConvert x @?= Right (ST.toUTCTime x)
 
-propCltCaltClt :: ST.ClockTime -> Result
+propCltCaltClt :: ST.ClockTime -> P.Result
 propCltCaltClt x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult ST.CalendarTime)
                    safeConvert r1
 
-propCltPT :: ST.ClockTime -> Result
+propCltPT :: ST.ClockTime -> P.Result
 propCltPT x@(ST.TOD y z) =
     safeConvert x @?= Right (r::POSIXTime)
     where r = fromRational $ fromInteger y + fromRational (z % 1000000000000)
 
-propPTClt :: POSIXTime -> Result
+propPTClt :: POSIXTime -> P.Result
 propPTClt x =
     safeConvert x @?= Right (r::ST.ClockTime)
     where r = ST.TOD rsecs rpico
           rsecs = floor x
           rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
 
-propCaltPT :: ST.CalendarTime -> Result
+propCaltPT :: ST.CalendarTime -> P.Result
 propCaltPT x =
     safeConvert x @?= expected
         where expected = do r <- safeConvert x
                             (safeConvert (r :: ST.ClockTime))::ConvertResult POSIXTime
 
-propCltPTClt :: ST.ClockTime -> Result
+propCltPTClt :: ST.ClockTime -> P.Result
 propCltPTClt x =
     Right (toTOD x) @=? case do r1 <- (safeConvert x)::ConvertResult POSIXTime
                                 safeConvert r1
@@ -82,74 +83,74 @@ propCltPTClt x =
                    safeConvert r1
 -}
 
-propPTZTPT :: POSIXTime -> Result
+propPTZTPT :: POSIXTime -> P.Result
 propPTZTPT x =
     Right x @=? do r1 <- safeConvert x
                    safeConvert (r1 :: ZonedTime)
 
-propPTCltPT :: POSIXTime -> Result
+propPTCltPT :: POSIXTime -> P.Result
 propPTCltPT x =
     Right x @=? do r1 <- (safeConvert x)::ConvertResult ST.ClockTime
                    safeConvert r1
 
-propPTCalPT :: POSIXTime -> Result
+propPTCalPT :: POSIXTime -> P.Result
 propPTCalPT x =
     Right x @=? do r1 <- safeConvert x
                    safeConvert (r1::ST.CalendarTime)
 
-propUTCCaltUTC :: UTCTime -> Result
+propUTCCaltUTC :: UTCTime -> P.Result
 propUTCCaltUTC x =
     Right x @=? do r1 <- safeConvert x
                    safeConvert (r1::ST.CalendarTime)
 
-propPTUTC :: POSIXTime -> Result
+propPTUTC :: POSIXTime -> P.Result
 propPTUTC x =
     safeConvert x @?= Right (posixSecondsToUTCTime x)
-propUTCPT :: UTCTime -> Result
+propUTCPT :: UTCTime -> P.Result
 propUTCPT x =
     safeConvert x @?= Right (utcTimeToPOSIXSeconds x)
 
-propCltUTC :: ST.ClockTime -> Result
+propCltUTC :: ST.ClockTime -> P.Result
 propCltUTC x =
     safeConvert x @?= Right (posixSecondsToUTCTime . convert $ x)
 
-propZTCTeqZTCaltCt :: ZonedTime -> Result
+propZTCTeqZTCaltCt :: ZonedTime -> P.Result
 propZTCTeqZTCaltCt x =
     route1 @=? route2
     where route1 = (safeConvert x)::ConvertResult ST.ClockTime
           route2 = do calt <- safeConvert x
                       safeConvert (calt :: ST.CalendarTime)
 
-propCaltZTCalt :: ST.ClockTime -> Result
+propCaltZTCalt :: ST.ClockTime -> P.Result
 propCaltZTCalt x =
     Right x @=? do zt <- ((safeConvert calt)::ConvertResult ZonedTime)
                    calt' <- ((safeConvert zt)::ConvertResult ST.CalendarTime)
                    return (ST.toClockTime calt')
     where calt = ST.toUTCTime x
 
-propCaltZTCalt2 :: ST.CalendarTime -> Result
+propCaltZTCalt2 :: ST.CalendarTime -> P.Result
 propCaltZTCalt2 x =
     Right x @=? do zt <- safeConvert x
                    safeConvert (zt :: ZonedTime)
 
-propZTCaltCtZT :: ZonedTime -> Result
+propZTCaltCtZT :: ZonedTime -> P.Result
 propZTCaltCtZT x =
     Right x @=? do calt <- safeConvert x
                    ct <- safeConvert (calt :: ST.CalendarTime)
                    safeConvert (ct :: ST.ClockTime)
 
-propZTCtCaltZT :: ZonedTime -> Result
+propZTCtCaltZT :: ZonedTime -> P.Result
 propZTCtCaltZT x =
     Right x @=? do ct <- safeConvert x
                    calt <- safeConvert (ct :: ST.ClockTime)
                    safeConvert (calt :: ST.CalendarTime)
 
-propZTCaltZT :: ZonedTime -> Result
+propZTCaltZT :: ZonedTime -> P.Result
 propZTCaltZT x =
     Right x @=? do calt <- safeConvert x
                    safeConvert (calt :: ST.CalendarTime)
 
-propZTCtCaltCtZT :: ZonedTime -> Result
+propZTCtCaltCtZT :: ZonedTime -> P.Result
 propZTCtCaltCtZT x =
     Right x @=? do ct <- safeConvert x
                    calt <- safeConvert (ct :: ST.ClockTime)
@@ -160,17 +161,17 @@ propUTCZT :: UTCTime -> Bool
 propUTCZT x =
           x == zonedTimeToUTC (convert x)
 
-propUTCZTUTC :: UTCTime -> Result
+propUTCZTUTC :: UTCTime -> P.Result
 propUTCZTUTC x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult ZonedTime)
                    safeConvert r1
 
-propNdtTdNdt :: NominalDiffTime -> Result
+propNdtTdNdt :: NominalDiffTime -> P.Result
 propNdtTdNdt x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult ST.TimeDiff)
                    safeConvert r1
 
-propPTCPT :: POSIXTime -> Result
+propPTCPT :: POSIXTime -> P.Result
 propPTCPT x =
     Right testval @=? do r1 <- safeConvert testval
                          safeConvert (r1 :: CTime)

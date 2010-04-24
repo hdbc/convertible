@@ -11,9 +11,10 @@ import TestInfrastructure
 import Data.Convertible
 import Test.QuickCheck
 import Test.QuickCheck.Tools
+import qualified Test.QuickCheck.Property as P
 import Data.Word
 
-prop_int_to_integer :: Int -> Result
+prop_int_to_integer :: Int -> P.Result
 prop_int_to_integer x =
     safeConvert x @?= Right ((fromIntegral x)::Integer)
 
@@ -23,7 +24,7 @@ prop_integer_to_int_pass x =
     (x >= fromIntegral (minBound :: Int)) ==> 
                                           safeConvert x @?= Right ((fromIntegral x)::Int)
 
-prop_integer_to_word8 :: Integer -> Result
+prop_integer_to_word8 :: Integer -> P.Result
 prop_integer_to_word8 x =
     safeConvert x @?= if x >= fromIntegral (minBound :: Word8) &&
                          x <= fromIntegral (maxBound :: Word8)
@@ -42,7 +43,7 @@ prop_integer_to_word8_unsafe x =
     x > fromIntegral (maxBound :: Word8) ==>
       ((safeConvert x)::ConvertResult Word8) @?= (Left $ ConvertError (show x) "Integer" "Word8" "Input value outside of bounds: (0,255)")
 
-prop_double_to_word8 :: Double -> Result
+prop_double_to_word8 :: Double -> P.Result
 prop_double_to_word8 x =
     safeConvert x @?= if truncate x >= toInteger (minBound :: Word8) &&
                          truncate x <= toInteger (maxBound :: Word8)
@@ -61,11 +62,11 @@ prop_double_to_word8_unsafe x =
     truncate x > toInteger (maxBound :: Word8) ==>
       ((safeConvert x)::ConvertResult Word8) @?= (Left $ ConvertError (show x) "Double" "Word8" "Input value outside of bounds: (0,255)")
 
-propIntDouble :: Int -> Result
+propIntDouble :: Int -> P.Result
 propIntDouble x =
     safeConvert x @?= Right ((fromIntegral x)::Double)
 
-propIntChar :: Int -> Result
+propIntChar :: Int -> P.Result
 propIntChar x =
     safeConvert x @?= if x >= fromEnum (minBound :: Char) &&
                          x <= fromEnum (maxBound :: Char)
@@ -78,12 +79,12 @@ propCharInt x =
     safeConvert c @?= Right ((fromEnum c)::Int)
     where c = (toEnum x)::Char
 
-propIntIntegerInt :: Int -> Result
+propIntIntegerInt :: Int -> P.Result
 propIntIntegerInt x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult Integer)
                    ((safeConvert r1)::ConvertResult Int)
     
-propDoubleRationalDouble :: Double -> Result
+propDoubleRationalDouble :: Double -> P.Result
 propDoubleRationalDouble x =
     Right x @=? do r1 <- ((safeConvert x)::ConvertResult Rational)
                    ((safeConvert r1)::ConvertResult Double)

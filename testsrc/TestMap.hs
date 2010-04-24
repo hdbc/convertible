@@ -12,12 +12,13 @@ import Data.Convertible
 import Test.QuickCheck
 import Test.QuickCheck.Tools
 import Test.QuickCheck.Instances
+import qualified Test.QuickCheck.Property as P
 import qualified Data.Map as Map
 
-propListMap :: [(Int, Int)] -> Result
+propListMap :: [(Int, Int)] -> P.Result
 propListMap x = safeConvert x @?= Right (Map.fromList x)
 
-propMapList :: Map.Map Int Int -> Result
+propMapList :: Map.Map Int Int -> P.Result
 propMapList x = safeConvert x @?= Right (Map.toList x)
 
 allt = [q "[(Int, Int)] -> Map" propListMap,
