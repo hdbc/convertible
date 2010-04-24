@@ -73,11 +73,10 @@ propIntChar x =
                       then Right ((toEnum x)::Char)
                       else Left $ ConvertError (show x) "Int" "Char" "Input value outside of bounds: ('\\NUL','\\1114111')"
 
-propCharInt :: Int -> Property
-propCharInt x =
-    x >= fromEnum (minBound :: Char) && x <= fromEnum (maxBound :: Char) ==>
+propCharInt :: Char -> P.Result
+propCharInt c =
     safeConvert c @?= Right ((fromEnum c)::Int)
-    where c = (toEnum x)::Char
+    where x = fromEnum c
 
 propIntIntegerInt :: Int -> P.Result
 propIntIntegerInt x =
