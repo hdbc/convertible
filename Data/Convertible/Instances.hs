@@ -36,4 +36,5 @@ module Data.Convertible.Instances(
 import Data.Convertible.Instances.C()
 import Data.Convertible.Instances.Map()
 import Data.Convertible.Instances.Num()
+import Data.Convertible.Instances.Text()
 import Data.Convertible.Instances.Time()
