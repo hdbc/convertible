@@ -59,7 +59,7 @@ library
       Build-Depends: time<1.1.3
   else
     Build-Depends: base<3
-  Build-Depends: mtl
+  Build-Depends: mtl, text
 
   GHC-Options: -O2 -Wall -fno-warn-orphans
 
@@ -70,6 +70,7 @@ library
                    Data.Convertible.Instances.C,
                    Data.Convertible.Instances.Map,
                    Data.Convertible.Instances.Num,
+                   Data.Convertible.Instances.Text,
                    Data.Convertible.Instances.Time
 
   --Other-Modules: Database.HDBC.Utils
