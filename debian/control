@@ -13,6 +13,7 @@ Build-Depends: debhelper (>= 5.0.0),
  libghc6-mtl-dev,
  libghc6-time-dev,
  libghc6-mtl-prof,
+ libghc6-text-dev,
  libghc6-time-prof,
  libghc6-mtl-doc,
  libghc6-time-doc
