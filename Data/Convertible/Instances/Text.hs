@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 {- |
    Module     : Data.Convertible.Instances.Text
    Copyright  : Copyright (C) 2011 MailRank, Inc.
@@ -47,11 +49,19 @@ instance Convertible [Char] TL.Text where
 instance Convertible TL.Text [Char] where
     safeConvert = Right . TL.unpack
 
+#if MIN_VERSION_text(0,8,1)
 instance Convertible TS.Text TL.Text where
     safeConvert = Right . TL.fromStrict
 
 instance Convertible TL.Text TS.Text where
     safeConvert = Right . TL.toStrict
+#else
+instance Convertible TS.Text TL.Text where
+    safeConvert = Right . TL.fromChunks . (:[])
+
+instance Convertible TL.Text TS.Text where
+    safeConvert = Right . TS.concat . TL.toChunks
+#endif
 
 -- ByteString
 
