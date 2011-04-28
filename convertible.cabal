@@ -59,7 +59,7 @@ library
       Build-Depends: time<1.1.3
   else
     Build-Depends: base<3
-  Build-Depends: mtl, text
+  Build-Depends: mtl, text >= 0.7
 
   GHC-Options: -O2 -Wall -fno-warn-orphans
 
