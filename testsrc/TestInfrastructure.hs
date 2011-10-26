@@ -3,7 +3,7 @@ Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
 
 All rights reserved.
 
-For license and copyright information, see the file COPYRIGHT
+For license and copyright information, see the file LICENSE
 -}
 module TestInfrastructure where
 import qualified Test.QuickCheck as QC

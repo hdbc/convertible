@@ -1,16 +1,16 @@
 {-
-Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
+Copyright (C) 2009-2011 John Goerzen <jgoerzen@complete.org>
 
 All rights reserved.
 
-For license and copyright information, see the file COPYRIGHT
+For license and copyright information, see the file LICENSE
 
 -}
 
 {- |
    Module     : Data.Convertible.Base
-   Copyright  : Copyright (C) 2009 John Goerzen
-   License    : LGPL
+   Copyright  : Copyright (C) 2009-2011 John Goerzen
+   License    : BSD3
 
    Maintainer : John Goerzen <jgoerzen@complete.org>
    Stability  : provisional

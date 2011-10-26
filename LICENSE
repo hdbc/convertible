@@ -1,11 +1,3 @@
-This is convertible, written and maintained by John Goerzen <jgoerzen@complete.org>
-
-The original source can always be found at:
-    http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
-
-The Darcs repository for this program can be accessed with:
-   git clone git://git.complete.org/convertible
-
 Copyright (c) 2009 - 2011 John Goerzen
 All rights reserved.
 
