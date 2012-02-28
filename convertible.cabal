@@ -1,11 +1,11 @@
 Name: convertible
-Version: 1.0.10.0
-License: LGPL
+Version: 1.0.11.0
+License: BSD3
 Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
-Copyright: Copyright (c) 2009-2010 John Goerzen
-license-file: COPYRIGHT
-extra-source-files: COPYING, utils/genCinstances.hs,
+Copyright: Copyright (c) 2009-2011 John Goerzen
+license-file: LICENSE
+extra-source-files: LICENSE, utils/genCinstances.hs,
                     Makefile,
                     testsrc/TestInfrastructure.hs,
                     testsrc/TestMap.hs,
@@ -50,7 +50,7 @@ flag time_gte_113
 
 library
   if flag(splitBase)
-    Build-Depends: base>=3 && <5, old-time, time>=1.1.2.4 && <=1.2.0.3,
+    Build-Depends: base>=3 && <5, old-time, time>=1.1.2.4 && <=1.2.0.5,
      bytestring, containers, old-locale
     if flag(time_gte_113)
       Build-Depends: time>=1.1.3

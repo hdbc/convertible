@@ -1,7 +1,7 @@
 {- |
    Module     : Data.Convertible.Instances.C
-   Copyright  : Copyright (C) 2009 John Goerzen
-   License    : LGPL
+   Copyright  : Copyright (C) 2009-2011 John Goerzen
+   License    : BSD3
 
    Maintainer : John Goerzen <jgoerzen@complete.org>
    Stability  : provisional
@@ -10,11 +10,11 @@
 Numeric instances for Convertible for C types.  See comments in
 "Data.Convertible.Instances.Num".
 
-Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
+Copyright (C) 2009-2011 John Goerzen <jgoerzen@complete.org>
 
 All rights reserved.
 
-For license and copyright information, see the file COPYRIGHT
+For license and copyright information, see the file LICENSE
 -}
 module Data.Convertible.Instances.C()
 where

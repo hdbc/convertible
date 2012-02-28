@@ -1,7 +1,7 @@
 {- |
    Module     : Data.Convertible.Instances.Time
-   Copyright  : Copyright (C) 2009 John Goerzen
-   License    : LGPL
+   Copyright  : Copyright (C) 2009-2011 John Goerzen
+   License    : BSD3
 
    Maintainer : John Goerzen <jgoerzen@complete.org>
    Stability  : provisional
@@ -13,11 +13,11 @@ At present, this module does not do full input validation.  That is, it is possi
 to get an exception rather than a Left result from these functions if your input is
 invalid, particularly when converting from the old-style System.Time structures.
 
-Copyright (C) 2009 John Goerzen <jgoerzen@complete.org>
+Copyright (C) 2009-2011 John Goerzen <jgoerzen@complete.org>
 
 All rights reserved.
 
-For license and copyright information, see the file COPYRIGHT
+For license and copyright information, see the file LICENSE
 
 -}
 
