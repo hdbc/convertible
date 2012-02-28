@@ -1,5 +1,5 @@
 Name: convertible
-Version: 1.0.11.0
+Version: 1.0.11.1
 License: BSD3
 Maintainer: John Goerzen <jgoerzen@complete.org>
 Author: John Goerzen
@@ -50,7 +50,7 @@ flag time_gte_113
 
 library
   if flag(splitBase)
-    Build-Depends: base>=3 && <5, old-time, time>=1.1.2.4 && <=1.2.0.5,
+    Build-Depends: base>=3 && <5, old-time, time>=1.1.2.4
      bytestring, containers, old-locale
     if flag(time_gte_113)
       Build-Depends: time>=1.1.3
