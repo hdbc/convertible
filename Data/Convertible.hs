@@ -31,10 +31,9 @@ for you.
 
 module Data.Convertible (
                          module Data.Convertible.Base,
-                         module Data.Convertible.Utils,
-                         module Data.Convertible.Instances
+                         module Data.Convertible.Utils
                          )
 where
 import Data.Convertible.Base
 import Data.Convertible.Utils
-import Data.Convertible.Instances
+import Data.Convertible.Instances ()
