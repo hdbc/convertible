@@ -7,19 +7,21 @@ For license and copyright information, see the file LICENSE
 -}
 
 module TestMap where
-import TestInfrastructure
 import Data.Convertible
-import Test.QuickCheck
-import Test.QuickCheck.Tools
-import Test.QuickCheck.Instances
-import qualified Test.QuickCheck.Property as P
+  
+import Test.QuickCheck.Assertions
+import Test.QuickCheck.Property
+import Test.Hspec (describe)
+import Test.Hspec.QuickCheck
+  
 import qualified Data.Map as Map
 
-propListMap :: [(Int, Int)] -> P.Result
-propListMap x = safeConvert x @?= Right (Map.fromList x)
+propListMap :: [(Int, Int)] -> Result
+propListMap x = safeConvert x ?== Right (Map.fromList x)
 
-propMapList :: Map.Map Int Int -> P.Result
-propMapList x = safeConvert x @?= Right (Map.toList x)
+propMapList :: Map.Map Int Int -> Result
+propMapList x = safeConvert x ?== Right (Map.toList x)
 
-allt = [q "[(Int, Int)] -> Map" propListMap,
-        q "Map -> [(Int, Int)]" propMapList]
+allt = describe "Map tests" $ do
+  prop "[(Int, Int)] -> Map" propListMap
+  prop "Map -> [(Int, Int)]" propMapList

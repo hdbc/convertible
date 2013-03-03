@@ -37,7 +37,7 @@ Description: convertible provides a typeclass with a single function
 Stability: Stable
 Build-Type: Simple
 
-Cabal-Version: >=1.2
+Cabal-Version: >=1.8
 
 flag splitBase
   description: Choose the new smaller, split-up base package.
@@ -70,16 +70,19 @@ library
   Extensions: ExistentialQuantification, MultiParamTypeClasses,
               UndecidableInstances, FlexibleInstances,
               FlexibleContexts, TypeSynonymInstances, CPP
-  
-Executable runtests
-   if flag(buildtests)
-      Buildable: True
-      Build-Depends: HUnit, QuickCheck >= 2.0, testpack >= 2.0, time
-   else
-      Buildable: False
-   Main-Is: runtests.hs
-   Hs-Source-Dirs: ., testsrc
-   GHC-Options: -O2
-   Extensions: ExistentialQuantification, MultiParamTypeClasses,
-               UndecidableInstances, FlexibleInstances,
-               FlexibleContexts, TypeSynonymInstances, CPP
+
+test-suite               runtests
+  build-depends:         base >= 3
+                       , QuickCheck >= 2.0
+                       , hspec
+                       , quickcheck-instances
+                       , quickcheck-assertions
+                       , time
+                       , old-time
+                       , containers
+                       , convertible
+
+  type:                  exitcode-stdio-1.0
+  hs-source-dirs:        testsrc
+  main-is:               runtests.hs
+  ghc-options:           -Wall -O2
