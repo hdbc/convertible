@@ -80,9 +80,12 @@ test-suite               runtests
                        , time
                        , old-time
                        , containers
+                       , Decimal
                        , convertible
 
   type:                  exitcode-stdio-1.0
   hs-source-dirs:        testsrc
   main-is:               runtests.hs
   ghc-options:           -Wall -O2
+
+  extensions: CPP

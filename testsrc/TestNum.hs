@@ -11,10 +11,20 @@ import Data.Convertible
 
 import Test.Hspec
 import Test.Hspec.QuickCheck
+import Test.QuickCheck (Arbitrary(..))
 import Test.QuickCheck.Assertions
 import Test.QuickCheck.Property
+import Data.Decimal
+import Control.Applicative
   
 import Data.Word
+import Data.Int
+
+#if MIN_VERSION_Decimal(0,2,4)
+-- Decimal-0.2.4 has no Arbitrary instance in library any more
+instance (Arbitrary i, Integral i) => Arbitrary (DecimalRaw i) where
+  arbitrary = Decimal <$> arbitrary <*> arbitrary
+#endif
 
 prop_int_to_integer :: Int -> Result
 prop_int_to_integer x =
@@ -93,6 +103,15 @@ propDoubleRationalDouble x =
 propFloatToDouble :: Float -> Result
 propFloatToDouble x = x ~==? (convert (convert x :: Double))
 
+propDoubleToDecimal :: Double -> Result
+propDoubleToDecimal x = x ~==? (convert (convert x :: Decimal))
+
+propDecimalToRational :: Decimal -> Result
+propDecimalToRational x = x ==? (convert (convert x :: Rational))
+
+propInt32ToDecimal :: Int32 -> Result
+propInt32ToDecimal x = x ==? (convert (convert x :: Decimal))
+
 
 allt = describe "Numeric tests" $ do
   prop "Int -> Integer" prop_int_to_integer
@@ -108,4 +127,7 @@ allt = describe "Numeric tests" $ do
   prop "Char -> Int" propCharInt
   prop "identity Int -> Integer -> Int" propIntIntegerInt
   prop "identity Double -> Rational -> Double" propDoubleRationalDouble
-  prop "Float ~== Float -> Double -> Float" propFloatToDouble
+  prop "Float -> Double -> Float" propFloatToDouble
+  prop "Doublde -> Decimal -> Double" propDoubleToDecimal
+  prop "Decimal -> Rational -> Decimal" propDecimalToRational
+  prop "Int32 -> Decimal -> Int32" propInt32ToDecimal
