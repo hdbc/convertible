@@ -1,3 +1,6 @@
+{-# LANGUAGE
+    ScopedTypeVariables #-}
+
 {-
 Copyright (C) 2009-2011 John Goerzen <jgoerzen@complete.org>
 
@@ -12,8 +15,8 @@ import Data.Convertible
 
 import Test.Hspec
 import Test.Hspec.QuickCheck
-import Test.QuickCheck (arbitrary, Gen(..))
-import Test.QuickCheck.Instances
+import Test.QuickCheck (arbitrary, Gen)
+import Test.QuickCheck.Instances ()
 import Test.QuickCheck.Assertions
 import Test.QuickCheck.Property
   
@@ -21,9 +24,10 @@ import qualified System.Time as ST
 import Data.Time
 import Data.Time.Clock.POSIX
 import Data.Ratio
+import Data.AEq
 import Foreign.C.Types
 
-
+genZoned :: Gen ZonedTime
 genZoned = fmap convert (arbitrary :: Gen POSIXTime)
 
 instance Eq ZonedTime where
@@ -60,9 +64,9 @@ propCltPTClt :: ST.ClockTime -> Result
 propCltPTClt x =
     Right (toTOD x) ==? case do r1 <- (safeConvert x)::ConvertResult POSIXTime
                                 safeConvert r1
-                        of Left x -> Left x
+                        of Left z -> Left z
                            Right y -> Right $ toTOD y
-    where toTOD (ST.TOD x y) = (x, y)
+    where toTOD (ST.TOD z y) = (z, y)
 {-
     Right x ==? do r1 <- (safeConvert x)::ConvertResult POSIXTime
                    safeConvert r1
@@ -162,6 +166,14 @@ propPTCPT x =
                          safeConvert (r1 :: CTime)
         where testval = (convert ((truncate x)::Integer))::POSIXTime      -- CTime doesn't support picosecs
 
+propFromTo :: (Convertible a b, Convertible b a, Eq a, Show a) => a -> b -> Result
+propFromTo a b = a ==? (convert (asTypeOf (convert a) b))
+
+propFromToAlmost :: (Convertible a b, Convertible b a, AEq a, Show a) => a -> b -> Result
+propFromToAlmost a b = a ~==? (convert (asTypeOf (convert a) b))
+
+              
+allt :: Spec
 allt = describe "Date and time tests" $ do
   prop "ClockTime -> CalendarTime" propCltCalt
   prop "ClockTime -> CalendarTime -> ClockTime" propCltCaltClt
@@ -187,3 +199,16 @@ allt = describe "Date and time tests" $ do
   prop "UTCTime -> ZonedTime -> UTCTime" propUTCZTUTC
   prop "identity NominalDiffTime -> TimeDiff -> NominalDiffTime" propNdtTdNdt
   prop "identity POSIXTime -> CTime -> POSIXTime" propPTCPT
+  prop "Integer -> ST.ClockTime -> Integer" $ \(i :: Integer) -> propFromTo i (undefined :: ST.ClockTime)
+  prop "POSIXTime -> Rational -> POSIXTime" $ \(i :: POSIXTime) -> propFromTo i (undefined :: Rational)
+  prop "Double -> POSIXTime -> Double" $ \(i :: Double) -> propFromToAlmost i (undefined :: POSIXTime)
+  prop "Int -> POSIXTime -> Int" $ \(i :: Int) -> propFromTo i (undefined :: POSIXTime)
+  prop "UTCTime -> Rational -> UTCTime" $ \(i :: UTCTime) -> propFromTo i (undefined :: Rational)
+  prop "Integer -> UTCTime -> Integer" $ \(i :: Integer) -> propFromTo i (undefined :: UTCTime)
+  prop "Int -> UTCTime -> Int" $ \(i :: Int) -> propFromTo i (undefined :: UTCTime)
+  prop "Double -> UTCTime -> Double" $ \(i :: Double) -> propFromToAlmost i (undefined :: UTCTime)
+  prop "ST.CalendarTime -> POSIXTime -> ST.CalendarTime" $ \(i :: ST.CalendarTime) -> propFromTo i (undefined :: POSIXTime)
+  prop "UTCTime -> ST.ClockTime -> UTCTime" $ \(i :: UTCTime) -> propFromTo i (undefined :: ST.ClockTime)
+  prop "Integer -> ST.TimeDiff -> Integer" $ \(i :: Integer) -> propFromTo i (undefined :: ST.TimeDiff)
+  prop "Double -> ST.TimeDiff -> Double" $ \(i :: Double) -> propFromToAlmost i (undefined :: ST.TimeDiff)
+  

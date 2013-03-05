@@ -81,11 +81,12 @@ test-suite               runtests
                        , old-time
                        , containers
                        , Decimal
+                       , ieee754
                        , convertible
 
   type:                  exitcode-stdio-1.0
   hs-source-dirs:        testsrc
   main-is:               runtests.hs
-  ghc-options:           -Wall -O2
+  ghc-options:           -Wall -O2 -fno-warn-orphans
 
   extensions: CPP

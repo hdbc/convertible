@@ -11,7 +11,7 @@ import Data.Convertible
   
 import Test.QuickCheck.Assertions
 import Test.QuickCheck.Property
-import Test.Hspec (describe)
+import Test.Hspec
 import Test.Hspec.QuickCheck
   
 import qualified Data.Map as Map
@@ -22,6 +22,7 @@ propListMap x = safeConvert x ?== Right (Map.fromList x)
 propMapList :: Map.Map Int Int -> Result
 propMapList x = safeConvert x ?== Right (Map.toList x)
 
+allt :: Spec
 allt = describe "Map tests" $ do
   prop "[(Int, Int)] -> Map" propListMap
   prop "Map -> [(Int, Int)]" propMapList
