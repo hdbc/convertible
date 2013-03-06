@@ -5,12 +5,13 @@ Maintainer: Nicolas Wu <nicolas.wu@gmail.com>
 Author: John Goerzen
 Copyright: Copyright (c) 2009-2011 John Goerzen
 license-file: LICENSE
-extra-source-files: LICENSE, utils/genCinstances.hs,
+extra-source-files: LICENSE, 
+                    utils/genCinstances.hs,
                     Makefile,
-                    testsrc/TestInfrastructure.hs,
                     testsrc/TestMap.hs,
                     testsrc/TestNum.hs,
                     testsrc/TestTime.hs
+                    
 homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
 Category: Data
 synopsis: Typeclasses and instances for converting between types
@@ -52,7 +53,7 @@ library
     Build-Depends: base<3
   Build-Depends: mtl, text >= 0.7, Decimal >= 0.2.1, time
 
-  GHC-Options: -O2 -Wall -fno-warn-orphans
+  GHC-Options: -Wall -fno-warn-orphans
 
   Exposed-Modules: Data.Convertible,
                    Data.Convertible.Base,
@@ -87,6 +88,6 @@ test-suite               runtests
   type:                  exitcode-stdio-1.0
   hs-source-dirs:        testsrc
   main-is:               runtests.hs
-  ghc-options:           -Wall -O2 -fno-warn-orphans
+  ghc-options:           -Wall -fno-warn-orphans
 
   extensions: CPP
