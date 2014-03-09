@@ -19,7 +19,6 @@ For license and copyright information, see the file LICENSE
 -}
 
 module Data.Convertible.Utils(boundedConversion,
-                             mkTypeName,
                              convertVia
                              )
 where
@@ -48,14 +47,6 @@ boundedConversion func inp =
           then convError ("Input value outside of bounds: " ++ show (smallest, biggest))
                inp
           else return result
-
-{- | Useful for defining 'Typeable' instances.  Example:
-
->instance Typeable TimeOfDay where
->    typeOf _ = mkTypeName "TimeOfDay"
--}
-mkTypeName :: String -> TypeRep
-mkTypeName name = mkTyConApp (mkTyCon name) []
 
 {- | Useful for defining conversions that are implemented in terms of other
 conversions via an intermediary type. Instead of:
