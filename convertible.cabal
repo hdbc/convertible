@@ -12,6 +12,7 @@ extra-source-files: LICENSE, utils/genCinstances.hs,
                     testsrc/TestNum.hs,
                     testsrc/TestTime.hs
 homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
+bug-reports: https://github.com/hdbc/convertible/issues
 Category: Data
 synopsis: Typeclasses and instances for converting between types
 Description: convertible provides a typeclass with a single function
@@ -75,7 +76,7 @@ library
   Extensions: ExistentialQuantification, MultiParamTypeClasses,
               UndecidableInstances, FlexibleInstances,
               FlexibleContexts, TypeSynonymInstances, CPP
-  
+
 Executable runtests
    if flag(buildtests)
       Buildable: True
