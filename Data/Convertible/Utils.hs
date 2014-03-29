@@ -17,11 +17,13 @@ For license and copyright information, see the file LICENSE
    Portability: portable
 
 -}
-
 module Data.Convertible.Utils(boundedConversion,
-                             convertVia
+                             convertVia,
+                             convertMay
                              )
 where
+import Control.Monad.Error (throwError)
+import Control.Monad ((<=<))
 import Data.Convertible.Base
 import Data.Typeable
 
@@ -32,7 +34,7 @@ the source via 'safeConvert', comparing to the source value.  Results in an erro
 if the conversion is out of bounds. -}
 boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible a Integer,
                       Convertible b Integer,
-                      Typeable a, Typeable b) => 
+                      Typeable a, Typeable b) =>
                      (a -> ConvertResult b) -- ^ Function to do the conversion
                   -> a                      -- ^ Input data
                   -> ConvertResult b        -- ^ Result
@@ -70,3 +72,23 @@ convertVia :: (Convertible a b, Convertible b c) =>
 convertVia dummy inp =
     do r1 <- safeConvert inp
        safeConvert (asTypeOf r1 dummy)
+
+{- | Make an intermediary conversion based on a function (a -> Maybe b). For instance:
+
+>data Foo
+>instance Show Foo where ...
+>
+>data Bar
+instance Read Bar where ...
+>
+>instance Convertible Foo [Char] where ...
+>
+>instance Convertible Foo Bar where
+>    safeConvert = convertMay (strMsg "Invalid Bar") readMay
+ -}
+convertMay :: Convertible a b =>
+              ConvertError    -- ^ Error if the conversion fails
+           -> (b -> Maybe c)  -- ^ Conversion from intermediate type to end result
+           -> a               -- ^ Input value
+           -> ConvertResult c -- ^ Result
+convertMay e f = maybe (throwError e) return . f <=< safeConvert
