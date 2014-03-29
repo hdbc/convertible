@@ -37,8 +37,10 @@ Description: convertible provides a typeclass with a single function
  on GHC and Hugs.
 Stability: Stable
 Build-Type: Simple
-
 Cabal-Version: >=1.2
+source-repository head
+  type: git
+  location: https://github.com/hdbc/convertible.git
 
 flag splitBase
   description: Choose the new smaller, split-up base package.
