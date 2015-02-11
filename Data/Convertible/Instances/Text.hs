@@ -206,3 +206,30 @@ instance Convertible [Word8] BB.Builder where
     {-# INLINE safeConvert #-}
     safeConvert = Right . foldMap BB.word8
 
+
+
+instance Convertible Char TS.Text where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . TS.singleton
+
+instance Convertible Char TL.Text where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . TL.singleton
+
+instance Convertible Char TLB.Builder where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . TLB.singleton
+
+
+
+instance Convertible Word8 BS.ByteString where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . BS.singleton
+
+instance Convertible Word8 BL.ByteString where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . BL.singleton
+
+instance Convertible Word8 BB.Builder where
+    {-# INLINE safeConvert #-}
+    safeConvert = Right . BB.word8
