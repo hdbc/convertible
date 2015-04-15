@@ -12,6 +12,7 @@ extra-source-files: LICENSE, utils/genCinstances.hs,
                     testsrc/TestNum.hs,
                     testsrc/TestTime.hs
 homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
+bug-reports: https://github.com/hdbc/convertible/issues
 Category: Data
 synopsis: Typeclasses and instances for converting between types
 Description: convertible provides a typeclass with a single function
@@ -36,8 +37,10 @@ Description: convertible provides a typeclass with a single function
  on GHC and Hugs.
 Stability: Stable
 Build-Type: Simple
-
 Cabal-Version: >=1.2
+source-repository head
+  type: git
+  location: https://github.com/hdbc/convertible.git
 
 flag buildtests
   description: Build the executable to run unit tests
@@ -68,7 +71,7 @@ library
   Extensions: ExistentialQuantification, MultiParamTypeClasses,
               UndecidableInstances, FlexibleInstances,
               FlexibleContexts, TypeSynonymInstances, CPP
-  
+
 Executable runtests
    if flag(buildtests)
       Buildable: True
