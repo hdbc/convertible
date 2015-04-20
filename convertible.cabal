@@ -1,8 +1,8 @@
 Name: convertible
-Version: 1.1.0.0
+Version: 1.1.1.0
 License: BSD3
-Maintainer: Nicolas Wu <nicolas.wu@gmail.com>
-Author: John Goerzen, Nicolas Wu
+Maintainer: Erik Hesselink <hesselink@gmail.com>
+Author: John Goerzen
 Copyright: Copyright (c) 2009-2011 John Goerzen
 license-file: LICENSE
 extra-source-files: LICENSE, utils/genCinstances.hs,
@@ -11,7 +11,11 @@ extra-source-files: LICENSE, utils/genCinstances.hs,
                     testsrc/TestMap.hs,
                     testsrc/TestNum.hs,
                     testsrc/TestTime.hs
-homepage: http://hackage.haskell.org/cgi-bin/hackage-scripts/package/convertible
+homepage: http://hackage.haskell.org/package/convertible
+bug-reports:  https://github.com/hdbc/convertible/issues
+source-repository head
+  type: git
+  location: git://github.com/hdbc/convertible.git
 Category: Data
 synopsis: Typeclasses and instances for converting between types
 Description: convertible provides a typeclass with a single function
