@@ -13,9 +13,8 @@ extra-source-files: LICENSE, utils/genCinstances.hs,
                     testsrc/TestTime.hs
 homepage: http://hackage.haskell.org/package/convertible
 bug-reports:  https://github.com/hdbc/convertible/issues
-source-repository head
-  type: git
-  location: git://github.com/hdbc/convertible.git
+
+
 Category: Data
 synopsis: Typeclasses and instances for converting between types
 Description: convertible provides a typeclass with a single function
@@ -41,11 +40,15 @@ Description: convertible provides a typeclass with a single function
 Stability: Stable
 Build-Type: Simple
 
-Cabal-Version: >=1.2
+Cabal-Version: >=1.6
 
 flag buildtests
   description: Build the executable to run unit tests
   default: False
+
+source-repository head
+  type: git
+  location: git://github.com/hdbc/convertible.git
 
 library
   Build-Depends: base>=3 && <5,
