@@ -64,7 +64,7 @@ instance Convertible TS.Text BL.ByteString where
 
 instance Convertible TS.Text BB.Builder where
     {-# INLINE safeConvert #-}
-#if MIN_VERSION_text(1,2,0)
+#if MIN_VERSION_text(1,2,0) && MIN_VERSION_bytestring(0,10,4)
     safeConvert = Right . TE.encodeUtf8Builder
 #else
     safeConvert = safeConvert . TE.encodeUtf8
@@ -94,7 +94,7 @@ instance Convertible TL.Text BL.ByteString where
 
 instance Convertible TL.Text BB.Builder where
     {-# INLINE safeConvert #-}
-#if MIN_VERSION_text(1,2,0)
+#if MIN_VERSION_text(1,2,0) && MIN_VERSION_bytestring(0,10,4)
     safeConvert = Right . TLE.encodeUtf8Builder
 #else
     safeConvert = safeConvert . TLE.encodeUtf8
