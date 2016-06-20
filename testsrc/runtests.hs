@@ -1,17 +1,19 @@
 module Main where
-import qualified Test.HUnit as HU
-import Test.HUnit.Tools
 
-import qualified TestNum
-import qualified TestMap
-import qualified TestTime
+import Test.Tasty
 
-test1 = HU.TestCase ((HU.@=?) "x" "x")
+import TestNum
+import TestMap
+import TestTime
 
-alltests = [HU.TestLabel "test1" test1,
-            tl "TestNum" TestNum.allt,
-            tl "TestMap" TestMap.allt,
-            tl "TestTime" TestTime.allt]
+main = defaultMain tests
 
-main = do runVerboseTests (HU.TestList alltests)
-          return ()
+tests :: TestTree
+tests = testGroup "Tests" [properties]
+
+properties :: TestTree
+properties = testGroup "Properties"
+  [ testMap
+  , testNum
+  , testTime
+  ]
