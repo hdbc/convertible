@@ -28,11 +28,15 @@ module Data.Convertible.Base( -- * The conversion process
                               prettyConvertError
                              )
 where
+import Control.Monad.Fail
 import Control.Monad.Error
 import Data.Typeable
 
 {- | The result of a safe conversion via 'safeConvert'. -}
 type ConvertResult a = Either ConvertError a
+
+instance MonadFail (Either ConvertError) where
+    fail = Left . strMsg
 
 ----------------------------------------------------------------------
 -- Conversions
