@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-
 Copyright (C) 2009-2011 John Goerzen <jgoerzen@complete.org>
 
@@ -28,7 +29,9 @@ module Data.Convertible.Base( -- * The conversion process
                               prettyConvertError
                              )
 where
+#if !MIN_VERSION_mtl(2,3,0)
 import Control.Monad.Error
+#endif
 import Data.Typeable
 
 {- | The result of a safe conversion via 'safeConvert'. -}
@@ -89,8 +92,10 @@ data ConvertError = ConvertError {
       convErrorMessage :: String}
                     deriving (Eq, Read, Show)
 
+#if !MIN_VERSION_mtl(2,3,0)
 instance Error ConvertError where
     strMsg x = ConvertError "(unknown)" "(unknown)" "(unknown)" x
+#endif
 
 convError' :: (Show a, Typeable a, Typeable b) =>
                String -> a -> b -> ConvertResult b
