@@ -30,7 +30,7 @@ import Data.Typeable
 Does this be examining the bounds of the destination type, converting to the type of
 the source via 'safeConvert', comparing to the source value.  Results in an error
 if the conversion is out of bounds. -}
-boundedConversion :: (Ord a, Bounded b, Show a, Show b, Convertible a Integer,
+boundedConversion :: (Bounded b, Show a, Show b, Convertible a Integer,
                       Convertible b Integer,
                       Typeable a, Typeable b) => 
                      (a -> ConvertResult b) -- ^ Function to do the conversion

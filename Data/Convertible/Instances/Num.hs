@@ -607,10 +607,10 @@ printIt i =
 main = do mapM_ (putStrLn . printIt) int
 -}
 
-instance Convertible Char Int where 
-    safeConvert = boundedConversion (return . fromIntegral . fromEnum)
-instance Convertible Int Char where 
-    safeConvert = boundedConversion (return . toEnum . fromIntegral)
+instance Convertible Char Int where
+    safeConvert = boundedConversion (return . fromEnum)
+instance Convertible Int Char where
+    safeConvert = boundedConversion (return . toEnum)
 
 
 instance Convertible Char Int8 where 

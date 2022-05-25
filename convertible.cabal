@@ -47,11 +47,10 @@ library
                  time>=1.1.3,
                  bytestring >= 0.10.2,
                  containers,
-                 old-locale,
                  mtl,
                  text >= 0.8
 
-  GHC-Options: -Wall -fno-warn-orphans
+  GHC-Options: -Wall -fno-warn-orphans -Wcpp-undef -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Winvalid-haddock -Wunused-packages -Wmissing-export-lists
 
   Exposed-Modules: Data.Convertible,
                    Data.Convertible.Base,
@@ -71,7 +70,7 @@ test-suite runtests
    Build-Depends: base, convertible, containers, QuickCheck >= 2.8, time>=1.1.3, old-time
    Main-Is: runtests.hs
    Hs-Source-Dirs: testsrc
-   GHC-Options: -Wall -Wno-orphans
+   GHC-Options: -Wall -Wno-orphans -Wcpp-undef -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Winvalid-haddock -Wunused-packages
    Extensions: ExistentialQuantification, MultiParamTypeClasses,
                UndecidableInstances, FlexibleInstances,
                FlexibleContexts, TypeSynonymInstances, CPP
