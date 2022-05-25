@@ -1,16 +1,11 @@
 Name: convertible
 Version: 1.1.1.0
 License: BSD3
-Maintainer: Erik Hesselink <hesselink@gmail.com>
+Maintainer: Janus Troelsen <ysangkok@gmail.com>
 Author: John Goerzen
 Copyright: Copyright (c) 2009-2011 John Goerzen
 license-file: LICENSE
-extra-source-files: LICENSE, utils/genCinstances.hs,
-                    Makefile,
-                    testsrc/TestInfrastructure.hs,
-                    testsrc/TestMap.hs,
-                    testsrc/TestNum.hs,
-                    testsrc/TestTime.hs
+extra-source-files: LICENSE, utils/genCinstances.hs
 homepage: http://hackage.haskell.org/package/convertible
 bug-reports:  https://github.com/hdbc/convertible/issues
 
@@ -40,11 +35,7 @@ Description: convertible provides a typeclass with a single function
 Stability: Stable
 Build-Type: Simple
 
-Cabal-Version: >=1.6
-
-flag buildtests
-  description: Build the executable to run unit tests
-  default: False
+Cabal-Version: >=1.8
 
 source-repository head
   type: git
@@ -57,10 +48,10 @@ library
                  bytestring >= 0.10.2,
                  containers,
                  old-locale,
-                 mtl, 
+                 mtl,
                  text >= 0.8
 
-  GHC-Options: -O2 -Wall -fno-warn-orphans
+  GHC-Options: -Wall -fno-warn-orphans
 
   Exposed-Modules: Data.Convertible,
                    Data.Convertible.Base,
@@ -75,16 +66,13 @@ library
   Extensions: ExistentialQuantification, MultiParamTypeClasses,
               UndecidableInstances, FlexibleInstances,
               FlexibleContexts, TypeSynonymInstances, CPP
-  
-Executable runtests
-   if flag(buildtests)
-      Buildable: True
-      Build-Depends: HUnit, QuickCheck >= 2.0, testpack >= 2.0, time>=1.1.3
-   else
-      Buildable: False
+
+test-suite runtests
+   Build-Depends: base, convertible, containers, QuickCheck >= 2.8, time>=1.1.3, old-time
    Main-Is: runtests.hs
-   Hs-Source-Dirs: ., testsrc
-   GHC-Options: -O2
+   Hs-Source-Dirs: testsrc
+   GHC-Options: -Wall -Wno-orphans
    Extensions: ExistentialQuantification, MultiParamTypeClasses,
                UndecidableInstances, FlexibleInstances,
                FlexibleContexts, TypeSynonymInstances, CPP
+   Other-Modules: TestNum, TestTime, TestMap
