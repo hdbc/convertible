@@ -32,7 +32,7 @@ the source via 'safeConvert', comparing to the source value.  Results in an erro
 if the conversion is out of bounds. -}
 boundedConversion :: (Bounded b, Show a, Show b, Convertible a Integer,
                       Convertible b Integer,
-                      Typeable a, Typeable b) => 
+                      Typeable a, Typeable b) =>
                      (a -> ConvertResult b) -- ^ Function to do the conversion
                   -> a                      -- ^ Input data
                   -> ConvertResult b        -- ^ Result
@@ -40,9 +40,9 @@ boundedConversion func inp =
     do result <- func inp
        let smallest = asTypeOf minBound result
        let biggest = asTypeOf maxBound result
-       let smallest' = (convert smallest)::Integer
-       let biggest' = (convert biggest)::Integer
-       let inp' = (convert inp)::Integer
+       let smallest' = convert smallest :: Integer
+       let biggest' = convert biggest :: Integer
+       let inp' = convert inp :: Integer
        if inp' < smallest' || inp' > biggest'
           then convError ("Input value outside of bounds: " ++ show (smallest, biggest))
                inp

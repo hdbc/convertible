@@ -46,7 +46,7 @@ propCltCalt x =
 
 propCltCaltClt :: ST.ClockTime -> Property
 propCltCaltClt x =
-    Right x === do r1 <- ((safeConvert x)::ConvertResult ST.CalendarTime)
+    Right x === do r1 <- safeConvert x :: ConvertResult ST.CalendarTime
                    safeConvert r1
 
 propCltPT :: ST.ClockTime -> Property
@@ -59,17 +59,17 @@ propPTClt x =
     safeConvert x === Right (r::ST.ClockTime)
     where r = ST.TOD rsecs rpico
           rsecs = floor x
-          rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
+          rpico = truncate $ abs $ 1000000000000 * (x - fromIntegral rsecs)
 
 propCaltPT :: ST.CalendarTime -> Property
 propCaltPT x =
     safeConvert x === expected
         where expected = do r <- safeConvert x
-                            (safeConvert (r :: ST.ClockTime))::ConvertResult POSIXTime
+                            safeConvert (r :: ST.ClockTime) :: ConvertResult POSIXTime
 
 propCltPTClt :: ST.ClockTime -> Property
 propCltPTClt x =
-    Right (toTOD x) === case do r1 <- (safeConvert x)::ConvertResult POSIXTime
+    Right (toTOD x) === case do r1 <- safeConvert x :: ConvertResult POSIXTime
                                 safeConvert r1
                         of Left x -> Left x
                            Right y -> Right $ toTOD y
@@ -86,7 +86,7 @@ propPTZTPT x =
 
 propPTCltPT :: POSIXTime -> Property
 propPTCltPT x =
-    Right x === do r1 <- (safeConvert x)::ConvertResult ST.ClockTime
+    Right x === do r1 <- safeConvert x :: ConvertResult ST.ClockTime
                    safeConvert r1
 
 propPTCalPT :: POSIXTime -> Property
@@ -113,14 +113,14 @@ propCltUTC x =
 propZTCTeqZTCaltCt :: ZonedTime -> Property
 propZTCTeqZTCaltCt x =
     route1 === route2
-    where route1 = (safeConvert x)::ConvertResult ST.ClockTime
+    where route1 = safeConvert x :: ConvertResult ST.ClockTime
           route2 = do calt <- safeConvert x
                       safeConvert (calt :: ST.CalendarTime)
 
 propCaltZTCalt :: ST.ClockTime -> Property
 propCaltZTCalt x =
-    Right x === do zt <- ((safeConvert calt)::ConvertResult ZonedTime)
-                   calt' <- ((safeConvert zt)::ConvertResult ST.CalendarTime)
+    Right x === do zt <- safeConvert calt :: ConvertResult ZonedTime
+                   calt' <- safeConvert zt :: ConvertResult ST.CalendarTime
                    return (ST.toClockTime calt')
     where calt = ST.toUTCTime x
 
@@ -159,19 +159,21 @@ propUTCZT x =
 
 propUTCZTUTC :: UTCTime -> Property
 propUTCZTUTC x =
-    Right x === do r1 <- ((safeConvert x)::ConvertResult ZonedTime)
+    Right x === do r1 <- safeConvert x :: ConvertResult ZonedTime
                    safeConvert r1
 
 propNdtTdNdt :: NominalDiffTime -> Property
 propNdtTdNdt x =
-    Right x === do r1 <- ((safeConvert x)::ConvertResult ST.TimeDiff)
+    Right x === do r1 <- safeConvert x :: ConvertResult ST.TimeDiff
                    safeConvert r1
 
 propPTCPT :: POSIXTime -> Property
 propPTCPT x =
     Right testval === do r1 <- safeConvert testval
                          safeConvert (r1 :: CTime)
-        where testval = (convert ((truncate x)::Integer))::POSIXTime      -- CTime doesn't support picosecs
+        where
+          testval :: POSIXTime
+          testval = convert (truncate x :: Integer) -- CTime doesn't support picosecs
 
 q :: Testable prop => String -> prop -> IO ()
 q testLabel prop = do

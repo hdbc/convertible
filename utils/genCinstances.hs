@@ -5,7 +5,7 @@ hsint = ["Int", "Int8", "Int16", "Int32", "Int64", "Word", "Word8", "Word16", "W
          "Word64"]
 hsfloat = ["Double", "Float", "Rational"]
 
-printFP (f, i) = 
+printFP (f, i) =
     "instance Convertible " ++ f ++ " " ++ i ++ " where \n\
     \    safeConvert = boundedConversion (return . truncate)\n\
     \instance Convertible " ++ i ++ " " ++ f ++ " where \n\
@@ -29,7 +29,7 @@ printCharI i =
     \instance Convertible Char " ++ i ++ " where\n\
     \    safeConvert = boundedConversion (return . fromIntegral . fromEnum)\n"
 
-printFP1 (f1, f2) = 
+printFP1 (f1, f2) =
     "instance Convertible " ++ f1 ++ " " ++ f2 ++ " where\n\
     \    safeConvert = return . realToFrac\n"
 
@@ -48,7 +48,7 @@ main = do putStrLn "-- Section 1"
           putStrLn "-- Section 3"
           mapM_ (putStrLn . printIntInt) (concatMap (\x -> map (\y -> (x, y)) hsint) cint)
           putStrLn "-- Section 4"
-          mapM_ (putStrLn . printInt) . filter (\(a, b) -> a /= b) $ 
+          mapM_ (putStrLn . printInt) . filter (\(a, b) -> a /= b) $
                 (concatMap (\x -> map (\y -> (x, y)) cint) cint)
           putStrLn "-- Section 5"
           mapM_ (putStrLn . printFP1) . filter (\(a, b) -> a /= b) $
@@ -63,4 +63,3 @@ main = do putStrLn "-- Section 1"
 
 
 
-          

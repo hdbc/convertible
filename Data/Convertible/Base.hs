@@ -64,7 +64,7 @@ instance Convertible a b => Convertible [a] [b] where
 an error with the conversion.  For a function that does not raise an exception
 in that case, see 'safeConvert'. -}
 convert :: Convertible a b => a -> b
-convert x = 
+convert x =
     case safeConvert x of
       Left e -> error (prettyConvertError e)
       Right r -> r
@@ -99,20 +99,20 @@ instance Error ConvertError where
 
 convError' :: (Show a, Typeable a, Typeable b) =>
                String -> a -> b -> ConvertResult b
-convError' msg inpval retval = 
+convError' msg inpval retval =
      Left $ ConvertError {
              convSourceValue = show inpval,
              convSourceType = show . typeOf $ inpval,
              convDestType = show . typeOf $ retval,
              convErrorMessage = msg}
-    
+
 convError :: (Show a, Typeable a, Typeable b) =>
              String -> a -> ConvertResult b
-convError msg inpval = 
+convError msg inpval =
     convError' msg inpval undefined
-    
+
 prettyConvertError :: ConvertError -> String
 prettyConvertError (ConvertError sv st dt em) =
     "Convertible: error converting source data " ++ sv ++ " of type " ++ st
     ++ " to type " ++ dt ++ ": " ++ em
-    
+

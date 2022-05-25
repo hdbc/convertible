@@ -84,13 +84,13 @@ instance Convertible UTCTime POSIXTime where
     safeConvert = return . utcTimeToPOSIXSeconds
 
 instance Convertible Rational UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+    safeConvert a = posixSecondsToUTCTime <$> safeConvert a
 instance Convertible Integer UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+    safeConvert a = posixSecondsToUTCTime <$> safeConvert a
 instance Convertible Int UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+    safeConvert a = posixSecondsToUTCTime <$> safeConvert a
 instance Convertible Double UTCTime where
-    safeConvert a = safeConvert a >>= return . posixSecondsToUTCTime
+    safeConvert a = posixSecondsToUTCTime <$> safeConvert a
 
 instance Convertible UTCTime Rational where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
@@ -125,13 +125,13 @@ instance Convertible LocalTime TimeOfDay where
 instance Convertible ST.CalendarTime ZonedTime where
     safeConvert ct = return $ ZonedTime {
      zonedTimeToLocalTime = LocalTime {
-       localDay = fromGregorian (fromIntegral $ ST.ctYear ct) 
-                  (1 + (fromEnum $ ST.ctMonth ct))
+       localDay = fromGregorian (fromIntegral $ ST.ctYear ct)
+                  (1 + fromEnum (ST.ctMonth ct))
                   (ST.ctDay ct),
        localTimeOfDay = TimeOfDay {
          todHour = ST.ctHour ct,
          todMin = ST.ctMin ct,
-         todSec = (fromIntegral $ ST.ctSec ct) + 
+         todSec = fromIntegral (ST.ctSec ct) +
                   fromRational (ST.ctPicosec ct % 1000000000000)
                         }
                             },
@@ -147,7 +147,7 @@ instance Convertible ST.CalendarTime UTCTime where
     safeConvert = convertVia (undefined::POSIXTime)
 
 instance Convertible ST.ClockTime POSIXTime where
-    safeConvert (ST.TOD x y) = return $ fromRational $ 
+    safeConvert (ST.TOD x y) = return $ fromRational $
                                         fromInteger x + fromRational (y % 1000000000000)
 instance Convertible ST.ClockTime UTCTime where
     safeConvert = convertVia (undefined::POSIXTime)
@@ -159,7 +159,7 @@ instance Convertible ZonedTime ST.ClockTime where
 instance Convertible POSIXTime ST.ClockTime where
     safeConvert x = return $ ST.TOD rsecs rpico
         where rsecs = floor x
-              rpico = truncate $ abs $ 1000000000000 * (x - (fromIntegral rsecs))
+              rpico = truncate $ abs $ 1000000000000 * (x - fromIntegral rsecs)
 instance Convertible UTCTime ST.ClockTime where
     safeConvert = safeConvert . utcTimeToPOSIXSeconds
 
